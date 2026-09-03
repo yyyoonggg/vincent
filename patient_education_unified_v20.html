@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>환자교육 생성기 v20</title>
+<style>
+:root{--bg:#f5f7fb;--card:#fff;--ink:#202634;--muted:#6f7787;--line:#dfe4ee;--blue:#3157d5;--soft:#eef2ff;--good:#edf9f2;--warn:#fff8e8;--danger:#fff0f0}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--ink)}
+.shell{max-width:760px;margin:auto;padding:18px 14px 96px}.top{margin:4px 2px 18px}.top h1{font-size:24px;margin:0 0 6px}.top p{margin:0;color:var(--muted);font-size:13px;line-height:1.5}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:17px;margin-bottom:13px;box-shadow:0 4px 18px rgba(28,39,70,.04)}
+.card h2{font-size:17px;margin:0 0 12px}.title{font-size:24px;font-weight:900;line-height:1.3}.subtitle{font-size:14px;color:var(--blue);font-weight:850;margin-top:7px}
+label.h{display:block;font-size:12px;color:var(--muted);font-weight:800;margin:14px 0 7px}.note,.text{font-size:13px;color:var(--muted);line-height:1.7}.text{color:var(--ink);font-size:14px}.divider{height:1px;background:var(--line);margin:15px 0}
+select{width:100%;padding:13px 14px;border:1px solid var(--line);border-radius:14px;background:#fff;font:inherit;color:var(--ink);font-weight:750}
+.chips{display:flex;flex-wrap:wrap;gap:8px}.chip{position:relative}.chip input{position:absolute;opacity:0;pointer-events:none}.chip label{display:inline-flex;padding:10px 13px;border:1px solid var(--line);border-radius:999px;background:#fff;font-size:13px;font-weight:800;cursor:pointer}.chip input:checked+label{background:var(--blue);border-color:var(--blue);color:#fff}.chip input:checked+label:before{content:'✓ ';margin-right:3px}
+.btn{width:100%;border:none;border-radius:14px;padding:14px 12px;font-weight:850;font-size:14px;cursor:pointer;background:var(--blue);color:#fff;margin-top:16px}.btn.ghost{background:#fff;color:var(--ink);border:1px solid var(--line)}.btn.small{margin-top:8px;padding:11px}
+.status{padding:11px 12px;border-radius:12px;background:var(--good);font-size:12px;line-height:1.6}.status.warn{background:var(--warn)}.status.danger{background:var(--danger)}.field{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:11px;font:inherit;margin:5px 0 8px}
+.view{display:none}.view.active{display:block}.step{display:flex;gap:11px;align-items:flex-start;padding:11px 0;border-bottom:1px solid #edf0f5}.step:last-child{border-bottom:0}.num{width:28px;height:28px;flex:0 0 28px;border-radius:50%;background:var(--soft);color:var(--blue);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900}.comp{padding:10px 11px;border-radius:12px;background:var(--warn);margin:7px 0;font-size:13px;line-height:1.6}.risk{padding:11px 12px;border-radius:12px;background:var(--good);margin:8px 0;font-size:13px;line-height:1.6}.risk b{display:block;margin-bottom:4px}.video{padding:14px;border:1px dashed #bfc8da;border-radius:14px;margin:9px 0;background:#fafbfe}.video b{display:block;font-size:13px}.video span{display:block;color:var(--muted);font-size:12px;margin-top:4px}.videoFrame{position:relative;padding-top:56.25%;margin-top:10px;border-radius:12px;overflow:hidden;background:#eef1f7}.videoFrame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}.back{display:inline-flex;align-items:center;gap:5px;color:var(--blue);font-size:13px;font-weight:850;cursor:pointer;margin:2px 0 14px;border:0;background:transparent;padding:0}
+.bottomNav{position:fixed;left:0;right:0;bottom:0;background:rgba(255,255,255,.96);border-top:1px solid var(--line);display:flex;justify-content:center;gap:90px;padding:9px 12px calc(9px + env(safe-area-inset-bottom));z-index:20}.bottomNav button{border:0;background:transparent;color:#4d5668;font-size:11px;text-align:center;cursor:pointer}.bottomNav strong{display:block;font-size:18px;margin-bottom:2px}
+.mini{font-size:11px;color:var(--muted);line-height:1.5}.adminGrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.adminGrid .status{min-height:60px}
+</style>
+<script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+</head>
+<body>
+<div class="shell">
+  <div class="top"><h1>환자교육 생성기</h1><p id="topDesc">진단·수술과 기저질환을 선택하면 질환별 환자교육 화면으로 이동합니다.</p></div>
+
+  <section id="homeView" class="view active">
+    <div class="card">
+      <h2>환자 정보</h2>
+      <label class="h" for="dx">진단명</label>
+      <select id="dx"></select>
+      <label class="h" for="op">수술명</label>
+      <select id="op"></select>
+      <div class="note" style="margin-top:6px">진단명에 맞는 수술명이 자동으로 표시됩니다.</div>
+
+      <label class="h">기저질환 · 여러 개 선택 가능</label>
+      <div class="note" style="margin-bottom:8px">해당되는 항목을 모두 선택하세요.</div>
+      <div class="chips" id="comorbidityChips"></div>
+      <button class="btn" id="openEducation" type="button">환자교육 보기</button>
+    </div>
+    <div class="card"><h2>교육자료 구성</h2><div class="status">질환 설명 → 수술 과정 → 합병증 → 선택한 기저질환별 추가 안내 → 해부학/수술 영상</div></div>
+  </section>
+
+  <section id="educationView" class="view">
+    <button class="back" type="button" data-home>← 환자 정보로 돌아가기</button>
+    <div class="card"><div class="title" id="eduDiagnosis"></div><div class="subtitle" id="eduProcedure"></div><div class="divider"></div><h2>환자에게 드리는 설명</h2><div class="text" id="eduExplanation"></div></div>
+    <div class="card"><h2>수술은 어떻게 진행되나요?</h2><div id="eduSteps"></div></div>
+    <div class="card"><h2>발생할 수 있는 합병증</h2><div id="eduComplications"></div></div>
+    <div class="card"><h2>기저질환에 따른 추가 안내</h2><div id="eduComorbidities"></div></div>
+    <div class="card"><h2>영상으로 이해하기</h2><div id="eduVideos"></div></div>
+    <div class="card"><h2>의료진 참고</h2><div class="note" id="eduMedical"></div></div>
+  </section>
+
+  <section id="adminView" class="view">
+    <button class="back" type="button" data-home>← 환자교육으로 돌아가기</button>
+    <div class="card"><h2>관리자</h2><div class="status">Excel 파일의 <b>Scenarios</b> / <b>Comorbidities</b> 시트를 읽어 환자교육 화면을 갱신합니다. 같은 양식의 Excel을 수정한 뒤 다시 업로드하면 됩니다.</div></div>
+    <div class="card">
+      <h2>Excel 데이터 업로드</h2>
+      <input id="excelFile" class="field" type="file" accept=".xlsx,.xls">
+      <button class="btn small" id="importExcel" type="button">선택한 Excel 반영</button>
+      <button class="btn ghost small" id="resetData" type="button">기본 예시로 초기화</button>
+      <div id="importStatus" class="note" style="margin-top:10px">아직 Excel을 업로드하지 않았습니다.</div>
+      <div class="mini" style="margin-top:10px">브라우저에 저장되므로 이 기기에서는 새로고침 후에도 유지됩니다. 다른 기기에서는 같은 Excel을 다시 업로드해야 합니다.</div>
+    </div>
+    <div class="card"><h2>현재 반영 상태</h2><div class="adminGrid"><div class="status"><b id="scenarioCount">0</b><br>활성 수술 시나리오</div><div class="status"><b id="comorbCount">0</b><br>활성 기저질환</div></div></div>
+    <div class="card"><h2>Excel 필수 열</h2><div class="mini"><b>Scenarios</b><br>Scenario_ID, Diagnosis, Procedure, Patient_Explanation, Surgery_Steps, Complications, Medical_Detail, Anatomy_Video_URL, Procedure_Video_URL, Active<br><br><b>Comorbidities</b><br>Keyword, Display_Name, Aliases, Patient_Text, Medical_Text, Active</div></div>
+  </section>
+</div>
+
+<div class="bottomNav"><button type="button" id="navHome"><strong>⌂</strong>환자교육</button><button type="button" id="navAdmin"><strong>⚙</strong>관리자</button></div>
+<script>
+const DEFAULT_SCENARIOS=[
+ {Scenario_ID:'NS_SP_DISC_001',Diagnosis:'요추 디스크 파열(추간판 탈출증)',Procedure:'요추 디스크 제거술 · 내시경/미세현미경',Patient_Explanation:'허리 디스크 안쪽의 수핵이 바깥으로 밀려나와 신경을 누르는 상태를 치료하는 수술입니다. 신경을 압박하는 디스크 조각을 제거해 다리로 뻗치는 통증과 저림을 줄이는 것이 주된 목적입니다.',Surgery_Steps:'전신마취 후 엎드린 자세로 수술을 준비합니다.|영상 장비로 병변 위치를 확인한 뒤 작은 절개 또는 내시경 통로를 통해 접근합니다.|신경을 누르는 탈출 디스크와 주변 구조물을 확인합니다.|신경을 보호하면서 탈출된 디스크 조각을 제거합니다.|신경 압박이 충분히 해소되었는지 확인한 뒤 지혈하고 봉합합니다.',Complications:'수술 부위 출혈 또는 혈종|감염 또는 상처 회복 문제|신경 손상에 따른 통증·저림·근력저하|경막 손상 및 뇌척수액 누출|디스크 재발 또는 잔여 증상',Medical_Detail:'Procedure-specific risks include durotomy, nerve root injury, recurrent disc herniation, epidural hematoma, infection, residual radiculopathy, and conversion to wider decompression if required.',Anatomy_Video_URL:'',Procedure_Video_URL:'',Active:'Y'},
+ {Scenario_ID:'NS_SP_STENOSIS_001',Diagnosis:'요추 척추관 협착증',Procedure:'요추 감압술 ± 유합술',Patient_Explanation:'허리의 신경이 지나가는 통로인 척추관이 좁아져 신경이 눌리는 상태를 치료하는 수술입니다. 신경을 압박하는 뼈나 두꺼워진 인대 등을 제거해 공간을 넓히고, 척추가 불안정한 경우에는 나사와 금속봉을 이용한 유합술을 함께 시행할 수 있습니다.',Surgery_Steps:'전신마취 후 엎드린 자세로 수술을 준비합니다.|병변 위치를 확인한 뒤 허리 뒤쪽으로 접근합니다.|후궁 일부와 두꺼워진 인대, 필요 시 후관절 일부를 제거하여 척추관을 넓힙니다.|신경이 충분히 감압되었는지 확인합니다.|불안정성이 있거나 유합이 필요한 경우 척추경 나사·금속봉과 골이식을 사용합니다.|출혈을 확인하고 상처를 봉합합니다.',Complications:'출혈 및 수술 후 혈종|감염 및 상처 문제|신경 손상에 따른 감각저하·통증·근력저하|경막 손상 및 뇌척수액 누출|불완전한 증상 호전 또는 재협착|유합술 시행 시 나사 위치 이상, 유합 실패, 인접 분절 질환',Medical_Detail:'Risks depend on the extent of decompression and whether fusion is performed. Consider durotomy, nerve root injury, postoperative hematoma, infection, instability, screw malposition, pseudarthrosis, adjacent segment disease, and recurrent stenosis.',Anatomy_Video_URL:'',Procedure_Video_URL:'',Active:'Y'}
+];
+const DEFAULT_COMORBIDITIES=[
+ {Keyword:'HTN',Display_Name:'고혈압',Aliases:'Hypertension|고혈압',Patient_Text:'수술 전후 혈압 조절이 중요하며, 출혈 및 심혈관·뇌혈관계 위험을 함께 관리합니다.',Medical_Text:'Perioperative blood pressure control should be individualized according to procedure and cardiovascular risk.',Active:'Y'},
+ {Keyword:'DM',Display_Name:'당뇨',Aliases:'Diabetes|Diabetes mellitus|당뇨',Patient_Text:'감염과 상처 회복 지연 위험이 증가할 수 있어 수술 전후 혈당 조절이 중요합니다.',Medical_Text:'Perioperative glucose management may influence infection and wound-healing risk.',Active:'Y'},
+ {Keyword:'Stroke',Display_Name:'뇌경색',Aliases:'Cerebral infarction|ischemic stroke|뇌경색',Patient_Text:'기존 뇌혈관 상태와 항혈소판제 사용 여부 등을 고려해 신경학적·혈전성 위험을 평가합니다.',Medical_Text:'Prior ischemic stroke may affect perioperative cerebrovascular risk assessment and antithrombotic management.',Active:'Y'},
+ {Keyword:'CAD',Display_Name:'관상동맥질환',Aliases:'Coronary artery disease|CABG|PCI|관상동맥질환',Patient_Text:'마취와 수술 중 심장 상태를 면밀히 관찰하고 필요한 심혈관 약제를 조정할 수 있습니다.',Medical_Text:'Consider perioperative cardiac risk and medication management.',Active:'Y'},
+ {Keyword:'Anticoagulant',Display_Name:'항응고제 복용',Aliases:'anticoagulant|warfarin|apixaban|rivaroxaban|edoxaban|항응고제',Patient_Text:'수술 출혈 위험과 혈전 위험을 함께 고려해 중단·재개 시점을 개별적으로 결정합니다.',Medical_Text:'Anticoagulation interruption and resumption should be individualized to bleeding and thrombotic risks.',Active:'Y'}
+];
+const LS_SC='patientEduScenarios_v20',LS_CO='patientEduComorbidities_v20';
+let scenarios=load(LS_SC,DEFAULT_SCENARIOS),comorbidities=load(LS_CO,DEFAULT_COMORBIDITIES);
+const views=[...document.querySelectorAll('.view')],dx=document.getElementById('dx'),op=document.getElementById('op'),chips=document.getElementById('comorbidityChips');
+function load(k,f){try{const x=JSON.parse(localStorage.getItem(k)||'null');return Array.isArray(x)&&x.length?x:f}catch(e){return f}}
+function save(){localStorage.setItem(LS_SC,JSON.stringify(scenarios));localStorage.setItem(LS_CO,JSON.stringify(comorbidities))}
+function activeY(v){return String(v??'Y').trim().toUpperCase()!=='N'}
+function esc(s){return String(s??'').replace(/[&<>\"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+function parts(s){return String(s||'').split('|').map(x=>x.trim()).filter(Boolean)}
+function showView(id){views.forEach(v=>v.classList.toggle('active',v.id===id));document.getElementById('topDesc').textContent=id==='homeView'?'진단·수술과 기저질환을 선택하면 질환별 환자교육 화면으로 이동합니다.':id==='adminView'?'Excel로 교육 콘텐츠를 관리하는 화면입니다.':'선택한 질환에 맞는 환자교육 자료입니다.';window.scrollTo(0,0)}
+function renderHome(){
+ const active=scenarios.filter(x=>activeY(x.Active));
+ const diagnoses=[...new Set(active.map(x=>x.Diagnosis).filter(Boolean))];
+ const prev=dx.value;dx.innerHTML=diagnoses.map(v=>`<option value="${esc(v)}">${esc(v)}</option>`).join('');if(diagnoses.includes(prev))dx.value=prev;fillOps();
+ chips.innerHTML=comorbidities.filter(x=>activeY(x.Active)).map(c=>`<div class="chip"><input type="checkbox" id="co_${esc(c.Keyword)}" value="${esc(c.Keyword)}"><label for="co_${esc(c.Keyword)}">${esc(c.Display_Name||c.Keyword)}</label></div>`).join('');
+ document.getElementById('scenarioCount').textContent=active.length;document.getElementById('comorbCount').textContent=comorbidities.filter(x=>activeY(x.Active)).length;
+}
+function fillOps(){const active=scenarios.filter(x=>activeY(x.Active)&&x.Diagnosis===dx.value);op.innerHTML=active.map(x=>`<option value="${esc(x.Scenario_ID)}">${esc(x.Procedure)}</option>`).join('')}
+function selectedComorbidities(){const keys=[...chips.querySelectorAll('input:checked')].map(x=>x.value);return comorbidities.filter(c=>keys.includes(String(c.Keyword))&&activeY(c.Active))}
+function youtubeEmbed(url){if(!url)return'';try{const u=new URL(url);let id='';if(u.hostname.includes('youtu.be'))id=u.pathname.split('/').filter(Boolean)[0]||'';if(u.hostname.includes('youtube.com')){if(u.pathname==='/watch')id=u.searchParams.get('v')||'';else if(u.pathname.startsWith('/embed/'))id=u.pathname.split('/embed/')[1].split('/')[0];else if(u.pathname.startsWith('/shorts/'))id=u.pathname.split('/shorts/')[1].split('/')[0]}return id?`https://www.youtube-nocookie.com/embed/${id}?rel=0`:''}catch(e){return''}}
+function videoBlock(label,url){const emb=youtubeEmbed(url);return `<div class="video"><b>${esc(label)}</b>${emb?`<div class="videoFrame"><iframe src="${esc(emb)}" allowfullscreen loading="lazy"></iframe></div>`:`<span>등록된 영상 URL이 없습니다.</span>`}</div>`}
+function openEducation(){const s=scenarios.find(x=>String(x.Scenario_ID)===String(op.value)&&activeY(x.Active));if(!s){alert('선택한 수술에 대한 교육자료가 없습니다.');return}document.getElementById('eduDiagnosis').textContent=s.Diagnosis||'';document.getElementById('eduProcedure').textContent=s.Procedure||'';document.getElementById('eduExplanation').textContent=s.Patient_Explanation||'';document.getElementById('eduSteps').innerHTML=parts(s.Surgery_Steps).map((t,i)=>`<div class="step"><div class="num">${i+1}</div><div class="text">${esc(t)}</div></div>`).join('')||'<div class="note">등록된 수술 단계가 없습니다.</div>';document.getElementById('eduComplications').innerHTML=parts(s.Complications).map(t=>`<div class="comp">${esc(t)}</div>`).join('')||'<div class="note">등록된 합병증 안내가 없습니다.</div>';const cs=selectedComorbidities();document.getElementById('eduComorbidities').innerHTML=cs.length?cs.map(c=>`<div class="risk"><b>${esc(c.Display_Name||c.Keyword)}</b>${esc(c.Patient_Text||'')}</div>`).join(''):'<div class="text" style="color:var(--muted)">선택한 기저질환이 없습니다.</div>';document.getElementById('eduVideos').innerHTML=videoBlock('내 질환과 해부학 이해하기',s.Anatomy_Video_URL)+videoBlock('수술은 어떻게 하나요?',s.Procedure_Video_URL);document.getElementById('eduMedical').textContent=s.Medical_Detail||'등록된 의료진 참고 내용이 없습니다.';showView('educationView')}
+function cleanRows(rows){return rows.map(r=>{const o={};Object.keys(r||{}).forEach(k=>o[String(k).trim()]=typeof r[k]==='string'?r[k].trim():r[k]);return o})}
+async function importExcel(){const file=document.getElementById('excelFile').files[0],status=document.getElementById('importStatus');if(!file){status.textContent='먼저 Excel 파일을 선택해주세요.';return}if(typeof XLSX==='undefined'){status.textContent='Excel 읽기 라이브러리를 불러오지 못했습니다. Safari/Chrome에서 이 HTML을 직접 열어 다시 시도해주세요.';return}try{const data=await file.arrayBuffer();const wb=XLSX.read(data,{type:'array'});if(!wb.Sheets['Scenarios']||!wb.Sheets['Comorbidities'])throw new Error('Scenarios / Comorbidities 시트가 모두 필요합니다.');const sc=cleanRows(XLSX.utils.sheet_to_json(wb.Sheets['Scenarios'],{defval:''}));const co=cleanRows(XLSX.utils.sheet_to_json(wb.Sheets['Comorbidities'],{defval:''}));const reqSc=['Scenario_ID','Diagnosis','Procedure','Patient_Explanation','Surgery_Steps','Complications','Medical_Detail','Anatomy_Video_URL','Procedure_Video_URL','Active'];const reqCo=['Keyword','Display_Name','Aliases','Patient_Text','Medical_Text','Active'];if(!sc.length||!co.length)throw new Error('시트에 데이터 행이 없습니다.');const missSc=reqSc.filter(k=>!(k in sc[0])),missCo=reqCo.filter(k=>!(k in co[0]));if(missSc.length||missCo.length)throw new Error('필수 열 누락: '+[...missSc,...missCo].join(', '));scenarios=sc;comorbidities=co;save();renderHome();status.textContent=`반영 완료: 활성 시나리오 ${scenarios.filter(x=>activeY(x.Active)).length}개, 기저질환 ${comorbidities.filter(x=>activeY(x.Active)).length}개`;status.className='status';}catch(e){status.textContent='업로드 실패: '+e.message;status.className='status danger'}}
+dx.addEventListener('change',fillOps);document.getElementById('openEducation').addEventListener('click',openEducation);document.getElementById('navHome').addEventListener('click',()=>showView('homeView'));document.getElementById('navAdmin').addEventListener('click',()=>showView('adminView'));document.querySelectorAll('[data-home]').forEach(b=>b.addEventListener('click',()=>showView('homeView')));document.getElementById('importExcel').addEventListener('click',importExcel);document.getElementById('resetData').addEventListener('click',()=>{scenarios=JSON.parse(JSON.stringify(DEFAULT_SCENARIOS));comorbidities=JSON.parse(JSON.stringify(DEFAULT_COMORBIDITIES));save();renderHome();const st=document.getElementById('importStatus');st.textContent='기본 예시 데이터로 초기화했습니다.';st.className='status warn'});renderHome();
+</script>
+</body></html>
