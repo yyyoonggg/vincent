@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="ko">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta charset="utf-8"><meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>성빈센트병원 수술환자 안내</title>
 <style>
 :root{--bg:#f5f7fb;--card:#fff;--ink:#202634;--muted:#6f7787;--line:#dfe4ee;--blue:#3157d5;--soft:#eef2ff;--good:#edf9f2;--warn:#fff8e8;--danger:#fff0f0}
@@ -18,7 +18,7 @@ select{width:100%;padding:13px 14px;border:1px solid var(--line);border-radius:1
 .bottomNav{position:fixed;left:0;right:0;bottom:0;background:rgba(255,255,255,.96);border-top:1px solid var(--line);display:flex;justify-content:center;gap:90px;padding:9px 12px calc(9px + env(safe-area-inset-bottom));z-index:20}.bottomNav button{border:0;background:transparent;color:#4d5668;font-size:11px;text-align:center;cursor:pointer}.bottomNav strong{display:block;font-size:18px;margin-bottom:2px}
 .mini{font-size:11px;color:var(--muted);line-height:1.5}.adminGrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.adminGrid .status{min-height:60px}
 </style>
-<script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+
 </head>
 <body>
 <div class="shell">
@@ -100,7 +100,61 @@ function youtubeEmbed(url){if(!url)return'';try{const u=new URL(url);let id='';i
 function videoBlock(label,url){const emb=youtubeEmbed(url);return `<div class="video"><b>${esc(label)}</b>${emb?`<div class="videoFrame"><iframe src="${esc(emb)}" allowfullscreen loading="lazy"></iframe></div>`:`<span>등록된 영상 URL이 없습니다.</span>`}</div>`}
 function openEducation(){const s=scenarios.find(x=>String(x.Scenario_ID)===String(op.value)&&activeY(x.Active));if(!s){alert('선택한 수술에 대한 교육자료가 없습니다.');return}document.getElementById('eduDiagnosis').textContent=s.Diagnosis||'';document.getElementById('eduProcedure').textContent=s.Procedure||'';document.getElementById('eduExplanation').textContent=s.Patient_Explanation||'';document.getElementById('eduSteps').innerHTML=parts(s.Surgery_Steps).map((t,i)=>`<div class="step"><div class="num">${i+1}</div><div class="text">${esc(t)}</div></div>`).join('')||'<div class="note">등록된 수술 단계가 없습니다.</div>';document.getElementById('eduComplications').innerHTML=parts(s.Complications).map(t=>`<div class="comp">${esc(t)}</div>`).join('')||'<div class="note">등록된 합병증 안내가 없습니다.</div>';const cs=selectedComorbidities();document.getElementById('eduComorbidities').innerHTML=cs.length?cs.map(c=>`<div class="risk"><b>${esc(c.Display_Name||c.Keyword)}</b>${esc(c.Patient_Text||'')}</div>`).join(''):'<div class="text" style="color:var(--muted)">선택한 기저질환이 없습니다.</div>';document.getElementById('eduVideos').innerHTML=videoBlock('내 질환과 해부학 이해하기',s.Anatomy_Video_URL)+videoBlock('수술은 어떻게 하나요?',s.Procedure_Video_URL);showView('educationView')}
 function cleanRows(rows){return rows.map(r=>{const o={};Object.keys(r||{}).forEach(k=>o[String(k).trim()]=typeof r[k]==='string'?r[k].trim():r[k]);return o})}
-async function importExcel(){const file=document.getElementById('excelFile').files[0],status=document.getElementById('importStatus');if(!file){status.textContent='먼저 Excel 파일을 선택해주세요.';return}if(typeof XLSX==='undefined'){status.textContent='Excel 읽기 라이브러리를 불러오지 못했습니다. Safari/Chrome에서 이 HTML을 직접 열어 다시 시도해주세요.';return}try{const data=await file.arrayBuffer();const wb=XLSX.read(data,{type:'array'});if(!wb.Sheets['Scenarios']||!wb.Sheets['Comorbidities'])throw new Error('Scenarios / Comorbidities 시트가 모두 필요합니다.');const sc=cleanRows(XLSX.utils.sheet_to_json(wb.Sheets['Scenarios'],{defval:''}));const co=cleanRows(XLSX.utils.sheet_to_json(wb.Sheets['Comorbidities'],{defval:''}));const reqSc=['Scenario_ID','Diagnosis','Procedure','Patient_Explanation','Surgery_Steps','Complications','Medical_Detail','Anatomy_Video_URL','Procedure_Video_URL','Active'];const reqCo=['Keyword','Display_Name','Aliases','Patient_Text','Medical_Text','Active'];if(!sc.length||!co.length)throw new Error('시트에 데이터 행이 없습니다.');const missSc=reqSc.filter(k=>!(k in sc[0])),missCo=reqCo.filter(k=>!(k in co[0]));if(missSc.length||missCo.length)throw new Error('필수 열 누락: '+[...missSc,...missCo].join(', '));scenarios=sc;comorbidities=co;save();renderHome();status.textContent=`반영 완료: 활성 시나리오 ${scenarios.filter(x=>activeY(x.Active)).length}개, 기저질환 ${comorbidities.filter(x=>activeY(x.Active)).length}개`;status.className='status';}catch(e){status.textContent='업로드 실패: '+e.message;status.className='status danger'}}
-dx.addEventListener('change',fillOps);document.getElementById('openEducation').addEventListener('click',openEducation);document.getElementById('navHome').addEventListener('click',()=>showView('homeView'));document.getElementById('navAdmin').addEventListener('click',()=>showView('adminView'));document.querySelectorAll('[data-home]').forEach(b=>b.addEventListener('click',()=>showView('homeView')));document.getElementById('importExcel').addEventListener('click',importExcel);document.getElementById('resetData').addEventListener('click',()=>{scenarios=JSON.parse(JSON.stringify(DEFAULT_SCENARIOS));comorbidities=JSON.parse(JSON.stringify(DEFAULT_COMORBIDITIES));save();renderHome();const st=document.getElementById('importStatus');st.textContent='기본 예시 데이터로 초기화했습니다.';st.className='status warn'});renderHome();
+function loadSheetJS(){
+ return new Promise((resolve,reject)=>{
+  if(typeof XLSX!=='undefined'){resolve();return;}
+  const s=document.createElement('script');
+  s.src='https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js';
+  s.onload=()=>resolve();
+  s.onerror=()=>reject(new Error('Excel 라이브러리를 불러오지 못했습니다.'));
+  document.head.appendChild(s);
+ });
+}
+async function importExcel(){
+ const file=document.getElementById('excelFile').files[0],status=document.getElementById('importStatus');
+ if(!file){status.textContent='먼저 Excel 파일을 선택해주세요.';return;}
+ try{
+  await loadSheetJS();
+  const data=await file.arrayBuffer();
+  const wb=XLSX.read(data,{type:'array'});
+  if(!wb.Sheets['Scenarios']||!wb.Sheets['Comorbidities'])throw new Error('Scenarios / Comorbidities 시트가 모두 필요합니다.');
+  const sc=cleanRows(XLSX.utils.sheet_to_json(wb.Sheets['Scenarios'],{defval:''}));
+  const co=cleanRows(XLSX.utils.sheet_to_json(wb.Sheets['Comorbidities'],{defval:''}));
+  const reqSc=['Scenario_ID','Diagnosis','Procedure','Patient_Explanation','Surgery_Steps','Complications','Medical_Detail','Anatomy_Video_URL','Procedure_Video_URL','Active'];
+  const reqCo=['Keyword','Display_Name','Aliases','Patient_Text','Medical_Text','Active'];
+  if(!sc.length||!co.length)throw new Error('시트에 데이터 행이 없습니다.');
+  const missSc=reqSc.filter(k=>!(k in sc[0])),missCo=reqCo.filter(k=>!(k in co[0]));
+  if(missSc.length||missCo.length)throw new Error('필수 열 누락: '+[...missSc,...missCo].join(', '));
+  scenarios=sc;comorbidities=co;save();renderHome();
+  status.textContent=`반영 완료: 활성 시나리오 ${scenarios.filter(x=>activeY(x.Active)).length}개, 기저질환 ${comorbidities.filter(x=>activeY(x.Active)).length}개`;
+  status.className='status';
+ }catch(e){status.textContent='업로드 실패: '+e.message;status.className='status danger';}
+}
+function bindApp(){
+  renderHome();
+  dx.addEventListener('change',fillOps);
+  document.getElementById('openEducation').onclick=function(e){
+    e.preventDefault();
+    try{
+      if(!op.value){fillOps();}
+      openEducation();
+    }catch(err){
+      console.error(err);
+      alert('교육자료 화면을 여는 중 오류가 발생했습니다: '+err.message);
+    }
+  };
+  document.getElementById('navHome').onclick=()=>showView('homeView');
+  document.getElementById('navAdmin').onclick=()=>showView('adminView');
+  document.querySelectorAll('[data-home]').forEach(b=>b.onclick=()=>showView('homeView'));
+  document.getElementById('importExcel').onclick=importExcel;
+  document.getElementById('resetData').onclick=()=>{
+    scenarios=JSON.parse(JSON.stringify(DEFAULT_SCENARIOS));
+    comorbidities=JSON.parse(JSON.stringify(DEFAULT_COMORBIDITIES));
+    save();renderHome();
+    const st=document.getElementById('importStatus');
+    st.textContent='기본 예시 데이터로 초기화했습니다.';st.className='status warn';
+  };
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bindApp);else bindApp();
 </script>
 </body></html>
