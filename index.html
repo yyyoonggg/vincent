@@ -137,6 +137,7 @@ select{width:100%;padding:13px 14px;border:1px solid var(--line);border-radius:1
       <h2>Excel 데이터 업로드</h2>
       <input id="excelFile" class="field" type="file" accept=".xlsx,.xls">
       <button class="btn small" id="importExcel" type="button">선택한 Excel 반영</button>
+      <button class="btn ghost small" id="exportExcel" type="button">현재 데이터 Excel로 내보내기</button>
       <button class="btn ghost small" id="resetData" type="button">기본 예시로 초기화</button>
       <div id="importStatus" class="note" style="margin-top:10px">아직 Excel을 업로드하지 않았습니다.</div>
       <div class="mini" style="margin-top:10px">브라우저에 저장되므로 이 기기에서는 새로고침 후에도 유지됩니다. 다른 기기에서는 같은 Excel을 다시 업로드해야 합니다.</div>
@@ -280,6 +281,224 @@ function bindApp(){
       alert('교육자료 화면을 여는 중 오류가 발생했습니다: '+err.message);
     }
   };
+  async function exportExcel(){
+
+  try{
+
+    // SheetJS가 아직 로드되지 않았다면 불러오기
+    if(typeof XLSX === 'undefined'){
+
+      await new Promise((resolve,reject)=>{
+
+        const script = document.createElement('script');
+
+        script.src =
+          'https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js';
+
+        script.onload = resolve;
+
+        script.onerror = () =>
+          reject(new Error('Excel 라이브러리를 불러오지 못했습니다.'));
+
+        document.head.appendChild(script);
+
+      });
+
+    }
+
+
+    // -------------------------------
+    // 1. Scenarios 시트
+    // -------------------------------
+
+    const scenarioRows = scenarios.map(s => ({
+
+      Scenario_ID:
+        s.Scenario_ID || '',
+
+      Diagnosis:
+        s.Diagnosis || '',
+
+      Procedure:
+        s.Procedure || '',
+
+      Patient_Explanation:
+        s.Patient_Explanation || '',
+
+      Surgery_Purpose:
+        s.Surgery_Purpose || '',
+
+      Approach_Text:
+        s.Approach_Text || '',
+
+      Surgery_Steps:
+        s.Surgery_Steps || '',
+
+      Complications:
+        s.Complications || '',
+
+      Postop_Care:
+        s.Postop_Care || '',
+
+      Warning_Signs:
+        s.Warning_Signs || '',
+
+      Medical_Detail:
+        s.Medical_Detail || '',
+
+      Anatomy_Video_URL:
+        s.Anatomy_Video_URL || '',
+
+      Procedure_Video_URL:
+        s.Procedure_Video_URL || '',
+
+      Active:
+        s.Active || 'Y'
+
+    }));
+
+
+    // -------------------------------
+    // 2. Comorbidities 시트
+    // -------------------------------
+
+    const comorbidityRows = comorbidities.map(c => ({
+
+      Keyword:
+        c.Keyword || '',
+
+      Display_Name:
+        c.Display_Name || '',
+
+      Aliases:
+        c.Aliases || '',
+
+      Patient_Text:
+        c.Patient_Text || '',
+
+      Medical_Text:
+        c.Medical_Text || '',
+
+      Active:
+        c.Active || 'Y'
+
+    }));
+
+
+    // -------------------------------
+    // Excel workbook 생성
+    // -------------------------------
+
+    const wb = XLSX.utils.book_new();
+
+    const wsScenario =
+      XLSX.utils.json_to_sheet(scenarioRows);
+
+    const wsComorbidity =
+      XLSX.utils.json_to_sheet(comorbidityRows);
+
+
+    XLSX.utils.book_append_sheet(
+      wb,
+      wsScenario,
+      'Scenarios'
+    );
+
+    XLSX.utils.book_append_sheet(
+      wb,
+      wsComorbidity,
+      'Comorbidities'
+    );
+
+
+    // -------------------------------
+    // README 시트
+    // -------------------------------
+
+    const readmeRows = [
+
+      {
+        항목:'Scenarios',
+        설명:'진단·수술별 환자교육 콘텐츠'
+      },
+
+      {
+        항목:'Scenario_ID',
+        설명:'각 수술 시나리오의 고유 ID. 기존 내용을 수정하려면 같은 ID를 사용하세요.'
+      },
+
+      {
+        항목:'Surgery_Steps',
+        설명:'여러 단계는 | 기호로 구분합니다.'
+      },
+
+      {
+        항목:'Complications',
+        설명:'여러 합병증은 | 기호로 구분합니다.'
+      },
+
+      {
+        항목:'Warning_Signs',
+        설명:'여러 경고 증상은 | 기호로 구분합니다.'
+      },
+
+      {
+        항목:'Comorbidities',
+        설명:'기저질환별 추가 환자교육 콘텐츠'
+      },
+
+      {
+        항목:'Keyword',
+        설명:'기저질환의 고유 ID입니다.'
+      },
+
+      {
+        항목:'Active',
+        설명:'Y = 화면 표시 / N = 비활성'
+      }
+
+    ];
+
+    const wsReadme =
+      XLSX.utils.json_to_sheet(readmeRows);
+
+    XLSX.utils.book_append_sheet(
+      wb,
+      wsReadme,
+      'README'
+    );
+
+
+    // -------------------------------
+    // 파일명
+    // -------------------------------
+
+    const now = new Date();
+
+    const date =
+      now.getFullYear() +
+      '-' +
+      String(now.getMonth()+1).padStart(2,'0') +
+      '-' +
+      String(now.getDate()).padStart(2,'0');
+
+
+    XLSX.writeFile(
+      wb,
+      `환자교육_DB_${date}.xlsx`
+    );
+
+
+  }catch(e){
+
+    alert(
+      'Excel 내보내기에 실패했습니다.\n' +
+      e.message
+    );
+
+  }
+document.getElementById('exportExcel').onclick = exportExcel;
+}
   document.getElementById('eduPrev').onclick=()=>{if(currentEduPage>1)showEduPage(currentEduPage-1);};
   document.getElementById('eduNext').onclick=()=>{if(currentEduPage<3)showEduPage(currentEduPage+1);else showView('homeView');};
   document.getElementById('navHome').onclick=()=>showView('homeView');
