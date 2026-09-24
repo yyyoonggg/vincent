@@ -1,0 +1,723 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"><meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>성빈센트병원 수술환자 안내</title>
+<style>
+:root{--bg:#f5f7fb;--card:#fff;--ink:#202634;--muted:#6f7787;--line:#dfe4ee;--blue:#3157d5;--soft:#eef2ff;--good:#edf9f2;--warn:#fff8e8;--danger:#fff0f0}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--ink)}
+.shell{max-width:760px;margin:auto;padding:18px 14px 96px}.top{margin:4px 2px 18px}.top h1{font-size:24px;margin:0 0 6px}.top p{margin:0;color:var(--muted);font-size:13px;line-height:1.5}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:17px;margin-bottom:13px;box-shadow:0 4px 18px rgba(28,39,70,.04)}
+.card h2{font-size:17px;margin:0 0 12px}.title{font-size:24px;font-weight:900;line-height:1.3}.subtitle{font-size:14px;color:var(--blue);font-weight:850;margin-top:7px}
+label.h{display:block;font-size:12px;color:var(--muted);font-weight:800;margin:14px 0 7px}.note,.text{font-size:13px;color:var(--muted);line-height:1.7}.text{color:var(--ink);font-size:14px}.divider{height:1px;background:var(--line);margin:15px 0}
+select{width:100%;padding:13px 14px;border:1px solid var(--line);border-radius:14px;background:#fff;font:inherit;color:var(--ink);font-weight:750}
+.chips{display:flex;flex-wrap:wrap;gap:8px}.chip{position:relative}.chip input{position:absolute;opacity:0;pointer-events:none}.chip label{display:inline-flex;padding:10px 13px;border:1px solid var(--line);border-radius:999px;background:#fff;font-size:13px;font-weight:800;cursor:pointer}.chip input:checked+label{background:var(--blue);border-color:var(--blue);color:#fff}.chip input:checked+label:before{content:'✓ ';margin-right:3px}
+.btn{width:100%;border:none;border-radius:14px;padding:14px 12px;font-weight:850;font-size:14px;cursor:pointer;background:var(--blue);color:#fff;margin-top:16px}.btn.ghost{background:#fff;color:var(--ink);border:1px solid var(--line)}.btn.small{margin-top:8px;padding:11px}
+.status{padding:11px 12px;border-radius:12px;background:var(--good);font-size:12px;line-height:1.6}.status.warn{background:var(--warn)}.status.danger{background:var(--danger)}.field{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:11px;font:inherit;margin:5px 0 8px}
+.view{display:none}.view.active{display:block}.step{display:flex;gap:11px;align-items:flex-start;padding:11px 0;border-bottom:1px solid #edf0f5}.step:last-child{border-bottom:0}.num{width:28px;height:28px;flex:0 0 28px;border-radius:50%;background:var(--soft);color:var(--blue);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900}.comp{padding:10px 11px;border-radius:12px;background:var(--warn);margin:7px 0;font-size:13px;line-height:1.6}.risk{padding:11px 12px;border-radius:12px;background:var(--good);margin:8px 0;font-size:13px;line-height:1.6}.risk b{display:block;margin-bottom:4px}.video{padding:14px;border:1px dashed #bfc8da;border-radius:14px;margin:9px 0;background:#fafbfe}.video b{display:block;font-size:13px}.video span{display:block;color:var(--muted);font-size:12px;margin-top:4px}.videoFrame{position:relative;padding-top:56.25%;margin-top:10px;border-radius:12px;overflow:hidden;background:#eef1f7}.videoFrame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}.back{display:inline-flex;align-items:center;gap:5px;color:var(--blue);font-size:13px;font-weight:850;cursor:pointer;margin:2px 0 14px;border:0;background:transparent;padding:0}
+.bottomNav{position:fixed;left:0;right:0;bottom:0;background:rgba(255,255,255,.96);border-top:1px solid var(--line);display:flex;justify-content:center;gap:90px;padding:9px 12px calc(9px + env(safe-area-inset-bottom));z-index:20}.bottomNav button{border:0;background:transparent;color:#4d5668;font-size:11px;text-align:center;cursor:pointer}.bottomNav strong{display:block;font-size:18px;margin-bottom:2px}
+.mini{font-size:11px;color:var(--muted);line-height:1.5}.adminGrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.adminGrid .status{min-height:60px}
+</style>
+
+</head>
+<body>
+<div class="shell">
+  <div class="top"><h1>성빈센트병원 수술환자 안내</h1><p id="topDesc">진단·수술과 기저질환을 선택하면 질환별 안내 화면으로 이동합니다.</p></div>
+
+  <section id="homeView" class="view active">
+    <div class="card">
+      <h2>환자 정보</h2>
+      <label class="h" for="dx">진단명</label>
+      <select id="dx"></select>
+      <label class="h" for="op">수술명</label>
+      <select id="op"></select>
+      <div class="note" style="margin-top:6px">진단명에 맞는 수술명이 자동으로 표시됩니다.</div>
+
+      <label class="h">기저질환 · 여러 개 선택 가능</label>
+      <div class="note" style="margin-bottom:8px">해당되는 항목을 모두 선택하세요.</div>
+      <div class="chips" id="comorbidityChips"></div>
+      <button class="btn" id="openEducation" type="button">환자교육 보기</button>
+    </div>
+  </section>
+
+  <section id="educationView" class="view">
+  <button class="back" type="button" data-home>← 환자 정보로 돌아가기</button>
+
+  <div class="card">
+    <div class="mini" id="eduProgressText">1 / 3</div>
+    <div style="height:8px;background:#edf0f5;border-radius:999px;overflow:hidden;margin-top:8px">
+      <div id="eduProgressBar" style="height:100%;width:33.3%;background:var(--blue);transition:.25s"></div>
+    </div>
+  </div>
+
+  <div id="eduPage1" class="eduPage">
+    <div class="card">
+      <div class="title" id="eduDiagnosis"></div>
+      <div class="subtitle">내 질환과 해부학 이해하기</div>
+      <div class="divider"></div>
+
+      <h2>정상 해부학</h2>
+      <div class="text" id="eduAnatomyText"></div>
+
+      <div class="divider"></div>
+
+      <h2>어떤 이상이 생긴 건가요?</h2>
+      <div class="text" id="eduExplanation"></div>
+    </div>
+
+    <div class="card">
+      <h2>영상으로 이해하기</h2>
+      <div id="eduAnatomyVideo"></div>
+    </div>
+  </div>
+
+  <div id="eduPage2" class="eduPage" style="display:none">
+    <div class="card">
+      <div class="title">수술은 어떻게 하나요?</div>
+      <div class="subtitle" id="eduProcedure"></div>
+      <div class="divider"></div>
+
+      <h2>수술의 목적</h2>
+      <div class="text" id="eduSurgeryPurpose"></div>
+
+      <div class="divider"></div>
+
+      <h2>접근 방법</h2>
+      <div class="text" id="eduApproachText"></div>
+    </div>
+
+    <div class="card">
+      <h2>수술 과정</h2>
+      <div id="eduSteps"></div>
+    </div>
+
+    <div class="card">
+      <h2>수술 및 접근법 영상</h2>
+      <div id="eduProcedureVideo"></div>
+    </div>
+  </div>
+
+  <div id="eduPage3" class="eduPage" style="display:none">
+    <div class="card">
+      <h2>발생할 수 있는 합병증</h2>
+      <div id="eduComplications"></div>
+    </div>
+
+    <div class="card">
+      <h2>기저질환에 따른 추가 안내</h2>
+      <div id="eduComorbidities"></div>
+    </div>
+
+    <div class="card">
+      <h2>수술 후 관리</h2>
+      <div id="eduPostopCare" class="text"></div>
+    </div>
+
+    <div class="card">
+      <h2>이런 증상이 있으면 바로 알려주세요</h2>
+      <div id="eduWarningSigns"></div>
+    </div>
+
+    <div class="card">
+      <h2>교육자료 참고</h2>
+      <div id="eduReferences" class="mini"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div style="display:flex;gap:10px">
+      <button class="btn ghost" id="eduPrev" type="button" style="margin-top:0">이전</button>
+      <button class="btn" id="eduNext" type="button" style="margin-top:0">다음</button>
+    </div>
+  </div>
+</section>
+
+  <section id="adminView" class="view">
+    <button class="back" type="button" data-home>← 환자교육으로 돌아가기</button>
+    <div class="card"><h2>관리자</h2><div class="status">Excel 파일의 <b>Scenarios</b> / <b>Comorbidities</b> 시트를 읽어 환자교육 화면을 갱신합니다. 같은 양식의 Excel을 수정한 뒤 다시 업로드하면 됩니다.</div></div>
+    <div class="card">
+      <h2>Excel 데이터 업로드</h2>
+      <input id="excelFile" class="field" type="file" accept=".xlsx,.xls">
+      <button class="btn small" id="importExcel" type="button">선택한 Excel 반영</button>
+      <button class="btn ghost small" id="exportExcel" type="button">현재 데이터 Excel로 내보내기</button>
+      <button class="btn ghost small" id="resetData" type="button">기본 예시로 초기화</button>
+      <div id="importStatus" class="note" style="margin-top:10px">아직 Excel을 업로드하지 않았습니다.</div>
+      <div class="mini" style="margin-top:10px">브라우저에 저장되므로 이 기기에서는 새로고침 후에도 유지됩니다. 다른 기기에서는 같은 Excel을 다시 업로드해야 합니다.</div>
+    </div>
+    <div class="card"><h2>현재 반영 상태</h2><div class="adminGrid"><div class="status"><b id="scenarioCount">0</b><br>활성 수술 시나리오</div><div class="status"><b id="comorbCount">0</b><br>활성 기저질환</div></div></div>
+    <div class="card"><h2>Excel 필수 열</h2><div class="mini"><b>Scenarios</b><br>Scenario_ID, Diagnosis, Procedure, Anatomy_Text, Patient_Explanation, Surgery_Purpose, Approach_Text, Surgery_Steps, Complications, Postop_Care, Warning_Signs, Medical_Detail, Anatomy_Video_URL, Procedure_Video_URL, Reference_Text, Active<br><br><b>Comorbidities</b><br>Keyword, Display_Name, Aliases, Patient_Text, Medical_Text, Active</div></div>
+  </section>
+</div>
+
+<div class="bottomNav"><button type="button" id="navHome"><strong>⌂</strong>환자교육</button><button type="button" id="navAdmin"><strong>⚙</strong>관리자</button></div>
+<script>
+const DEFAULT_SCENARIOS=[
+{
+Scenario_ID:'NS_SP_DISC_001',
+Diagnosis:'요추 디스크 파열(추간판 탈출증)',
+Procedure:'요추 디스크 제거술',
+Anatomy_Text:'요추는 척추체, 추간판(디스크), 후궁, 후관절, 인대와 신경 구조로 이루어집니다. 디스크는 척추체 사이에서 충격을 흡수하고, 척추관과 신경공을 통해 신경이 지나갑니다.',
+Patient_Explanation:'디스크 내부 조직이 뒤쪽으로 밀려나와 신경을 누르는 상태입니다. 수술은 신경을 압박하는 디스크 조각을 제거해 다리로 뻗치는 통증과 저림을 줄이는 것이 주된 목적입니다.',
+Surgery_Purpose:'신경을 압박하는 탈출된 디스크를 제거하여 하지 방사통과 신경 증상을 줄이는 것이 목적입니다.',
+Approach_Text:'허리 뒤쪽의 작은 절개 또는 내시경 통로를 통해 병변 부위에 접근합니다. 신경을 보호하면서 압박을 일으키는 디스크 조각을 제거합니다.',
+Surgery_Steps:'전신마취 후 엎드린 자세로 수술을 준비합니다.|영상 장비로 병변 위치를 확인한 뒤 작은 절개 또는 내시경 통로를 통해 접근합니다.|신경을 누르는 탈출 디스크와 주변 구조물을 확인합니다.|신경을 보호하면서 탈출된 디스크 조각을 제거합니다.|신경 압박이 충분히 해소되었는지 확인한 뒤 지혈하고 봉합합니다.',
+Complications:'수술 부위 출혈 또는 혈종|감염 또는 상처 회복 문제|신경 손상에 따른 통증·저림·근력저하|경막 손상 및 뇌척수액 누출|디스크 재발 또는 잔여 증상',
+Postop_Care:'수술 후 통증이 조절되는 범위에서 조기 보행을 시작합니다. 초기에는 무거운 물건 들기와 심한 허리 굴곡을 피하고, 상처 상태와 다리 통증·저림·근력 변화를 관찰합니다.',
+Warning_Signs:'새로운 하지 근력 저하|심해지는 저림 또는 감각저하|대소변 기능 이상|고열 또는 상처의 심한 발적·분비물',
+Medical_Detail:'Procedure-specific risks include durotomy, nerve root injury, recurrent disc herniation, epidural hematoma, infection, residual radiculopathy, and conversion to wider decompression if required.',
+Reference_Text:'Youmans & Winn Neurological Surgery; 대한신경외과학회 『신경외과학』의 일반적인 척추 해부·수술 원칙을 바탕으로 환자교육용으로 재구성.',
+Anatomy_Video_URL:'',
+Procedure_Video_URL:'',
+Active:'Y'
+},
+{
+Scenario_ID:'NS_SP_STENOSIS_001',
+Diagnosis:'요추 척추관 협착증',
+Procedure:'요추 감압술',
+Anatomy_Text:'척추관은 신경이 지나가는 통로이며, 뒤쪽의 후궁과 황색인대, 양측 후관절, 앞쪽의 디스크와 척추체로 둘러싸여 있습니다. 이 구조물들이 퇴행성 변화로 두꺼워지거나 돌출되면 신경이 지나갈 공간이 좁아질 수 있습니다.',
+Patient_Explanation:'척추관이 좁아져 신경이 눌리는 상태입니다. 수술은 신경을 압박하는 뼈나 두꺼워진 인대 등을 제거해 공간을 넓히고, 필요한 경우 척추를 안정시키기 위한 유합술을 함께 시행합니다.',
+Surgery_Purpose:'좁아진 척추관을 넓혀 신경 압박을 줄이고 보행 시 통증과 저림을 완화하는 것이 목적입니다. 불안정성이 동반된 경우에는 척추를 안정시키기 위해 유합술을 함께 시행할 수 있습니다.',
+Approach_Text:'허리 뒤쪽으로 접근하여 신경을 누르는 후궁, 두꺼워진 인대, 필요 시 후관절 일부를 제거합니다. 유합이 필요한 경우 척추경 나사와 금속봉을 이용해 안정성을 보강합니다.',
+Surgery_Steps:'전신마취 후 엎드린 자세로 수술을 준비합니다.|병변 위치를 확인한 뒤 허리 뒤쪽으로 접근합니다.|후궁 일부와 두꺼워진 인대, 필요 시 후관절 일부를 제거하여 척추관을 넓힙니다.|신경이 충분히 감압되었는지 확인합니다.|불안정성이 있거나 유합이 필요한 경우 척추경 나사·금속봉과 골이식을 사용합니다.|출혈을 확인하고 상처를 봉합합니다.',
+Complications:'출혈 및 수술 후 혈종|감염 및 상처 문제|신경 손상에 따른 감각저하·통증·근력저하|경막 손상 및 뇌척수액 누출|불완전한 증상 호전 또는 재협착|유합술 시행 시 나사 위치 이상, 유합 실패, 인접 분절 질환',
+Postop_Care:'수술 후 통증과 신경학적 상태를 확인하면서 보행을 단계적으로 시작합니다. 유합술을 시행한 경우 보조기 착용 여부와 활동 범위는 수술 범위에 따라 달라질 수 있습니다.',
+Warning_Signs:'새로운 하지 근력 저하|감각 저하 또는 통증의 급격한 악화|대소변 기능 이상|고열 또는 상처의 심한 발적·분비물|심한 두통이나 지속되는 맑은 상처 배액',
+Medical_Detail:'Risks depend on the extent of decompression and whether fusion is performed. Consider durotomy, nerve root injury, postoperative hematoma, infection, instability, screw malposition, pseudarthrosis, adjacent segment disease, and recurrent stenosis.',
+Reference_Text:'Youmans & Winn Neurological Surgery; 대한신경외과학회 『신경외과학』의 일반적인 척추관 협착증 및 감압술 원칙을 바탕으로 환자교육용으로 재구성.',
+Anatomy_Video_URL:'',
+Procedure_Video_URL:'',
+Active:'Y'
+},
+{
+Scenario_ID:'NS_SP_C_ACDF_001',
+Diagnosis:'경추 추간판 탈출증',
+Procedure:'전방 경유 경추 디스크 제거술 및 유합술',
+Anatomy_Text:'',
+Patient_Explanation:'경추 (목뼈) 간 디스크 안쪽의 수핵이 외상 혹은 퇴행성 변화로 바깥으로 밀려나와 경추 중앙 신경 혹은 좌/우 추간공의 신경을 압박하는 상태를 최소한의 절개를 통해 치료하는 수술입니다. 신경을 압박하는 디스크 조각 및 퇴행성변화가 일어난 경추 간의 디스크를 제거하여 신경압박으로 인한 어깨, 팔, 손으로 뻗치는 통증 및 이상감각을 완화시키고 힘이 빠지는 증상을 호전시키는 목적으로 시행합니다.',
+Surgery_Purpose:'',
+Approach_Text:'',
+Surgery_Steps:'전신마취 후 누운 자세로 수술을 준비합니다.|병변 위치를 확인한 뒤 목의 좌측 혹은 우측(재수술 시) 에 3-5cm 가량을 가로로 절개합니다.|경동맥, 기도, 식도, 주요 신경을 보존하며 외측으로 견인하고, 경추체와 디스크를 육안으로 확인 후 xray를 이용하여 정확한 위치를 확인합니다.|경추체 간의 디스크를 제거합니다.|제거된 디스크공간에 유합 촉진을 위한 티타늄 금속편과 골이식편을 삽입합니다.|제거된 디스크 공간 위-아래의 경추체에 나사와 금속판을 고정합니다.|출혈을 확인하고 수술 후 체액저류 혹은 미세출혈 저류를 배출하기 위한 배액관을 삽입 후 상처를 봉합합니다.',
+Complications:'수술 부위 출혈 또는 혈종|수술부위 혈종으로 인한 경추 이하 마비증상|감염 또는 상처 벌어짐|유합부위 주변 디스크의 퇴행성 변화로 인한 증상 지속 혹은 악화|후두신경 손상으로 인한 고음 불가 혹은 쉰 목소리|식도 손상으로 인한 연하곤란|식도 천공으로 인한 경부 감염 및 패혈증|수술부위 부종으로 인한 기도 폐색|골유합 실패|나사 풀림 혹은 부러짐|디스크-신경주위 경막 염증으로 인한 디스크 제거 시 경막손상 및 뇌척수액 누출|경동맥 및 척추동맥 손상으로 인한 뇌경색, 뇌출혈 및 사망',
+Postop_Care:'',
+Warning_Signs:'',
+Medical_Detail:'',
+Reference_Text:'Youmans & Winn Neurological Surgery; 대한신경외과학회 『신경외과학』의 일반적인 경추 전방 접근 및 유합술 원칙을 바탕으로 환자교육용으로 재구성.',
+Anatomy_Video_URL:'',
+Procedure_Video_URL:'',
+Active:'Y'
+},
+{
+Scenario_ID:'NS_SP_C_LAMI_001',
+Diagnosis:'경추 척추관 협착증',
+Procedure:'경추 감압술 (후궁절제술)',
+Anatomy_Text:'',
+Patient_Explanation:'경추 (목뼈) 의 척추관 내에 있는 병변 (후궁인대골화증, 종양, 황색인대 비대증, 디스크 탈출증 등)이 신경을 누르는 상태를 완화시키는 수술입니다. 척추관을 이루는 경추의 후방에 위치한 후궁을 절제하고 신경을 압박하는 인대나 종양을 제거하여 척추관 내의 공간을 확보하고 압력을 줄여줍니다.',
+Surgery_Purpose:'',
+Approach_Text:'',
+Surgery_Steps:'전신마취 후 엎드린 자세로 수술을 준비합니다.|xray를 이용하여 정확한 경추 위치를 파악합니다.|경추 후궁 주변 근육들을 절개하여 후궁을 노출시킵니다.|수술기구를 이용하여 후궁의 일부, 혹은 후궁 전체를 제거합니다.|불안정성이 있거나 유합이 필요한 경우 나사, 금속봉, 골이식을 사용하여 유합술을 시행할 수 있으며, 추후 전방경유 유합술을 추가소 시행할 수 있습니다.|경막손상이 없는지 확인 후 출혈을 확인합니다.|상처를 봉합합니다.',
+Complications:'수술부위 근육 손상으로 인한 통증|5번경추 신경 마비로 인한 윗팔 통증, 윗팔 마비|수술 후 경추 후만증으로 인한 신경증상 악화|수술 부위 출혈 또는 혈종|수술부위 혈종으로 인한 경추 이하 마비증상|감염 또는 상처 벌어짐|경막손상 및 뇌척수액 누출',
+Postop_Care:'',
+Warning_Signs:'',
+Medical_Detail:'',
+Reference_Text:'Youmans & Winn Neurological Surgery; 대한신경외과학회 『신경외과학』의 일반적인 경추 후방 감압술 원칙을 바탕으로 환자교육용으로 재구성.',
+Anatomy_Video_URL:'',
+Procedure_Video_URL:'',
+Active:'Y'
+},
+{
+Scenario_ID:'NS_TM_PA_TSA',
+Diagnosis:'뇌하수체 샘종',
+Procedure:'경접형동 뇌하수체 종양 제거술',
+Anatomy_Text:'뇌하수체는 두개골 바닥의 터키안(sella turcica) 안에 위치하며, 위쪽에는 시신경 교차가 있고 양옆으로는 해면정맥동과 내경동맥이 지나갑니다. 코 뒤쪽의 접형동을 통하면 뇌를 직접 통과하지 않고 뇌하수체에 접근할 수 있습니다.',
+Patient_Explanation:'대부분 양성인 뇌하수체 종양으로 호르몬 이상이나 시야장애를 유발할 수 있습니다. MRI, 호르몬검사, 시야검사로 종양의 크기, 위치, 기능을 평가하고 무증상 소형종양은 경과관찰하며 일부 프로락틴종은 약물치료를 진행합니다. 시신경 압박, 종양 성장, 호르몬 과다분비 시 수술 고려합니다.',
+Surgery_Purpose:'종양을 제거하여 시신경 압박을 줄이고, 종양으로 인한 호르몬 이상을 치료하거나 진행을 막는 것이 목적입니다.',
+Approach_Text:'코를 통한 경접형동 접근으로 종양에 접근합니다. 수술 중 시신경·혈관·정상 뇌하수체를 최대한 보존하며 제거합니다.',
+Surgery_Steps:'코를 통한 경접형동 접근으로 종양을 제거합니다.|전신마취 후 시신경·혈관·정상 뇌하수체를 최대한 보존하며 제거합니다.|종양의 위치와 침범 정도에 따라 일부 잔존할 수 있습니다.|잔존 및 재발 시 경과관찰, 재수술, 약물, 방사선치료를 고려합니다.',
+Complications:'뇌척수액 누출|출혈|감염|뇌하수체 기능저하|요붕증|나트륨 이상|시력 및 시야저하|복시 등 신경학적 이상|드물게 혈관손상, 뇌출혈, 뇌경색',
+Postop_Care:'수술 후 소변량과 전해질, 뇌하수체 호르몬, 시력·시야 변화를 확인합니다. 코를 세게 풀거나 힘을 심하게 주는 행동은 피하고, 의료진 지시에 따라 내분비 검사와 비강 관리를 시행합니다.',
+Warning_Signs:'맑은 물 같은 콧물이 지속되는 경우|갑자기 소변량이 크게 증가하고 심한 갈증이 생기는 경우|심한 두통·발열·목 경직|새로운 시력 저하 또는 시야 변화|심한 비출혈|심한 구역·구토 또는 의식 변화',
+Medical_Detail:'',
+Reference_Text:'Youmans & Winn Neurological Surgery의 pituitary/skull base surgery 관련 장 및 대한신경외과학회 『신경외과학』의 뇌하수체 종양·경접형동 수술 원칙을 바탕으로 환자교육용으로 재구성.',
+Anatomy_Video_URL:'videos/tsa_anatomy.mp4',
+Procedure_Video_URL:'videos/tsa_surgery.mp4',
+Active:'Y'
+},
+{
+Scenario_ID:'NS_CV_CLIP_001',
+Diagnosis:'뇌동맥류',
+Procedure:'개두술 및 뇌동맥류 결찰술 (Clipping)',
+Anatomy_Text:'뇌동맥은 뇌 표면과 기저부를 따라 주행하며 여러 분지로 나뉩니다. 뇌동맥류는 혈관 벽의 일부가 풍선처럼 부풀어 오른 상태로, 목(neck)과 동맥류 주머니(sac), 주변의 정상 혈관과 작은 천공지들이 중요합니다.',
+Patient_Explanation:'뇌동맥류는 뇌혈관 일부가 풍선처럼 부풀어 오른 상태입니다. 클립 수술은 두개골 일부를 열고 동맥류를 직접 확인한 뒤, 동맥류의 입구에 작은 금속 클립을 적용하여 정상 혈류는 유지하면서 동맥류로 피가 들어가지 않게 하는 수술입니다.',
+Surgery_Purpose:'동맥류를 정상 혈액순환에서 분리하여 파열 또는 재출혈 위험을 줄이면서, 주변 정상 뇌혈관과 천공지의 혈류를 보존하는 것이 목적입니다.',
+Approach_Text:'동맥류의 위치에 맞추어 개두술을 시행한 뒤 현미경하에서 뇌의 정상 공간을 따라 혈관에 접근합니다. 필요 시 동맥류보다 근위부 혈관을 먼저 확보한 뒤 동맥류 neck과 주변 분지를 확인하여 clip을 적용합니다.',
+Surgery_Steps:'전신마취 후 머리를 고정하고 동맥류 위치에 맞게 개두술을 시행합니다.|현미경하에서 뇌혈관에 접근하여 모혈관과 주변 분지를 확인합니다.|동맥류 neck과 주변 천공지·분지를 분리하여 확인합니다.|필요 시 일시적 클립을 사용한 뒤 영구 클립을 동맥류 neck에 적용합니다.|도플러·ICG angiography 등으로 정상 혈관 혈류와 동맥류 폐색을 확인할 수 있습니다.|지혈 후 두개골과 피부를 닫습니다.',
+Complications:'수술 중 또는 수술 후 출혈|뇌경색 및 마비·언어장애 등 신경학적 이상|천공지 또는 정상 분지의 혈류 장애|발작|감염 및 상처 문제|동맥류의 불완전 폐색 또는 잔여 동맥류|병변 위치에 따른 뇌신경 기능 저하',
+Postop_Care:'수술 후 의식과 팔다리 힘, 언어·시야 등 신경학적 상태를 반복 확인합니다. 필요에 따라 CT 또는 혈관검사를 시행하며, 파열 동맥류의 경우 혈관연축·수두증 등 지주막하출혈 관련 합병증을 추가로 관찰합니다.',
+Warning_Signs:'갑작스러운 의식 저하|새로운 한쪽 팔다리 마비 또는 감각 이상|말이 어눌해지거나 이해가 어려워지는 경우|갑자기 심해지는 두통 또는 반복되는 구토|새로운 시야·시력 변화|경련',
+Medical_Detail:'Procedure-specific considerations include proximal/distal control, preservation of perforators and branch vessels, premature rupture, clip-induced parent artery stenosis/occlusion, residual aneurysm, postoperative hematoma, ischemia, seizure, and cranial nerve injury depending on aneurysm location.',
+Reference_Text:'Youmans & Winn Neurological Surgery의 cerebrovascular/aneurysm surgery 관련 장 및 대한신경외과학회 『신경외과학』의 뇌동맥류 수술 원칙을 바탕으로 환자교육용으로 재구성.',
+Anatomy_Video_URL:'videos/aneurysm_anatomy.mp4',
+Procedure_Video_URL:'videos/aneurysm_clipping.mp4',
+Active:'Y'
+},
+{
+Scenario_ID:'NS_CV_COIL_001',
+Diagnosis:'뇌동맥류',
+Procedure:'뇌동맥류 코일 색전술 (Coil embolization)',
+Anatomy_Text:'뇌동맥류는 뇌동맥 벽 일부가 주머니처럼 부풀어 오른 상태입니다. 혈관내 치료에서는 손목 또는 사타구니 동맥을 통해 가느다란 카테터를 뇌혈관까지 이동시켜 동맥류 내부에 접근합니다.',
+Patient_Explanation:'코일 색전술은 두개골을 열지 않고 혈관 안으로 가느다란 관을 넣어 뇌동맥류까지 접근한 뒤, 동맥류 안에 매우 가는 금속 코일을 채워 혈액이 동맥류 안으로 들어가는 것을 줄이는 치료입니다.',
+Surgery_Purpose:'동맥류 내부의 혈류를 차단하여 파열 또는 재출혈 위험을 줄이면서 정상 뇌혈관의 혈류를 유지하는 것이 목적입니다.',
+Approach_Text:'손목의 요골동맥 또는 사타구니의 대퇴동맥을 통해 카테터를 삽입하고 X-ray 혈관조영 영상을 보면서 뇌혈관까지 이동합니다. 동맥류의 모양에 따라 단순 코일, 풍선 보조 또는 스텐트 보조 기법을 사용할 수 있습니다.',
+Surgery_Steps:'국소마취 또는 전신마취 후 손목이나 사타구니 동맥에 혈관 통로를 확보합니다.|혈관조영을 시행하며 카테터를 동맥류가 있는 뇌혈관까지 이동합니다.|미세카테터를 동맥류 안으로 넣습니다.|동맥류 안에 코일을 순차적으로 삽입하여 혈류를 감소시킵니다.|필요 시 풍선이나 스텐트를 보조적으로 사용합니다.|마지막 혈관조영으로 동맥류 폐색 정도와 정상 혈관 혈류를 확인한 뒤 카테터를 제거하고 천자 부위를 지혈합니다.',
+Complications:'혈전 형성에 의한 뇌경색|시술 중 동맥류 파열 또는 출혈|혈관 박리·손상 또는 혈관연축|코일 이동 또는 동맥류 잔여·재개통|천자 부위 출혈·혈종|조영제 관련 이상반응 또는 신장 기능 악화|스텐트 사용 시 항혈소판제 관련 출혈 위험',
+Postop_Care:'시술 후 신경학적 상태와 천자 부위 출혈 여부를 확인합니다. 스텐트를 사용한 경우 처방된 항혈소판제를 임의로 중단하지 않는 것이 중요합니다. 동맥류의 모양과 폐색 정도에 따라 추적 MRA·CTA 또는 혈관조영검사가 필요할 수 있습니다.',
+Warning_Signs:'새로운 한쪽 팔다리 마비 또는 감각 이상|말이 어눌하거나 이해가 어려워지는 경우|갑작스러운 심한 두통 또는 의식 변화|천자 부위에서 계속되는 출혈 또는 빠르게 커지는 혈종|손이나 다리가 차갑거나 심하게 아픈 경우|호흡곤란·심한 발진 등 알레르기 증상',
+Medical_Detail:'Endovascular risks include thromboembolism, intraprocedural rupture, parent artery compromise, coil migration/protrusion, access-site complications, contrast-related complications, recanalization/retreatment, and antiplatelet-related issues when adjunctive stents are used.',
+Reference_Text:'Youmans & Winn Neurological Surgery의 endovascular/aneurysm treatment 관련 장 및 대한신경외과학회 『신경외과학』의 뇌동맥류 혈관내 치료 원칙을 바탕으로 환자교육용으로 재구성.',
+Anatomy_Video_URL:'videos/aneurysm_anatomy.mp4',
+Procedure_Video_URL:'videos/coil_embolization.mp4',
+Active:'Y'
+}
+];
+
+const DEFAULT_COMORBIDITIES=[
+ {Keyword:'HTN',Display_Name:'고혈압',Aliases:'Hypertension|고혈압',Patient_Text:'수술 전후 혈압 조절이 중요하며, 출혈 및 심혈관·뇌혈관계 위험을 함께 관리합니다.',Medical_Text:'Perioperative blood pressure control should be individualized according to procedure and cardiovascular risk.',Active:'Y'},
+ {Keyword:'DM',Display_Name:'당뇨',Aliases:'Diabetes|Diabetes mellitus|당뇨',Patient_Text:'감염과 상처 회복 지연 위험이 증가할 수 있어 수술 전후 혈당 조절이 중요합니다.',Medical_Text:'Perioperative glucose management may influence infection and wound-healing risk.',Active:'Y'},
+ {Keyword:'Stroke',Display_Name:'뇌경색',Aliases:'Cerebral infarction|ischemic stroke|뇌경색',Patient_Text:'기존 뇌혈관 상태와 항혈소판제 사용 여부 등을 고려해 신경학적·혈전성 위험을 평가합니다.',Medical_Text:'Prior ischemic stroke may affect perioperative cerebrovascular risk assessment and antithrombotic management.',Active:'Y'},
+ {Keyword:'CAD',Display_Name:'관상동맥질환',Aliases:'Coronary artery disease|CABG|PCI|관상동맥질환',Patient_Text:'마취와 수술 중 심장 상태를 면밀히 관찰하고 필요한 심혈관 약제를 조정할 수 있습니다.',Medical_Text:'Consider perioperative cardiac risk and medication management.',Active:'Y'},
+ {Keyword:'Anticoagulant',Display_Name:'항응고제 복용',Aliases:'anticoagulant|warfarin|apixaban|rivaroxaban|edoxaban|항응고제',Patient_Text:'수술 출혈 위험과 혈전 위험을 함께 고려해 중단·재개 시점을 개별적으로 결정합니다.',Medical_Text:'Anticoagulation interruption and resumption should be individualized to bleeding and thrombotic risks.',Active:'Y'}
+];
+const LS_SC='patientEduScenarios_v20',LS_CO='patientEduComorbidities_v20';
+let scenarios=load(LS_SC,DEFAULT_SCENARIOS),comorbidities=load(LS_CO,DEFAULT_COMORBIDITIES);
+const views=[...document.querySelectorAll('.view')],dx=document.getElementById('dx'),op=document.getElementById('op'),chips=document.getElementById('comorbidityChips');
+function load(k,f){try{const x=JSON.parse(localStorage.getItem(k)||'null');return Array.isArray(x)&&x.length?x:f}catch(e){return f}}
+function save(){localStorage.setItem(LS_SC,JSON.stringify(scenarios));localStorage.setItem(LS_CO,JSON.stringify(comorbidities))}
+function activeY(v){return String(v??'Y').trim().toUpperCase()!=='N'}
+function esc(s){return String(s??'').replace(/[&<>\"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+function parts(s){return String(s||'').split('|').map(x=>x.trim()).filter(Boolean)}
+function showView(id){views.forEach(v=>v.classList.toggle('active',v.id===id));document.getElementById('topDesc').textContent=id==='homeView'?'진단·수술과 기저질환을 선택하면 질환별 환자교육 화면으로 이동합니다.':id==='adminView'?'Excel로 교육 콘텐츠를 관리하는 화면입니다.':'선택한 질환에 맞는 환자교육 자료입니다.';window.scrollTo(0,0)}
+
+function applyDefaultVideoPaths(){
+  const defaultsById=Object.fromEntries(DEFAULT_SCENARIOS.map(s=>[String(s.Scenario_ID),s]));
+  let changed=false;
+  scenarios.forEach(s=>{
+    const d=defaultsById[String(s.Scenario_ID)];
+    if(!d)return;
+    if(!String(s.Anatomy_Video_URL||'').trim() && String(d.Anatomy_Video_URL||'').trim()){
+      s.Anatomy_Video_URL=d.Anatomy_Video_URL;
+      changed=true;
+    }
+    if(!String(s.Procedure_Video_URL||'').trim() && String(d.Procedure_Video_URL||'').trim()){
+      s.Procedure_Video_URL=d.Procedure_Video_URL;
+      changed=true;
+    }
+  });
+  if(changed)save();
+}
+applyDefaultVideoPaths();
+
+function renderHome(){
+ const active=scenarios.filter(x=>activeY(x.Active));
+ const diagnoses=[...new Set(active.map(x=>x.Diagnosis).filter(Boolean))];
+ const prev=dx.value;dx.innerHTML=diagnoses.map(v=>`<option value="${esc(v)}">${esc(v)}</option>`).join('');if(diagnoses.includes(prev))dx.value=prev;fillOps();
+ chips.innerHTML=comorbidities.filter(x=>activeY(x.Active)).map(c=>`<div class="chip"><input type="checkbox" id="co_${esc(c.Keyword)}" value="${esc(c.Keyword)}"><label for="co_${esc(c.Keyword)}">${esc(c.Display_Name||c.Keyword)}</label></div>`).join('');
+ document.getElementById('scenarioCount').textContent=active.length;document.getElementById('comorbCount').textContent=comorbidities.filter(x=>activeY(x.Active)).length;
+}
+function fillOps(){const active=scenarios.filter(x=>activeY(x.Active)&&x.Diagnosis===dx.value);op.innerHTML=active.map(x=>`<option value="${esc(x.Scenario_ID)}">${esc(x.Procedure)}</option>`).join('')}
+function selectedComorbidities(){const keys=[...chips.querySelectorAll('input:checked')].map(x=>x.value);return comorbidities.filter(c=>keys.includes(String(c.Keyword))&&activeY(c.Active))}
+function youtubeEmbed(url){if(!url)return'';try{const u=new URL(url);let id='';if(u.hostname.includes('youtu.be'))id=u.pathname.split('/').filter(Boolean)[0]||'';if(u.hostname.includes('youtube.com')){if(u.pathname==='/watch')id=u.searchParams.get('v')||'';else if(u.pathname.startsWith('/embed/'))id=u.pathname.split('/embed/')[1].split('/')[0];else if(u.pathname.startsWith('/shorts/'))id=u.pathname.split('/shorts/')[1].split('/')[0]}return id?`https://www.youtube-nocookie.com/embed/${id}?rel=0`:''}catch(e){return''}}
+function videoBlock(label,url){
+  if(!url){
+    return `<div class="video"><b>${esc(label)}</b><span>등록된 영상 URL이 없습니다.</span></div>`;
+  }
+
+  const cleanUrl=String(url).trim();
+
+  // GitHub Pages 등에서 직접 재생하는 영상 파일
+  if(/\.(mp4|webm|ogg)(\?.*)?$/i.test(cleanUrl)){
+    return `
+      <div class="video">
+        <b>${esc(label)}</b>
+        <video controls playsinline preload="metadata"
+          style="width:100%;margin-top:10px;border-radius:12px;background:#000;display:block;">
+          <source src="${esc(cleanUrl)}">
+          이 브라우저에서는 영상을 재생할 수 없습니다.
+        </video>
+      </div>
+    `;
+  }
+
+  // YouTube 링크
+  const emb=youtubeEmbed(cleanUrl);
+  if(emb){
+    return `
+      <div class="video">
+        <b>${esc(label)}</b>
+        <div class="videoFrame">
+          <iframe
+            src="${esc(emb)}"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen
+            loading="lazy"></iframe>
+        </div>
+      </div>
+    `;
+  }
+
+  return `
+    <div class="video">
+      <b>${esc(label)}</b>
+      <span>지원되는 영상 형식이 아닙니다.</span>
+      <a href="${esc(cleanUrl)}" target="_blank" rel="noopener"
+         style="display:inline-block;margin-top:8px;color:var(--blue);font-weight:800">
+         영상 열기
+      </a>
+    </div>
+  `;
+}
+function openEducation(){
+  const s=scenarios.find(x=>String(x.Scenario_ID)===String(op.value)&&activeY(x.Active));
+  if(!s){alert('선택한 수술에 대한 교육자료가 없습니다.');return;}
+
+  document.getElementById('eduDiagnosis').textContent=s.Diagnosis||'';
+  document.getElementById('eduProcedure').textContent=s.Procedure||'';
+  document.getElementById('eduAnatomyText').textContent=s.Anatomy_Text||'등록된 해부학 설명이 없습니다.';
+  document.getElementById('eduExplanation').textContent=s.Patient_Explanation||'';
+
+  document.getElementById('eduSurgeryPurpose').textContent=
+    s.Surgery_Purpose||'신경 압박을 줄이고 통증과 신경학적 증상을 개선하는 것이 수술의 주된 목적입니다.';
+
+  document.getElementById('eduApproachText').textContent=
+    s.Approach_Text||'병변의 위치와 수술 범위에 따라 적절한 접근법을 사용하여 신경 구조를 확인하고 치료합니다.';
+
+  document.getElementById('eduSteps').innerHTML=
+    parts(s.Surgery_Steps).map((t,i)=>`<div class="step"><div class="num">${i+1}</div><div class="text">${esc(t)}</div></div>`).join('')
+    ||'<div class="note">등록된 수술 단계가 없습니다.</div>';
+
+  document.getElementById('eduComplications').innerHTML=
+    parts(s.Complications).map(t=>`<div class="comp">${esc(t)}</div>`).join('')
+    ||'<div class="note">등록된 합병증 안내가 없습니다.</div>';
+
+  const cs=selectedComorbidities();
+  document.getElementById('eduComorbidities').innerHTML=
+    cs.length
+      ?cs.map(c=>`<div class="risk"><b>${esc(c.Display_Name||c.Keyword)}</b>${esc(c.Patient_Text||'')}</div>`).join('')
+      :'<div class="text" style="color:var(--muted)">선택한 기저질환이 없습니다.</div>';
+
+  document.getElementById('eduPostopCare').textContent=
+    s.Postop_Care||'수술 후 통증 조절과 보행을 단계적으로 진행하며 상처 상태와 신경학적 증상을 관찰합니다.';
+
+  document.getElementById('eduWarningSigns').innerHTML=
+    parts(s.Warning_Signs||'새로운 근력 저하|감각 저하가 급격히 악화되는 경우|대소변 조절의 갑작스러운 변화|고열 또는 수술 상처의 심한 발적·분비물')
+    .map(t=>`<div class="comp">${esc(t)}</div>`).join('');
+
+  document.getElementById('eduAnatomyVideo').innerHTML=
+    videoBlock('해부학 / 질환 설명 영상',s.Anatomy_Video_URL);
+
+  document.getElementById('eduProcedureVideo').innerHTML=
+    videoBlock('수술 및 접근법 설명 영상',s.Procedure_Video_URL);
+
+  document.getElementById('eduReferences').textContent=
+    s.Reference_Text||'Youmans & Winn Neurological Surgery; 대한신경외과학회 『신경외과학』의 일반 원칙을 바탕으로 환자교육용으로 재구성.';
+
+  showView('educationView');
+  showEduPage(1);
+}
+
+let currentEduPage=1;
+function showEduPage(page){
+  currentEduPage=page;
+  document.getElementById('eduPage1').style.display=page===1?'block':'none';
+  document.getElementById('eduPage2').style.display=page===2?'block':'none';
+  document.getElementById('eduPage3').style.display=page===3?'block':'none';
+  document.getElementById('eduProgressText').textContent=page+' / 3';
+  document.getElementById('eduProgressBar').style.width=(page*33.333)+'%';
+  document.getElementById('eduPrev').style.visibility=page===1?'hidden':'visible';
+  document.getElementById('eduNext').textContent=page===3?'처음으로':'다음';
+  window.scrollTo(0,0);
+}
+function cleanRows(rows){return rows.map(r=>{const o={};Object.keys(r||{}).forEach(k=>o[String(k).trim()]=typeof r[k]==='string'?r[k].trim():r[k]);return o})}
+function loadSheetJS(){
+ return new Promise((resolve,reject)=>{
+  if(typeof XLSX!=='undefined'){resolve();return;}
+  const s=document.createElement('script');
+  s.src='https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js';
+  s.onload=()=>resolve();
+  s.onerror=()=>reject(new Error('Excel 라이브러리를 불러오지 못했습니다.'));
+  document.head.appendChild(s);
+ });
+}
+async function importExcel(){
+ const file=document.getElementById('excelFile').files[0],status=document.getElementById('importStatus');
+ if(!file){status.textContent='먼저 Excel 파일을 선택해주세요.';return;}
+ try{
+  await loadSheetJS();
+  const data=await file.arrayBuffer();
+  const wb=XLSX.read(data,{type:'array'});
+  if(!wb.Sheets['Scenarios']||!wb.Sheets['Comorbidities'])throw new Error('Scenarios / Comorbidities 시트가 모두 필요합니다.');
+  const sc=cleanRows(XLSX.utils.sheet_to_json(wb.Sheets['Scenarios'],{defval:''}));
+  const co=cleanRows(XLSX.utils.sheet_to_json(wb.Sheets['Comorbidities'],{defval:''}));
+  const reqSc=['Scenario_ID','Diagnosis','Procedure','Patient_Explanation','Surgery_Steps','Complications','Medical_Detail','Anatomy_Video_URL','Procedure_Video_URL','Active'];
+  const reqCo=['Keyword','Display_Name','Aliases','Patient_Text','Medical_Text','Active'];
+  if(!sc.length||!co.length)throw new Error('시트에 데이터 행이 없습니다.');
+  const missSc=reqSc.filter(k=>!(k in sc[0])),missCo=reqCo.filter(k=>!(k in co[0]));
+  if(missSc.length||missCo.length)throw new Error('필수 열 누락: '+[...missSc,...missCo].join(', '));
+  scenarios=sc;comorbidities=co;save();renderHome();
+  status.textContent=`반영 완료: 활성 시나리오 ${scenarios.filter(x=>activeY(x.Active)).length}개, 기저질환 ${comorbidities.filter(x=>activeY(x.Active)).length}개`;
+  status.className='status';
+ }catch(e){status.textContent='업로드 실패: '+e.message;status.className='status danger';}
+}
+function bindApp(){
+  renderHome();
+  dx.addEventListener('change',fillOps);
+  document.getElementById('openEducation').onclick=function(e){
+    e.preventDefault();
+    try{
+      if(!op.value){fillOps();}
+      openEducation();
+    }catch(err){
+      console.error(err);
+      alert('교육자료 화면을 여는 중 오류가 발생했습니다: '+err.message);
+    }
+  };
+  async function exportExcel(){
+
+  try{
+
+    // SheetJS가 아직 로드되지 않았다면 불러오기
+    if(typeof XLSX === 'undefined'){
+
+      await new Promise((resolve,reject)=>{
+
+        const script = document.createElement('script');
+
+        script.src =
+          'https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js';
+
+        script.onload = resolve;
+
+        script.onerror = () =>
+          reject(new Error('Excel 라이브러리를 불러오지 못했습니다.'));
+
+        document.head.appendChild(script);
+
+      });
+
+    }
+
+
+    // -------------------------------
+    // 1. Scenarios 시트
+    // -------------------------------
+
+    const scenarioRows = scenarios.map(s => ({
+
+      Scenario_ID:
+        s.Scenario_ID || '',
+
+      Diagnosis:
+        s.Diagnosis || '',
+
+      Procedure:
+        s.Procedure || '',
+
+      Patient_Explanation:
+        s.Patient_Explanation || '',
+
+      Anatomy_Text:
+        s.Anatomy_Text || '',
+
+      Surgery_Purpose:
+        s.Surgery_Purpose || '',
+
+      Approach_Text:
+        s.Approach_Text || '',
+
+      Surgery_Steps:
+        s.Surgery_Steps || '',
+
+      Complications:
+        s.Complications || '',
+
+      Postop_Care:
+        s.Postop_Care || '',
+
+      Warning_Signs:
+        s.Warning_Signs || '',
+
+      Medical_Detail:
+        s.Medical_Detail || '',
+
+      Anatomy_Video_URL:
+        s.Anatomy_Video_URL || '',
+
+      Procedure_Video_URL:
+        s.Procedure_Video_URL || '',
+
+      Reference_Text:
+        s.Reference_Text || '',
+
+      Active:
+        s.Active || 'Y'
+
+    }));
+
+
+    // -------------------------------
+    // 2. Comorbidities 시트
+    // -------------------------------
+
+    const comorbidityRows = comorbidities.map(c => ({
+
+      Keyword:
+        c.Keyword || '',
+
+      Display_Name:
+        c.Display_Name || '',
+
+      Aliases:
+        c.Aliases || '',
+
+      Patient_Text:
+        c.Patient_Text || '',
+
+      Medical_Text:
+        c.Medical_Text || '',
+
+      Active:
+        c.Active || 'Y'
+
+    }));
+
+
+    // -------------------------------
+    // Excel workbook 생성
+    // -------------------------------
+
+    const wb = XLSX.utils.book_new();
+
+    const wsScenario =
+      XLSX.utils.json_to_sheet(scenarioRows);
+
+    const wsComorbidity =
+      XLSX.utils.json_to_sheet(comorbidityRows);
+
+
+    XLSX.utils.book_append_sheet(
+      wb,
+      wsScenario,
+      'Scenarios'
+    );
+
+    XLSX.utils.book_append_sheet(
+      wb,
+      wsComorbidity,
+      'Comorbidities'
+    );
+
+
+    // -------------------------------
+    // README 시트
+    // -------------------------------
+
+    const readmeRows = [
+
+      {
+        항목:'Scenarios',
+        설명:'진단·수술별 환자교육 콘텐츠'
+      },
+
+      {
+        항목:'Scenario_ID',
+        설명:'각 수술 시나리오의 고유 ID. 기존 내용을 수정하려면 같은 ID를 사용하세요.'
+      },
+
+      {
+        항목:'Surgery_Steps',
+        설명:'여러 단계는 | 기호로 구분합니다.'
+      },
+
+      {
+        항목:'Complications',
+        설명:'여러 합병증은 | 기호로 구분합니다.'
+      },
+
+      {
+        항목:'Warning_Signs',
+        설명:'여러 경고 증상은 | 기호로 구분합니다.'
+      },
+
+      {
+        항목:'Comorbidities',
+        설명:'기저질환별 추가 환자교육 콘텐츠'
+      },
+
+      {
+        항목:'Keyword',
+        설명:'기저질환의 고유 ID입니다.'
+      },
+
+      {
+        항목:'Active',
+        설명:'Y = 화면 표시 / N = 비활성'
+      }
+
+    ];
+
+    const wsReadme =
+      XLSX.utils.json_to_sheet(readmeRows);
+
+    XLSX.utils.book_append_sheet(
+      wb,
+      wsReadme,
+      'README'
+    );
+
+
+    // -------------------------------
+    // 파일명
+    // -------------------------------
+
+    const now = new Date();
+
+    const date =
+      now.getFullYear() +
+      '-' +
+      String(now.getMonth()+1).padStart(2,'0') +
+      '-' +
+      String(now.getDate()).padStart(2,'0');
+
+
+    XLSX.writeFile(
+      wb,
+      `환자교육_DB_${date}.xlsx`
+    );
+
+
+  }catch(e){
+
+    alert(
+      'Excel 내보내기에 실패했습니다.\n' +
+      e.message
+    );
+
+  }
+}
+  document.getElementById('exportExcel').onclick = exportExcel;
+  document.getElementById('eduPrev').onclick=()=>{if(currentEduPage>1)showEduPage(currentEduPage-1);};
+  document.getElementById('eduNext').onclick=()=>{if(currentEduPage<3)showEduPage(currentEduPage+1);else showView('homeView');};
+  document.getElementById('navHome').onclick=()=>showView('homeView');
+  document.getElementById('navAdmin').onclick=()=>showView('adminView');
+  document.querySelectorAll('[data-home]').forEach(b=>b.onclick=()=>showView('homeView'));
+  document.getElementById('importExcel').onclick=importExcel;
+  document.getElementById('resetData').onclick=()=>{
+    scenarios=JSON.parse(JSON.stringify(DEFAULT_SCENARIOS));
+    comorbidities=JSON.parse(JSON.stringify(DEFAULT_COMORBIDITIES));
+    save();renderHome();
+    const st=document.getElementById('importStatus');
+    st.textContent='기본 예시 데이터로 초기화했습니다.';st.className='status warn';
+  };
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bindApp);else bindApp();
+</script>
+</body></html>
