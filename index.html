@@ -1,723 +1,414 @@
 <!doctype html>
 <html lang="ko">
 <head>
-<meta charset="utf-8"><meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>성빈센트병원 수술환자 안내</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Neuro Consent · 동의 설명 플랫폼</title>
 <style>
-:root{--bg:#f5f7fb;--card:#fff;--ink:#202634;--muted:#6f7787;--line:#dfe4ee;--blue:#3157d5;--soft:#eef2ff;--good:#edf9f2;--warn:#fff8e8;--danger:#fff0f0}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--ink)}
-.shell{max-width:760px;margin:auto;padding:18px 14px 96px}.top{margin:4px 2px 18px}.top h1{font-size:24px;margin:0 0 6px}.top p{margin:0;color:var(--muted);font-size:13px;line-height:1.5}
-.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:17px;margin-bottom:13px;box-shadow:0 4px 18px rgba(28,39,70,.04)}
-.card h2{font-size:17px;margin:0 0 12px}.title{font-size:24px;font-weight:900;line-height:1.3}.subtitle{font-size:14px;color:var(--blue);font-weight:850;margin-top:7px}
-label.h{display:block;font-size:12px;color:var(--muted);font-weight:800;margin:14px 0 7px}.note,.text{font-size:13px;color:var(--muted);line-height:1.7}.text{color:var(--ink);font-size:14px}.divider{height:1px;background:var(--line);margin:15px 0}
-select{width:100%;padding:13px 14px;border:1px solid var(--line);border-radius:14px;background:#fff;font:inherit;color:var(--ink);font-weight:750}
-.chips{display:flex;flex-wrap:wrap;gap:8px}.chip{position:relative}.chip input{position:absolute;opacity:0;pointer-events:none}.chip label{display:inline-flex;padding:10px 13px;border:1px solid var(--line);border-radius:999px;background:#fff;font-size:13px;font-weight:800;cursor:pointer}.chip input:checked+label{background:var(--blue);border-color:var(--blue);color:#fff}.chip input:checked+label:before{content:'✓ ';margin-right:3px}
-.btn{width:100%;border:none;border-radius:14px;padding:14px 12px;font-weight:850;font-size:14px;cursor:pointer;background:var(--blue);color:#fff;margin-top:16px}.btn.ghost{background:#fff;color:var(--ink);border:1px solid var(--line)}.btn.small{margin-top:8px;padding:11px}
-.status{padding:11px 12px;border-radius:12px;background:var(--good);font-size:12px;line-height:1.6}.status.warn{background:var(--warn)}.status.danger{background:var(--danger)}.field{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:11px;font:inherit;margin:5px 0 8px}
-.view{display:none}.view.active{display:block}.step{display:flex;gap:11px;align-items:flex-start;padding:11px 0;border-bottom:1px solid #edf0f5}.step:last-child{border-bottom:0}.num{width:28px;height:28px;flex:0 0 28px;border-radius:50%;background:var(--soft);color:var(--blue);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900}.comp{padding:10px 11px;border-radius:12px;background:var(--warn);margin:7px 0;font-size:13px;line-height:1.6}.risk{padding:11px 12px;border-radius:12px;background:var(--good);margin:8px 0;font-size:13px;line-height:1.6}.risk b{display:block;margin-bottom:4px}.video{padding:14px;border:1px dashed #bfc8da;border-radius:14px;margin:9px 0;background:#fafbfe}.video b{display:block;font-size:13px}.video span{display:block;color:var(--muted);font-size:12px;margin-top:4px}.videoFrame{position:relative;padding-top:56.25%;margin-top:10px;border-radius:12px;overflow:hidden;background:#eef1f7}.videoFrame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}.back{display:inline-flex;align-items:center;gap:5px;color:var(--blue);font-size:13px;font-weight:850;cursor:pointer;margin:2px 0 14px;border:0;background:transparent;padding:0}
-.bottomNav{position:fixed;left:0;right:0;bottom:0;background:rgba(255,255,255,.96);border-top:1px solid var(--line);display:flex;justify-content:center;gap:90px;padding:9px 12px calc(9px + env(safe-area-inset-bottom));z-index:20}.bottomNav button{border:0;background:transparent;color:#4d5668;font-size:11px;text-align:center;cursor:pointer}.bottomNav strong{display:block;font-size:18px;margin-bottom:2px}
-.mini{font-size:11px;color:var(--muted);line-height:1.5}.adminGrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.adminGrid .status{min-height:60px}
-</style>
+:root{
+  --bg:#f4f6fa;--card:#fff;--ink:#202634;--muted:#6e7686;--line:#dde3ed;
+  --blue:#3157d5;--blue2:#2447b8;--soft:#eef2ff;--green:#edf9f2;
+  --amber:#fff7e7;--red:#fff0f0;--shadow:0 8px 28px rgba(27,38,70,.06)
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;color:var(--ink)}
+button,input,select,textarea{font:inherit}
+.shell{max-width:1100px;margin:auto;padding:22px 16px 100px}
+.top{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;margin:2px 2px 18px}
+.brand h1{font-size:25px;margin:0 0 5px}.brand p{margin:0;color:var(--muted);font-size:13px;line-height:1.55}
+.pill{background:var(--soft);color:var(--blue);border-radius:999px;padding:8px 11px;font-size:11px;font-weight:900;white-space:nowrap}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;margin-bottom:13px;box-shadow:var(--shadow)}
+.card h2{font-size:17px;margin:0 0 12px}.card h3{font-size:14px;margin:0 0 8px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+label.h{display:block;font-size:12px;color:var(--muted);font-weight:850;margin:12px 0 6px}
+.field,select,textarea{width:100%;padding:12px 13px;border:1px solid var(--line);border-radius:12px;background:#fff;color:var(--ink);outline:none}
+textarea{min-height:86px;resize:vertical;line-height:1.55}
+.field:focus,select:focus,textarea:focus{border-color:#9baee9;box-shadow:0 0 0 3px #eef2ff}
+.note{font-size:12px;color:var(--muted);line-height:1.65}.text{font-size:14px;line-height:1.72}
+.divider{height:1px;background:var(--line);margin:15px 0}
+.chips{display:flex;flex-wrap:wrap;gap:8px}.chip{position:relative}.chip input{position:absolute;opacity:0}
+.chip label{display:inline-flex;padding:9px 12px;border:1px solid var(--line);border-radius:999px;background:#fff;font-size:12px;font-weight:800;cursor:pointer}
+.chip input:checked+label{background:var(--blue);border-color:var(--blue);color:#fff}.chip input:checked+label:before{content:"✓ ";margin-right:3px}
+.btn{border:0;border-radius:13px;padding:12px 15px;font-weight:850;cursor:pointer;background:var(--blue);color:#fff}
+.btn:hover{background:var(--blue2)}.btn.ghost{background:#fff;color:var(--ink);border:1px solid var(--line)}.btn.small{padding:8px 11px;font-size:12px}
+.btn.full{width:100%;margin-top:16px}
+.view{display:none}.view.active{display:block}
+.resultHead{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.resultTitle{font-size:22px;font-weight:900;line-height:1.35}.resultSub{font-size:13px;color:var(--blue);font-weight:850;margin-top:5px}
+.summary{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:14px}.summaryItem{background:#f8f9fc;border:1px solid #e8ebf1;border-radius:12px;padding:10px}.summaryItem b{display:block;font-size:10px;color:var(--muted);margin-bottom:4px}.summaryItem span{font-size:12px;font-weight:800}
+.workspace{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(280px,.8fr);gap:13px;align-items:start}
+.sectionCard{position:relative}.sectionTop{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:10px}
+.sectionNo{display:inline-flex;width:27px;height:27px;border-radius:50%;background:var(--soft);color:var(--blue);align-items:center;justify-content:center;font-size:12px;font-weight:900;margin-right:7px}
+.sectionTitle{font-weight:900;font-size:15px;display:flex;align-items:center}
+.showBtn{border:1px solid #cad3e5;background:#fff;color:#47536a;border-radius:10px;padding:7px 9px;font-size:11px;font-weight:850;cursor:pointer}
+.clinicianBox{background:#f7f8fb;border-left:3px solid #77839b;border-radius:10px;padding:11px 12px;margin-top:10px;font-size:12px;line-height:1.65;color:#4f596b}
+.clinicianBox b{color:#30394a}
+.visual{border:1px dashed #b9c4d9;border-radius:14px;background:#fbfcff;padding:14px;margin-top:10px}
+.visualTitle{font-size:12px;font-weight:900;margin-bottom:8px}.visualMock{min-height:155px;border-radius:12px;background:linear-gradient(145deg,#e9eefb,#f8faff);display:flex;align-items:center;justify-content:center;text-align:center;color:#66728b;font-size:12px;line-height:1.55;padding:20px}
+.risk{padding:10px 11px;border-radius:11px;background:var(--amber);margin:7px 0;font-size:12px;line-height:1.55}.risk.high{background:var(--red)}
+.patientRisk{padding:10px 11px;border-radius:11px;background:var(--green);margin:7px 0;font-size:12px;line-height:1.55}
+.checklist{position:sticky;top:12px}.checkRow{display:flex;gap:9px;align-items:flex-start;padding:9px 0;border-bottom:1px solid #edf0f4;font-size:12px;line-height:1.5}.checkRow:last-child{border-bottom:0}.checkRow input{margin-top:2px}
+.status{padding:11px 12px;border-radius:12px;background:var(--green);font-size:12px;line-height:1.6}
+.back{border:0;background:transparent;color:var(--blue);font-weight:850;font-size:12px;padding:0;cursor:pointer;margin-bottom:12px}
+.presenter{position:fixed;inset:0;background:#fff;z-index:100;display:none;overflow:auto}.presenter.active{display:block}.presenterInner{max-width:1000px;margin:auto;padding:24px 20px 80px}.presenterTop{display:flex;justify-content:space-between;align-items:center;gap:12px;border-bottom:1px solid var(--line);padding-bottom:13px;margin-bottom:22px}.presenter h2{font-size:28px;margin:0}.presenter .bigText{font-size:21px;line-height:1.8}.presenter .visualMock{min-height:420px;font-size:18px}
+.bottomNav{position:fixed;left:0;right:0;bottom:0;background:rgba(255,255,255,.96);backdrop-filter:blur(10px);border-top:1px solid var(--line);display:flex;justify-content:center;gap:80px;padding:9px 12px calc(9px + env(safe-area-inset-bottom));z-index:50}
+.bottomNav button{border:0;background:transparent;color:#4d5668;font-size:11px;text-align:center;cursor:pointer}.bottomNav strong{display:block;font-size:17px;margin-bottom:2px}
+@media(max-width:760px){.grid2,.grid3,.workspace,.summary{grid-template-columns:1fr}.top{display:block}.pill{display:inline-block;margin-top:10px}.checklist{position:static}.resultHead{display:block}.resultHead .btn{margin-top:10px}.shell{padding:16px 12px 95px}}
 
+.mediaGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:12px;margin-top:12px}.mediaCard{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#fff;min-width:0}.mediaCard img,.mediaCard video{width:100%;height:220px;object-fit:contain;background:#f0f3f8;display:block}.mediaCard .meta{padding:12px}.mediaCard h3{margin:0 0 6px;overflow-wrap:anywhere}.mediaCard .note{overflow-wrap:anywhere}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.empty{padding:22px;border:1px dashed #bac6dd;border-radius:12px;color:var(--muted);font-size:13px;line-height:1.7;background:#fafbff}.risk{font-weight:800}.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}.assetToolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}.guideTable{width:100%;border-collapse:collapse;font-size:13px;line-height:1.6}.guideTable th,.guideTable td{padding:12px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}.guideTable th{background:var(--soft)}.tableScroll{overflow:auto}.presenter .mediaCard img,.presenter .mediaCard video{height:auto;max-height:65vh}.presenter .mediaGrid{grid-template-columns:1fr}.presenter .feedback,.presenter .deleteAsset{display:none}.presenter .meta .note{font-size:14px}#toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:#202634;color:#fff;padding:14px 20px;border-radius:12px;z-index:200;max-width:90vw;display:none;font-size:14px}.bottomNav{gap:clamp(20px,8vw,80px)}button:focus-visible{outline:3px solid #97adff;outline-offset:3px}.chip input:focus-visible+label{outline:3px solid #97adff}.help{background:var(--soft);padding:12px;border-radius:12px;font-size:13px;line-height:1.7}details>summary{cursor:pointer;font-weight:800;padding:10px 0}code{overflow-wrap:anywhere}#assetView .field{margin-bottom:3px}dialog{border:1px solid var(--line);border-radius:18px;max-width:600px;width:90vw;padding:25px}dialog::backdrop{background:#17234099}
+@media print{body{background:#fff}.bottomNav,.btn,.back,.showBtn,.feedback,.clinicianBox,.brand,.checklist{display:none!important}.view{display:none!important}#resultView.active{display:block!important}.workspace{display:block}.card{box-shadow:none;break-inside:avoid}.shell{padding:0;max-width:none}.presenter.active{position:static}.presenter:not(.active){display:none}video{height:120px!important}.mediaCard img{height:160px}.summary{grid-template-columns:repeat(4,1fr)}}
+#dropZone{padding:28px;border:2px dashed #bbc8e8;border-radius:16px;background:#f6f8ff;text-align:center;cursor:pointer}#dropZone .actions{justify-content:center}#dropZone.dragover{background:#e8eeff;border-color:var(--blue)}.categoryButton.active{background:var(--blue);color:white}.categorySection{margin-top:22px}.categorySection h3{font-size:16px}.batchTable{min-width:980px}.batchTable td{padding:9px;max-width:220px}.batchTable select,.batchTable input{padding:8px;font-size:12px;min-width:125px}.batchName{overflow-wrap:anywhere;font-size:12px}#libraryStats{padding:12px;background:var(--soft);border-radius:12px}
+</style>
 </head>
 <body>
 <div class="shell">
-  <div class="top"><h1>성빈센트병원 수술환자 안내</h1><p id="topDesc">진단·수술과 기저질환을 선택하면 질환별 안내 화면으로 이동합니다.</p></div>
+  <div class="top">
+    <div class="brand">
+      <h1>동의서 설명 지원 도구</h1>
+      <p id="topDesc">환자 정보를 입력하면 의료진이 동의서 설명 시 참고하고 환자에게 보여줄 자료를 구성합니다.</p>
+    </div>
+    <span class="pill">NEURO CONSENT · 3.2</span>
+  </div>
 
-  <section id="homeView" class="view active">
+  <section id="inputView" class="view active">
     <div class="card">
-      <h2>환자 정보</h2>
-      <label class="h" for="dx">진단명</label>
-      <select id="dx"></select>
-      <label class="h" for="op">수술명</label>
-      <select id="op"></select>
-      <div class="note" style="margin-top:6px">진단명에 맞는 수술명이 자동으로 표시됩니다.</div>
+      <h2>환자 및 수술 정보</h2>
+      <div class="grid2">
+        <div class="grid2"><div><label class="h" for="age">나이 (세)</label><input id="age" class="field" type="number" min="0" max="120" placeholder="예: 65"></div><div><label class="h" for="sex">성별</label><select id="sex"><option value="">미입력</option><option>여성</option><option>남성</option></select></div></div>
+        <div><label class="h">진료 분야</label><select id="category"><option>뇌혈관</option><option>뇌종양</option><option>척추</option></select></div>
+      </div>
+      <div class="grid2">
+        <div><label class="h">진단명</label>
+          <select id="dx">
+            <option value="aneurysm">비파열성 뇌동맥류</option>
+            <option value="tumor">뇌종양</option>
+            <option value="disc">요추 추간판 탈출증</option>
+            <option value="stenosis">요추 척추관 협착증</option>
+          </select>
+        </div>
+        <div><label class="h">예정 수술 / 시술</label><select id="op"></select></div>
+      </div>
+      <div class="grid3">
+        <div><label class="h">병변 측</label><select id="side"><option>좌측</option><option>우측</option><option>중앙 / 해당 없음</option></select></div>
+        <div><label class="h">병변 위치</label><input id="location" class="field" placeholder="예: Lt MCA bifurcation, A.com, Pcom, Acho, basilar top"><div id="locationHint" class="note" aria-live="polite"></div></div>
+        <div><label class="h">접근법 / 술식 세부</label><input id="approach" class="field" placeholder="예: pterional, endoscopic"></div>
+      </div>
+      <label class="h">환자별 특이사항</label>
+      <textarea id="specific" placeholder="예: branch incorporation, severe stenosis, 재수술, 고령, 항혈소판제 사용 등. 동의 설명에서 특히 강조할 내용을 입력합니다."></textarea>
 
-      <label class="h">기저질환 · 여러 개 선택 가능</label>
-      <div class="note" style="margin-bottom:8px">해당되는 항목을 모두 선택하세요.</div>
-      <div class="chips" id="comorbidityChips"></div>
-      <button class="btn" id="openEducation" type="button">환자교육 보기</button>
+      <label class="h">기저질환 / 위험인자 · 여러 개 선택 가능</label>
+      <div class="chips">
+        <div class="chip"><input type="checkbox" id="co_htn" value="htn"><label for="co_htn">고혈압</label></div>
+        <div class="chip"><input type="checkbox" id="co_dm" value="dm"><label for="co_dm">당뇨</label></div>
+        <div class="chip"><input type="checkbox" id="co_stroke" value="stroke"><label for="co_stroke">뇌경색</label></div>
+        <div class="chip"><input type="checkbox" id="co_cad" value="cad"><label for="co_cad">관상동맥질환</label></div>
+        <div class="chip"><input type="checkbox" id="co_ap" value="ap"><label for="co_ap">항혈소판제</label></div>
+        <div class="chip"><input type="checkbox" id="co_ac" value="ac"><label for="co_ac">항응고제</label></div>
+      </div>
+
+      <label class="h">환자 영상</label>
+      <input id="patientFiles" class="field" type="file" accept="image/png,image/jpeg,image/webp,application/pdf" multiple><div id="patientFileCount" class="note"></div>
+      <div class="note">환자 영상은 현재 설명에서만 사용하며 자료실·내보내기에 저장하지 않습니다. 이미지와 PDF를 선택할 수 있습니다.</div>
+
+      <button id="resetPatient" class="btn ghost full" type="button">새 환자 · 입력 및 설명 기록 초기화</button><button id="generateBtn" class="btn full">동의 설명 자료 생성</button>
+    </div>
+    <div class="card">
+      <h2>이 도구의 역할</h2>
+      <div class="status"><b>동의서를 대신 작성하거나 환자가 혼자 보는 교육 페이지가 아닙니다.</b><br>의료진이 환자별 정보를 바탕으로 설명 순서와 확인할 위험을 정리하고, 필요한 그림·영상만 환자에게 보여주는 설명 보조 화면입니다.</div>
     </div>
   </section>
 
-  <section id="educationView" class="view">
-  <button class="back" type="button" data-home>← 환자 정보로 돌아가기</button>
-
-  <div class="card">
-    <div class="mini" id="eduProgressText">1 / 3</div>
-    <div style="height:8px;background:#edf0f5;border-radius:999px;overflow:hidden;margin-top:8px">
-      <div id="eduProgressBar" style="height:100%;width:33.3%;background:var(--blue);transition:.25s"></div>
-    </div>
-  </div>
-
-  <div id="eduPage1" class="eduPage">
+  <section id="resultView" class="view">
+    <button id="backBtn" class="back">← 환자 정보 수정</button>
     <div class="card">
-      <div class="title" id="eduDiagnosis"></div>
-      <div class="subtitle">내 질환과 해부학 이해하기</div>
-      <div class="divider"></div>
-
-      <h2>정상 해부학</h2>
-      <div class="text" id="eduAnatomyText"></div>
-
-      <div class="divider"></div>
-
-      <h2>어떤 이상이 생긴 건가요?</h2>
-      <div class="text" id="eduExplanation"></div>
+      <div class="resultHead">
+        <div><div id="rTitle" class="resultTitle"></div><div id="rSub" class="resultSub"></div></div>
+        <button class="btn ghost small" onclick="window.print()">설명 화면 인쇄</button>
+      </div>
+      <div class="summary">
+        <div class="summaryItem"><b>PATIENT</b><span id="rPatient">-</span></div>
+        <div class="summaryItem"><b>LESION</b><span id="rLesion">-</span></div>
+        <div class="summaryItem"><b>APPROACH</b><span id="rApproach">-</span></div>
+        <div class="summaryItem"><b>SPECIFIC POINT</b><span id="rSpecific">-</span></div>
+      </div>
     </div>
 
-    <div class="card">
-      <h2>영상으로 이해하기</h2>
-      <div id="eduAnatomyVideo"></div>
+    <div class="workspace">
+      <main>
+        <div class="card sectionCard">
+          <div class="sectionTop"><div class="sectionTitle"><span class="sectionNo">1</span>진단 및 병변 위치</div><button class="showBtn" data-present="diagnosis">환자에게 크게 보여주기</button></div>
+          <div id="diagnosisText" class="text"></div>
+          <div class="visual"><div class="visualTitle">환자에게 보여줄 시각자료</div><div id="patientGallery" class="mediaGrid"></div><div id="diagnosisVisual" class="mediaGrid"></div></div>
+          <div class="clinicianBox"><b>의료진 참고</b><br><span id="diagnosisNote"></span></div>
+        </div>
+
+        <div class="card sectionCard">
+          <div class="sectionTop"><div class="sectionTitle"><span class="sectionNo">2</span>치료 목적과 필요성</div><button class="showBtn" data-present="purpose">환자에게 크게 보여주기</button></div>
+          <div id="purposeText" class="text"></div>
+          <div class="clinicianBox"><b>설명 포인트</b><br>수술의 목적, 기대할 수 있는 효과와 한계, 치료하지 않았을 때의 경과를 환자의 실제 상황에 맞추어 설명합니다.</div>
+        </div>
+
+        <div class="card sectionCard">
+          <div class="sectionTop"><div class="sectionTitle"><span class="sectionNo">3</span>수술 / 시술 방법</div><button class="showBtn" data-present="procedure">환자에게 크게 보여주기</button></div>
+          <div id="procedureText" class="text"></div>
+          <div class="visual"><div class="visualTitle">수술 설명 영상 / 단계별 그림</div><div id="procedureVisual" class="mediaGrid"></div></div>
+        </div>
+
+        <div class="card sectionCard">
+          <div class="sectionTop"><div class="sectionTitle"><span class="sectionNo">4</span>주요 합병증 및 위험</div><button class="showBtn" data-present="risk">환자에게 크게 보여주기</button></div>
+          <h3>주요 합병증 · 영상 설명</h3><div id="riskList" class="chips"></div><div id="riskVisual"></div><div id="locationRiskSection"></div>
+          <div class="clinicianBox"><b>의료진 참고</b><br>모든 가능한 합병증을 나열하기보다 해당 술식에서 반드시 설명해야 하는 중대한 위험과 이 환자에서 특히 증가할 수 있는 위험을 구분합니다.</div>
+        </div>
+
+        <div class="card sectionCard">
+          <div class="sectionTop"><div class="sectionTitle"><span class="sectionNo">5</span>환자별 추가 위험</div></div>
+          <div id="patientRiskList"></div>
+        </div>
+
+        <div class="card sectionCard">
+          <div class="sectionTop"><div class="sectionTitle"><span class="sectionNo">6</span>대안 및 치료하지 않을 경우</div><button class="showBtn" data-present="alternative">환자에게 크게 보여주기</button></div>
+          <div id="alternativeText" class="text"></div><div id="aftercareVisual" class="mediaGrid"></div>
+        </div>
+      </main>
+
+      <aside class="card checklist">
+        <h2>동의 설명 체크</h2><div id="checkProgress" class="status">0 / 8 설명 완료</div>
+        <div class="note">설명하면서 확인하는 내부 체크리스트입니다.</div>
+        <div class="checkRow"><input type="checkbox"><span>진단명과 병변 위치 설명</span></div>
+        <div class="checkRow"><input type="checkbox"><span>수술/시술 목적과 기대 효과 설명</span></div>
+        <div class="checkRow"><input type="checkbox"><span>수술/시술 방법 설명</span></div>
+        <div class="checkRow"><input type="checkbox"><span>중대한 합병증 설명</span></div>
+        <div class="checkRow"><input type="checkbox"><span>환자별 추가 위험 설명</span></div>
+        <div class="checkRow"><input type="checkbox"><span>대안적 치료 방법 설명</span></div>
+        <div class="checkRow"><input type="checkbox"><span>치료하지 않을 경우 설명</span></div>
+        <div class="checkRow"><input type="checkbox"><span>환자/보호자 질문 확인</span></div>
+        <div class="divider"></div>
+        <label class="h">설명 중 메모</label>
+        <textarea placeholder="추가로 설명한 내용, 질문, 특이사항"></textarea>
+        <div class="note" style="margin-top:8px">설명 보조 도구입니다. 실제 동의서 서명·의무기록 저장 기능은 포함하지 않습니다.</div>
+      </aside>
     </div>
-  </div>
-
-  <div id="eduPage2" class="eduPage" style="display:none">
-    <div class="card">
-      <div class="title">수술은 어떻게 하나요?</div>
-      <div class="subtitle" id="eduProcedure"></div>
-      <div class="divider"></div>
-
-      <h2>수술의 목적</h2>
-      <div class="text" id="eduSurgeryPurpose"></div>
-
-      <div class="divider"></div>
-
-      <h2>접근 방법</h2>
-      <div class="text" id="eduApproachText"></div>
-    </div>
-
-    <div class="card">
-      <h2>수술 과정</h2>
-      <div id="eduSteps"></div>
-    </div>
-
-    <div class="card">
-      <h2>수술 및 접근법 영상</h2>
-      <div id="eduProcedureVideo"></div>
-    </div>
-  </div>
-
-  <div id="eduPage3" class="eduPage" style="display:none">
-    <div class="card">
-      <h2>발생할 수 있는 합병증</h2>
-      <div id="eduComplications"></div>
-    </div>
-
-    <div class="card">
-      <h2>기저질환에 따른 추가 안내</h2>
-      <div id="eduComorbidities"></div>
-    </div>
-
-    <div class="card">
-      <h2>수술 후 관리</h2>
-      <div id="eduPostopCare" class="text"></div>
-    </div>
-
-    <div class="card">
-      <h2>이런 증상이 있으면 바로 알려주세요</h2>
-      <div id="eduWarningSigns"></div>
-    </div>
-
-    <div class="card">
-      <h2>교육자료 참고</h2>
-      <div id="eduReferences" class="mini"></div>
-    </div>
-  </div>
-
-  <div class="card">
-    <div style="display:flex;gap:10px">
-      <button class="btn ghost" id="eduPrev" type="button" style="margin-top:0">이전</button>
-      <button class="btn" id="eduNext" type="button" style="margin-top:0">다음</button>
-    </div>
-  </div>
+  </section>
+<section id="assetView" class="view">
+ <div class="card"><div class="assetToolbar"><div><h2>공용 자료실</h2><div class="note">자료를 한 번 모아두면 모든 환자 케이스에서 함께 사용합니다. 질환·위치·술식에 맞는 자료를 자동으로 골라옵니다.</div></div><button class="btn" id="exportHtml">자료 포함 HTML 다운로드</button></div><div class="actions"><button class="btn ghost small" id="exportCatalog">자료목록 백업 (JSON)</button><label class="btn ghost small">자료목록 가져오기<input type="file" id="importCatalog" accept="application/json,.json" hidden></label><button class="btn ghost small" id="downloadExample">자료목록 양식</button></div><p id="storageStatus" class="note"></p><div class="help">교육 자료와 추천 피드백은 이 브라우저에 보관합니다. 다른 컴퓨터에서 사용하려면 <b>자료 포함 HTML</b>을 다운로드하세요. 환자 입력·환자 영상·설명 메모는 포함되지 않습니다.</div></div>
+ <div class="card" id="libraryInventory"><div class="assetToolbar"><h2>등록 자료 <span id="assetCount">0</span></h2><button class="btn ghost small" id="resetFeedback">추천 피드백 초기화</button></div><div id="libraryStats" class="note"></div><div id="categoryFilters" class="tabs" style="margin-top:16px"></div><div class="grid3"><input id="assetSearch" class="field" placeholder="제목·질환·위치·술식 검색"><select id="domainFilter" aria-label="질환별 필터"><option value="">모든 질환</option></select><select id="reviewFilter" aria-label="분류 상태 필터"><option value="">모든 상태</option><option value="ready">추천 사용 중</option><option value="pending">분류 확인 필요</option></select></div><div id="assetList"></div></div><div class="card"><h2>사진·영상 한꺼번에 등록</h2><div id="dropZone" tabindex="0" role="button" aria-label="여러 자료 파일 선택"><b>여기로 파일을 끌어 놓으세요</b><p>여러 사진·영상 또는 폴더를 한 번에 선택할 수 있습니다.</p><div class="actions"><label class="btn">여러 파일 선택<input id="bulkFiles" type="file" multiple accept="image/png,image/jpeg,image/webp,image/gif,video/mp4,video/webm" hidden></label><label class="btn ghost">폴더 선택<input id="bulkFolder" type="file" webkitdirectory multiple hidden></label></div></div><p class="note">파일명·폴더명에서 질환, 위치, 술식, 카테고리를 읽어 분류합니다. 영상 내용을 분석하는 기능은 아닙니다. 예: <code>MCA_clipping_procedure.mp4</code>, <code>공통_뇌경색.mp4</code>, <code>요추_해부학.png</code></p><div id="bulkStage" hidden><div class="assetToolbar"><h3 id="bulkCount"></h3><button id="clearBulk" class="btn ghost small">선택 목록 비우기</button></div><div class="tableScroll"><table class="guideTable batchTable"><thead><tr><th>파일명 / 상태</th><th>질환</th><th>카테고리</th><th>위치</th><th>술식</th><th>합병증 연결</th><th></th></tr></thead><tbody id="bulkRows"></tbody></table></div><label class="checkRow"><input id="bulkConfirmed" type="checkbox"><span>분류가 채워진 자료의 분류·내용·이용 권한을 확인했습니다. 미분류 자료는 ‘분류 확인 필요’로 보관합니다.</span></label><button id="saveBulk" class="btn">공용 자료실에 저장</button></div><div id="bulkMessage" class="note" role="status"></div></div><div class="card"><details id="singleEditor"><summary>자료 한 개 등록 / 분류 수정</summary><h2 id="editHeading">사진·영상 등록</h2><form id="assetForm">
+ <div class="grid2"><div><label class="h" for="assetTitle">자료 제목 *</label><input id="assetTitle" class="field" required placeholder="예: MCA 분지부 동맥류 · 클립 결찰 과정"></div><div><label class="h" for="assetCategory">자료 카테고리</label><select id="assetCategory"><option value="">카테고리 분류 필요</option><option value="anatomy">① 정상 해부학</option><option value="lesion">② 질환·병변 위치</option><option value="approach">③ 수술 접근법</option><option value="procedure">④ 수술·시술 과정</option><option value="risk">⑤ 합병증 짧은 클립</option><option value="aftercare">⑥ 회복·주의사항</option></select></div></div>
+ <div class="grid2"><div><label class="h" for="assetDomain">적용 질환</label><select id="assetDomain"><option value="">질환 분류 필요</option><option value="common">공통 주요 합병증 (모든 질환)</option><option value="lumbar">요추 공통 (디스크·협착증)</option><option value="aneurysm">비파열성 뇌동맥류</option><option value="tumor">뇌종양</option><option value="disc">요추 추간판 탈출증</option><option value="stenosis">요추 척추관 협착증</option></select></div><div><label class="h" for="assetProcedure">적용 술식</label><select id="assetProcedure"></select></div></div>
+ <div class="grid2"><div><label class="h" for="assetTags">세부 위치·접근법 태그 (쉼표로 구분)</label><input id="assetTags" class="field" placeholder="mca, bifurcation, pterional 또는 L4-5, foraminal"></div><div><label class="h" for="assetSide">좌우 제한</label><select id="assetSide"><option value="">공통 · 좌우 제한 없음</option><option>좌측</option><option>우측</option></select></div></div>
+ <div class="grid3"><div><label class="h" for="assetMinAge">최소 나이 (선택)</label><input class="field" id="assetMinAge" type="number" min="0" max="120"></div><div><label class="h" for="assetMaxAge">최대 나이 (선택)</label><input class="field" id="assetMaxAge" type="number" min="0" max="120"></div><div><label class="h" for="assetSex">성별 제한</label><select id="assetSex"><option value="">공통</option><option>여성</option><option>남성</option></select></div></div>
+ <div class="grid2"><div><label class="h" for="assetLocation">동맥류 위치 제한 (선택 · 공통 영상은 비워두기)</label><input id="assetLocation" class="field" placeholder="예: MCA, A.com, Pcom, A.cho, basilar top"></div><div><label class="h" for="assetRiskKey">연결할 주요 합병증</label><select id="assetRiskKey"><option value="">공통 / 특정 항목 없음</option></select></div></div><label class="h" for="assetFile">이미지 / 동영상 파일 (또는 아래 주소 입력)</label><input class="field" id="assetFile" type="file" accept="image/png,image/jpeg,image/webp,image/gif,video/mp4,video/webm"><div class="note">PNG·JPG·WebP·GIF / MP4·WebM. 파일당 최대 40MB. 동영상은 MP4(H.264) 권장.</div>
+ <div class="grid2"><div><label class="h" for="assetUrl">파일 주소</label><input class="field" id="assetUrl" placeholder="https://…/clip.mp4 또는 media/clip.mp4"></div><div><label class="h" for="assetType">주소 자료 유형</label><select id="assetType"><option value="image">이미지</option><option value="video">동영상</option></select></div></div>
+ <div class="grid2"><div><label class="h" for="assetSource">출처</label><input id="assetSource" class="field" placeholder="예: 직접 제작 / 원본 출처 URL"></div><div><label class="h" for="assetLicense">이용 권한 / 라이선스</label><input id="assetLicense" class="field" placeholder="예: 직접 제작, CC BY 4.0"></div></div>
+ <label class="h" for="assetCaption">짧은 설명</label><input id="assetCaption" class="field" placeholder="환자에게 보여줄 한 줄 설명">
+ <label class="checkRow"><input id="assetReviewed" type="checkbox" required><span>교육용 사용 권한 및 비식별화를 확인했고, 임상 내용을 검토했습니다.</span></label>
+ <div class="actions"><button class="btn" type="submit">자료 저장</button><button class="btn ghost" id="cancelEdit" type="button" hidden>수정 취소</button></div></form></details></div>
+ <div class="card"><details><summary>외부 자료목록 연결 · GitHub Pages</summary><p class="note">양식과 같은 JSON 자료목록을 읽어 등록합니다. 외부 서버는 브라우저 접근(CORS)을 허용해야 합니다. 인터넷 전체나 논문 사이트를 자동 검색하는 기능은 아닙니다.</p><label class="h" for="catalogUrl">자료목록 주소</label><input id="catalogUrl" class="field" placeholder="https://example.org/assets.json"><button id="fetchCatalog" class="btn ghost small">자료목록 불러오기</button><p class="note">JSON의 상대 파일 경로는 자료목록 주소를 기준으로 해석합니다. HTML을 index.html로 올리고 media 폴더와 자료목록을 같은 저장소에 둘 수 있습니다. 영상 주소는 실제 미디어 파일 주소여야 합니다.</p></details></div>
+ <div class="card"><details><summary>위치별 합병증 · 텍스트 참고</summary><div id="locationGuide"></div><p class="note">위치별 위험은 관련 혈관·신경 손상 시 나타날 수 있는 항목입니다. 발생 확률이나 해당 환자의 발생 여부를 예측하지 않습니다. 기존 증상과 치료 후 새로 발생하는 증상을 구분해 설명하세요.</p><div id="clinicalSources" class="note"></div></details></div><div class="card"><h2>내가 준비할 영상·이미지 항목</h2><p class="note">권장 제작 길이이며, 한 클립에는 한 가지 설명만 담으세요.</p><div class="tableScroll"><table class="guideTable"><thead><tr><th>카테고리</th><th>준비할 내용</th><th>권장 형태</th></tr></thead><tbody>
+ <tr><td>① 정상 해부학</td><td>뇌혈관·분지, 뇌엽·기능 위치, 요추·디스크·신경근</td><td>위치별 그림 2~3장 / 15~30초</td></tr>
+ <tr><td>② 질환·위치</td><td>동맥류 위치와 모양, 종양 위치, 디스크 탈출·척추관/추간공 협착</td><td>정상–병변 비교 / 15~30초</td></tr>
+ <tr><td>③ 접근법</td><td>개두·pterional, 혈관내 카테터 접근, 척추 내시경·후방 접근</td><td>진입 경로 / 15~30초</td></tr>
+ <tr><td>④ 수술방법</td><td>클립 / 코일 / 스텐트 보조 코일을 각각 분리. 종양 제거 / 조직검사, 디스크 제거 / 감압 / 유합을 각각 분리</td><td>단계별 그림 / 30~60초</td></tr>
+ <tr><td>⑤ 합병증</td><td>출혈 및 파열 / 뇌경색 / 신경손상 / 감염 / 경련을 각각 분리. 위치별 마비·언어장애 등은 글로 설명</td><td>주요 합병증 하나당 5~10초 + 키워드</td></tr>
+ <tr><td>⑥ 회복·주의사항</td><td>술식별 수술 후 경과, 추적 검사, 일상생활 주의사항</td><td>항목별 그림 / 15~30초</td></tr>
+ </tbody></table></div><div class="help" style="margin-top:15px">파일명 예: <code>aneurysm_mca_clip_procedure_01.mp4</code><br>등록 순서: 정상 해부학 → 질환 위치 → 수술방법 → 주요 합병증. 위치가 특정된 자료에는 위치 태그를 꼭 넣으세요.</div></div>
+ 
 </section>
 
-  <section id="adminView" class="view">
-    <button class="back" type="button" data-home>← 환자교육으로 돌아가기</button>
-    <div class="card"><h2>관리자</h2><div class="status">Excel 파일의 <b>Scenarios</b> / <b>Comorbidities</b> 시트를 읽어 환자교육 화면을 갱신합니다. 같은 양식의 Excel을 수정한 뒤 다시 업로드하면 됩니다.</div></div>
-    <div class="card">
-      <h2>Excel 데이터 업로드</h2>
-      <input id="excelFile" class="field" type="file" accept=".xlsx,.xls">
-      <button class="btn small" id="importExcel" type="button">선택한 Excel 반영</button>
-      <button class="btn ghost small" id="exportExcel" type="button">현재 데이터 Excel로 내보내기</button>
-      <button class="btn ghost small" id="resetData" type="button">기본 예시로 초기화</button>
-      <div id="importStatus" class="note" style="margin-top:10px">아직 Excel을 업로드하지 않았습니다.</div>
-      <div class="mini" style="margin-top:10px">브라우저에 저장되므로 이 기기에서는 새로고침 후에도 유지됩니다. 다른 기기에서는 같은 Excel을 다시 업로드해야 합니다.</div>
-    </div>
-    <div class="card"><h2>현재 반영 상태</h2><div class="adminGrid"><div class="status"><b id="scenarioCount">0</b><br>활성 수술 시나리오</div><div class="status"><b id="comorbCount">0</b><br>활성 기저질환</div></div></div>
-    <div class="card"><h2>Excel 필수 열</h2><div class="mini"><b>Scenarios</b><br>Scenario_ID, Diagnosis, Procedure, Anatomy_Text, Patient_Explanation, Surgery_Purpose, Approach_Text, Surgery_Steps, Complications, Postop_Care, Warning_Signs, Medical_Detail, Anatomy_Video_URL, Procedure_Video_URL, Reference_Text, Active<br><br><b>Comorbidities</b><br>Keyword, Display_Name, Aliases, Patient_Text, Medical_Text, Active</div></div>
-  </section>
 </div>
 
-<div class="bottomNav"><button type="button" id="navHome"><strong>⌂</strong>환자교육</button><button type="button" id="navAdmin"><strong>⚙</strong>관리자</button></div>
+<div id="presenter" class="presenter">
+  <div class="presenterInner">
+    <div class="presenterTop"><div><div class="note">환자에게 보여주는 화면</div><h2 id="pTitle"></h2></div><button id="closePresenter" class="btn ghost">설명 화면으로 돌아가기</button></div>
+    <div id="pBody" class="bigText"></div>
+    <div id="pVisual" class="visual" style="margin-top:22px"><div class="visualMock">시각자료 영역</div></div>
+  </div>
+</div>
+
+<div class="bottomNav">
+  <button id="navInput"><strong>⌨</strong>환자정보</button>
+  <button id="navResult"><strong>▤</strong>설명자료</button><button id="navAssets"><strong>▧</strong>자료실</button>
+</div>
+
 <script>
-const DEFAULT_SCENARIOS=[
-{
-Scenario_ID:'NS_SP_DISC_001',
-Diagnosis:'요추 디스크 파열(추간판 탈출증)',
-Procedure:'요추 디스크 제거술',
-Anatomy_Text:'요추는 척추체, 추간판(디스크), 후궁, 후관절, 인대와 신경 구조로 이루어집니다. 디스크는 척추체 사이에서 충격을 흡수하고, 척추관과 신경공을 통해 신경이 지나갑니다.',
-Patient_Explanation:'디스크 내부 조직이 뒤쪽으로 밀려나와 신경을 누르는 상태입니다. 수술은 신경을 압박하는 디스크 조각을 제거해 다리로 뻗치는 통증과 저림을 줄이는 것이 주된 목적입니다.',
-Surgery_Purpose:'신경을 압박하는 탈출된 디스크를 제거하여 하지 방사통과 신경 증상을 줄이는 것이 목적입니다.',
-Approach_Text:'허리 뒤쪽의 작은 절개 또는 내시경 통로를 통해 병변 부위에 접근합니다. 신경을 보호하면서 압박을 일으키는 디스크 조각을 제거합니다.',
-Surgery_Steps:'전신마취 후 엎드린 자세로 수술을 준비합니다.|영상 장비로 병변 위치를 확인한 뒤 작은 절개 또는 내시경 통로를 통해 접근합니다.|신경을 누르는 탈출 디스크와 주변 구조물을 확인합니다.|신경을 보호하면서 탈출된 디스크 조각을 제거합니다.|신경 압박이 충분히 해소되었는지 확인한 뒤 지혈하고 봉합합니다.',
-Complications:'수술 부위 출혈 또는 혈종|감염 또는 상처 회복 문제|신경 손상에 따른 통증·저림·근력저하|경막 손상 및 뇌척수액 누출|디스크 재발 또는 잔여 증상',
-Postop_Care:'수술 후 통증이 조절되는 범위에서 조기 보행을 시작합니다. 초기에는 무거운 물건 들기와 심한 허리 굴곡을 피하고, 상처 상태와 다리 통증·저림·근력 변화를 관찰합니다.',
-Warning_Signs:'새로운 하지 근력 저하|심해지는 저림 또는 감각저하|대소변 기능 이상|고열 또는 상처의 심한 발적·분비물',
-Medical_Detail:'Procedure-specific risks include durotomy, nerve root injury, recurrent disc herniation, epidural hematoma, infection, residual radiculopathy, and conversion to wider decompression if required.',
-Reference_Text:'Youmans & Winn Neurological Surgery; 대한신경외과학회 『신경외과학』의 일반적인 척추 해부·수술 원칙을 바탕으로 환자교육용으로 재구성.',
-Anatomy_Video_URL:'videos/lumbar_anatomy_web.mp4',
-Procedure_Video_URL:'',
-Active:'Y'
-},
-{
-Scenario_ID:'NS_SP_STENOSIS_001',
-Diagnosis:'요추 척추관 협착증',
-Procedure:'요추 감압술',
-Anatomy_Text:'척추관은 신경이 지나가는 통로이며, 뒤쪽의 후궁과 황색인대, 양측 후관절, 앞쪽의 디스크와 척추체로 둘러싸여 있습니다. 이 구조물들이 퇴행성 변화로 두꺼워지거나 돌출되면 신경이 지나갈 공간이 좁아질 수 있습니다.',
-Patient_Explanation:'척추관이 좁아져 신경이 눌리는 상태입니다. 수술은 신경을 압박하는 뼈나 두꺼워진 인대 등을 제거해 공간을 넓히고, 필요한 경우 척추를 안정시키기 위한 유합술을 함께 시행합니다.',
-Surgery_Purpose:'좁아진 척추관을 넓혀 신경 압박을 줄이고 보행 시 통증과 저림을 완화하는 것이 목적입니다. 불안정성이 동반된 경우에는 척추를 안정시키기 위해 유합술을 함께 시행할 수 있습니다.',
-Approach_Text:'허리 뒤쪽으로 접근하여 신경을 누르는 후궁, 두꺼워진 인대, 필요 시 후관절 일부를 제거합니다. 유합이 필요한 경우 척추경 나사와 금속봉을 이용해 안정성을 보강합니다.',
-Surgery_Steps:'전신마취 후 엎드린 자세로 수술을 준비합니다.|병변 위치를 확인한 뒤 허리 뒤쪽으로 접근합니다.|후궁 일부와 두꺼워진 인대, 필요 시 후관절 일부를 제거하여 척추관을 넓힙니다.|신경이 충분히 감압되었는지 확인합니다.|불안정성이 있거나 유합이 필요한 경우 척추경 나사·금속봉과 골이식을 사용합니다.|출혈을 확인하고 상처를 봉합합니다.',
-Complications:'출혈 및 수술 후 혈종|감염 및 상처 문제|신경 손상에 따른 감각저하·통증·근력저하|경막 손상 및 뇌척수액 누출|불완전한 증상 호전 또는 재협착|유합술 시행 시 나사 위치 이상, 유합 실패, 인접 분절 질환',
-Postop_Care:'수술 후 통증과 신경학적 상태를 확인하면서 보행을 단계적으로 시작합니다. 유합술을 시행한 경우 보조기 착용 여부와 활동 범위는 수술 범위에 따라 달라질 수 있습니다.',
-Warning_Signs:'새로운 하지 근력 저하|감각 저하 또는 통증의 급격한 악화|대소변 기능 이상|고열 또는 상처의 심한 발적·분비물|심한 두통이나 지속되는 맑은 상처 배액',
-Medical_Detail:'Risks depend on the extent of decompression and whether fusion is performed. Consider durotomy, nerve root injury, postoperative hematoma, infection, instability, screw malposition, pseudarthrosis, adjacent segment disease, and recurrent stenosis.',
-Reference_Text:'Youmans & Winn Neurological Surgery; 대한신경외과학회 『신경외과학』의 일반적인 척추관 협착증 및 감압술 원칙을 바탕으로 환자교육용으로 재구성.',
-Anatomy_Video_URL:'videos/lumbar_anatomy_web.mp4',
-Procedure_Video_URL:'',
-Active:'Y'
-},
-{
-Scenario_ID:'NS_SP_C_ACDF_001',
-Diagnosis:'경추 추간판 탈출증',
-Procedure:'전방 경유 경추 디스크 제거술 및 유합술',
-Anatomy_Text:'',
-Patient_Explanation:'경추 (목뼈) 간 디스크 안쪽의 수핵이 외상 혹은 퇴행성 변화로 바깥으로 밀려나와 경추 중앙 신경 혹은 좌/우 추간공의 신경을 압박하는 상태를 최소한의 절개를 통해 치료하는 수술입니다. 신경을 압박하는 디스크 조각 및 퇴행성변화가 일어난 경추 간의 디스크를 제거하여 신경압박으로 인한 어깨, 팔, 손으로 뻗치는 통증 및 이상감각을 완화시키고 힘이 빠지는 증상을 호전시키는 목적으로 시행합니다.',
-Surgery_Purpose:'',
-Approach_Text:'',
-Surgery_Steps:'전신마취 후 누운 자세로 수술을 준비합니다.|병변 위치를 확인한 뒤 목의 좌측 혹은 우측(재수술 시) 에 3-5cm 가량을 가로로 절개합니다.|경동맥, 기도, 식도, 주요 신경을 보존하며 외측으로 견인하고, 경추체와 디스크를 육안으로 확인 후 xray를 이용하여 정확한 위치를 확인합니다.|경추체 간의 디스크를 제거합니다.|제거된 디스크공간에 유합 촉진을 위한 티타늄 금속편과 골이식편을 삽입합니다.|제거된 디스크 공간 위-아래의 경추체에 나사와 금속판을 고정합니다.|출혈을 확인하고 수술 후 체액저류 혹은 미세출혈 저류를 배출하기 위한 배액관을 삽입 후 상처를 봉합합니다.',
-Complications:'수술 부위 출혈 또는 혈종|수술부위 혈종으로 인한 경추 이하 마비증상|감염 또는 상처 벌어짐|유합부위 주변 디스크의 퇴행성 변화로 인한 증상 지속 혹은 악화|후두신경 손상으로 인한 고음 불가 혹은 쉰 목소리|식도 손상으로 인한 연하곤란|식도 천공으로 인한 경부 감염 및 패혈증|수술부위 부종으로 인한 기도 폐색|골유합 실패|나사 풀림 혹은 부러짐|디스크-신경주위 경막 염증으로 인한 디스크 제거 시 경막손상 및 뇌척수액 누출|경동맥 및 척추동맥 손상으로 인한 뇌경색, 뇌출혈 및 사망',
-Postop_Care:'',
-Warning_Signs:'',
-Medical_Detail:'',
-Reference_Text:'Youmans & Winn Neurological Surgery; 대한신경외과학회 『신경외과학』의 일반적인 경추 전방 접근 및 유합술 원칙을 바탕으로 환자교육용으로 재구성.',
-Anatomy_Video_URL:'videos/cervical_anatomy_web.mp4',
-Procedure_Video_URL:'',
-Active:'Y'
-},
-{
-Scenario_ID:'NS_SP_C_LAMI_001',
-Diagnosis:'경추 척추관 협착증',
-Procedure:'경추 감압술 (후궁절제술)',
-Anatomy_Text:'',
-Patient_Explanation:'경추 (목뼈) 의 척추관 내에 있는 병변 (후궁인대골화증, 종양, 황색인대 비대증, 디스크 탈출증 등)이 신경을 누르는 상태를 완화시키는 수술입니다. 척추관을 이루는 경추의 후방에 위치한 후궁을 절제하고 신경을 압박하는 인대나 종양을 제거하여 척추관 내의 공간을 확보하고 압력을 줄여줍니다.',
-Surgery_Purpose:'',
-Approach_Text:'',
-Surgery_Steps:'전신마취 후 엎드린 자세로 수술을 준비합니다.|xray를 이용하여 정확한 경추 위치를 파악합니다.|경추 후궁 주변 근육들을 절개하여 후궁을 노출시킵니다.|수술기구를 이용하여 후궁의 일부, 혹은 후궁 전체를 제거합니다.|불안정성이 있거나 유합이 필요한 경우 나사, 금속봉, 골이식을 사용하여 유합술을 시행할 수 있으며, 추후 전방경유 유합술을 추가소 시행할 수 있습니다.|경막손상이 없는지 확인 후 출혈을 확인합니다.|상처를 봉합합니다.',
-Complications:'수술부위 근육 손상으로 인한 통증|5번경추 신경 마비로 인한 윗팔 통증, 윗팔 마비|수술 후 경추 후만증으로 인한 신경증상 악화|수술 부위 출혈 또는 혈종|수술부위 혈종으로 인한 경추 이하 마비증상|감염 또는 상처 벌어짐|경막손상 및 뇌척수액 누출',
-Postop_Care:'',
-Warning_Signs:'',
-Medical_Detail:'',
-Reference_Text:'Youmans & Winn Neurological Surgery; 대한신경외과학회 『신경외과학』의 일반적인 경추 후방 감압술 원칙을 바탕으로 환자교육용으로 재구성.',
-Anatomy_Video_URL:'videos/cervical_anatomy_web.mp4',
-Procedure_Video_URL:'',
-Active:'Y'
-},
-{
-Scenario_ID:'NS_TM_PA_TSA',
-Diagnosis:'뇌하수체 샘종',
-Procedure:'경접형동 뇌하수체 종양 제거술',
-Anatomy_Text:'뇌하수체는 두개골 바닥의 터키안(sella turcica) 안에 위치하며, 위쪽에는 시신경 교차가 있고 양옆으로는 해면정맥동과 내경동맥이 지나갑니다. 코 뒤쪽의 접형동을 통하면 뇌를 직접 통과하지 않고 뇌하수체에 접근할 수 있습니다.',
-Patient_Explanation:'대부분 양성인 뇌하수체 종양으로 호르몬 이상이나 시야장애를 유발할 수 있습니다. MRI, 호르몬검사, 시야검사로 종양의 크기, 위치, 기능을 평가하고 무증상 소형종양은 경과관찰하며 일부 프로락틴종은 약물치료를 진행합니다. 시신경 압박, 종양 성장, 호르몬 과다분비 시 수술 고려합니다.',
-Surgery_Purpose:'종양을 제거하여 시신경 압박을 줄이고, 종양으로 인한 호르몬 이상을 치료하거나 진행을 막는 것이 목적입니다.',
-Approach_Text:'코를 통한 경접형동 접근으로 종양에 접근합니다. 수술 중 시신경·혈관·정상 뇌하수체를 최대한 보존하며 제거합니다.',
-Surgery_Steps:'코를 통한 경접형동 접근으로 종양을 제거합니다.|전신마취 후 시신경·혈관·정상 뇌하수체를 최대한 보존하며 제거합니다.|종양의 위치와 침범 정도에 따라 일부 잔존할 수 있습니다.|잔존 및 재발 시 경과관찰, 재수술, 약물, 방사선치료를 고려합니다.',
-Complications:'뇌척수액 누출|출혈|감염|뇌하수체 기능저하|요붕증|나트륨 이상|시력 및 시야저하|복시 등 신경학적 이상|드물게 혈관손상, 뇌출혈, 뇌경색',
-Postop_Care:'수술 후 소변량과 전해질, 뇌하수체 호르몬, 시력·시야 변화를 확인합니다. 코를 세게 풀거나 힘을 심하게 주는 행동은 피하고, 의료진 지시에 따라 내분비 검사와 비강 관리를 시행합니다.',
-Warning_Signs:'맑은 물 같은 콧물이 지속되는 경우|갑자기 소변량이 크게 증가하고 심한 갈증이 생기는 경우|심한 두통·발열·목 경직|새로운 시력 저하 또는 시야 변화|심한 비출혈|심한 구역·구토 또는 의식 변화',
-Medical_Detail:'',
-Reference_Text:'Youmans & Winn Neurological Surgery의 pituitary/skull base surgery 관련 장 및 대한신경외과학회 『신경외과학』의 뇌하수체 종양·경접형동 수술 원칙을 바탕으로 환자교육용으로 재구성.',
-Anatomy_Video_URL:'videos/tsa_anatomy.mp4',
-Procedure_Video_URL:'videos/tsa_surgery.mp4',
-Active:'Y'
-},
-{
-Scenario_ID:'NS_CV_CLIP_001',
-Diagnosis:'뇌동맥류',
-Procedure:'개두술 및 뇌동맥류 결찰술 (Clipping)',
-Anatomy_Text:'뇌동맥은 뇌 표면과 기저부를 따라 주행하며 여러 분지로 나뉩니다. 뇌동맥류는 혈관 벽의 일부가 풍선처럼 부풀어 오른 상태로, 목(neck)과 동맥류 주머니(sac), 주변의 정상 혈관과 작은 천공지들이 중요합니다.',
-Patient_Explanation:'뇌동맥류는 뇌혈관 일부가 풍선처럼 부풀어 오른 상태입니다. 클립 수술은 두개골 일부를 열고 동맥류를 직접 확인한 뒤, 동맥류의 입구에 작은 금속 클립을 적용하여 정상 혈류는 유지하면서 동맥류로 피가 들어가지 않게 하는 수술입니다.',
-Surgery_Purpose:'동맥류를 정상 혈액순환에서 분리하여 파열 또는 재출혈 위험을 줄이면서, 주변 정상 뇌혈관과 천공지의 혈류를 보존하는 것이 목적입니다.',
-Approach_Text:'동맥류의 위치에 맞추어 개두술을 시행한 뒤 현미경하에서 뇌의 정상 공간을 따라 혈관에 접근합니다. 필요 시 동맥류보다 근위부 혈관을 먼저 확보한 뒤 동맥류 neck과 주변 분지를 확인하여 clip을 적용합니다.',
-Surgery_Steps:'전신마취 후 머리를 고정하고 동맥류 위치에 맞게 개두술을 시행합니다.|현미경하에서 뇌혈관에 접근하여 모혈관과 주변 분지를 확인합니다.|동맥류 neck과 주변 천공지·분지를 분리하여 확인합니다.|필요 시 일시적 클립을 사용한 뒤 영구 클립을 동맥류 neck에 적용합니다.|도플러·ICG angiography 등으로 정상 혈관 혈류와 동맥류 폐색을 확인할 수 있습니다.|지혈 후 두개골과 피부를 닫습니다.',
-Complications:'수술 중 또는 수술 후 출혈|뇌경색 및 마비·언어장애 등 신경학적 이상|천공지 또는 정상 분지의 혈류 장애|발작|감염 및 상처 문제|동맥류의 불완전 폐색 또는 잔여 동맥류|병변 위치에 따른 뇌신경 기능 저하',
-Postop_Care:'수술 후 의식과 팔다리 힘, 언어·시야 등 신경학적 상태를 반복 확인합니다. 필요에 따라 CT 또는 혈관검사를 시행하며, 파열 동맥류의 경우 혈관연축·수두증 등 지주막하출혈 관련 합병증을 추가로 관찰합니다.',
-Warning_Signs:'갑작스러운 의식 저하|새로운 한쪽 팔다리 마비 또는 감각 이상|말이 어눌해지거나 이해가 어려워지는 경우|갑자기 심해지는 두통 또는 반복되는 구토|새로운 시야·시력 변화|경련',
-Medical_Detail:'Procedure-specific considerations include proximal/distal control, preservation of perforators and branch vessels, premature rupture, clip-induced parent artery stenosis/occlusion, residual aneurysm, postoperative hematoma, ischemia, seizure, and cranial nerve injury depending on aneurysm location.',
-Reference_Text:'Youmans & Winn Neurological Surgery의 cerebrovascular/aneurysm surgery 관련 장 및 대한신경외과학회 『신경외과학』의 뇌동맥류 수술 원칙을 바탕으로 환자교육용으로 재구성.',
-Anatomy_Video_URL:'videos/aneurysm_web.mp4',
-Procedure_Video_URL:'videos/clip_web.mp4',
-Active:'Y'
-},
-{
-Scenario_ID:'NS_CV_COIL_001',
-Diagnosis:'뇌동맥류',
-Procedure:'뇌동맥류 코일 색전술 (Coil embolization)',
-Anatomy_Text:'뇌동맥류는 뇌동맥 벽 일부가 주머니처럼 부풀어 오른 상태입니다. 혈관내 치료에서는 손목 또는 사타구니 동맥을 통해 가느다란 카테터를 뇌혈관까지 이동시켜 동맥류 내부에 접근합니다.',
-Patient_Explanation:'코일 색전술은 두개골을 열지 않고 혈관 안으로 가느다란 관을 넣어 뇌동맥류까지 접근한 뒤, 동맥류 안에 매우 가는 금속 코일을 채워 혈액이 동맥류 안으로 들어가는 것을 줄이는 치료입니다.',
-Surgery_Purpose:'동맥류 내부의 혈류를 차단하여 파열 또는 재출혈 위험을 줄이면서 정상 뇌혈관의 혈류를 유지하는 것이 목적입니다.',
-Approach_Text:'손목의 요골동맥 또는 사타구니의 대퇴동맥을 통해 카테터를 삽입하고 X-ray 혈관조영 영상을 보면서 뇌혈관까지 이동합니다. 동맥류의 모양에 따라 단순 코일, 풍선 보조 또는 스텐트 보조 기법을 사용할 수 있습니다.',
-Surgery_Steps:'국소마취 또는 전신마취 후 손목이나 사타구니 동맥에 혈관 통로를 확보합니다.|혈관조영을 시행하며 카테터를 동맥류가 있는 뇌혈관까지 이동합니다.|미세카테터를 동맥류 안으로 넣습니다.|동맥류 안에 코일을 순차적으로 삽입하여 혈류를 감소시킵니다.|필요 시 풍선이나 스텐트를 보조적으로 사용합니다.|마지막 혈관조영으로 동맥류 폐색 정도와 정상 혈관 혈류를 확인한 뒤 카테터를 제거하고 천자 부위를 지혈합니다.',
-Complications:'혈전 형성에 의한 뇌경색|시술 중 동맥류 파열 또는 출혈|혈관 박리·손상 또는 혈관연축|코일 이동 또는 동맥류 잔여·재개통|천자 부위 출혈·혈종|조영제 관련 이상반응 또는 신장 기능 악화|스텐트 사용 시 항혈소판제 관련 출혈 위험',
-Postop_Care:'시술 후 신경학적 상태와 천자 부위 출혈 여부를 확인합니다. 스텐트를 사용한 경우 처방된 항혈소판제를 임의로 중단하지 않는 것이 중요합니다. 동맥류의 모양과 폐색 정도에 따라 추적 MRA·CTA 또는 혈관조영검사가 필요할 수 있습니다.',
-Warning_Signs:'새로운 한쪽 팔다리 마비 또는 감각 이상|말이 어눌하거나 이해가 어려워지는 경우|갑작스러운 심한 두통 또는 의식 변화|천자 부위에서 계속되는 출혈 또는 빠르게 커지는 혈종|손이나 다리가 차갑거나 심하게 아픈 경우|호흡곤란·심한 발진 등 알레르기 증상',
-Medical_Detail:'Endovascular risks include thromboembolism, intraprocedural rupture, parent artery compromise, coil migration/protrusion, access-site complications, contrast-related complications, recanalization/retreatment, and antiplatelet-related issues when adjunctive stents are used.',
-Reference_Text:'Youmans & Winn Neurological Surgery의 endovascular/aneurysm treatment 관련 장 및 대한신경외과학회 『신경외과학』의 뇌동맥류 혈관내 치료 원칙을 바탕으로 환자교육용으로 재구성.',
-Anatomy_Video_URL:'videos/aneurysm_web.mp4',
-Procedure_Video_URL:'videos/coil_web.mp4',
-Active:'Y'
-}
-];
-
-const DEFAULT_COMORBIDITIES=[
- {Keyword:'HTN',Display_Name:'고혈압',Aliases:'Hypertension|고혈압',Patient_Text:'수술 전후 혈압 조절이 중요하며, 출혈 및 심혈관·뇌혈관계 위험을 함께 관리합니다.',Medical_Text:'Perioperative blood pressure control should be individualized according to procedure and cardiovascular risk.',Active:'Y'},
- {Keyword:'DM',Display_Name:'당뇨',Aliases:'Diabetes|Diabetes mellitus|당뇨',Patient_Text:'감염과 상처 회복 지연 위험이 증가할 수 있어 수술 전후 혈당 조절이 중요합니다.',Medical_Text:'Perioperative glucose management may influence infection and wound-healing risk.',Active:'Y'},
- {Keyword:'Stroke',Display_Name:'뇌경색',Aliases:'Cerebral infarction|ischemic stroke|뇌경색',Patient_Text:'기존 뇌혈관 상태와 항혈소판제 사용 여부 등을 고려해 신경학적·혈전성 위험을 평가합니다.',Medical_Text:'Prior ischemic stroke may affect perioperative cerebrovascular risk assessment and antithrombotic management.',Active:'Y'},
- {Keyword:'CAD',Display_Name:'관상동맥질환',Aliases:'Coronary artery disease|CABG|PCI|관상동맥질환',Patient_Text:'마취와 수술 중 심장 상태를 면밀히 관찰하고 필요한 심혈관 약제를 조정할 수 있습니다.',Medical_Text:'Consider perioperative cardiac risk and medication management.',Active:'Y'},
- {Keyword:'Anticoagulant',Display_Name:'항응고제 복용',Aliases:'anticoagulant|warfarin|apixaban|rivaroxaban|edoxaban|항응고제',Patient_Text:'수술 출혈 위험과 혈전 위험을 함께 고려해 중단·재개 시점을 개별적으로 결정합니다.',Medical_Text:'Anticoagulation interruption and resumption should be individualized to bleeding and thrombotic risks.',Active:'Y'}
-];
-const LS_SC='patientEduScenarios_v20',LS_CO='patientEduComorbidities_v20';
-let scenarios=load(LS_SC,DEFAULT_SCENARIOS),comorbidities=load(LS_CO,DEFAULT_COMORBIDITIES);
-const views=[...document.querySelectorAll('.view')],dx=document.getElementById('dx'),op=document.getElementById('op'),chips=document.getElementById('comorbidityChips');
-function load(k,f){try{const x=JSON.parse(localStorage.getItem(k)||'null');return Array.isArray(x)&&x.length?x:f}catch(e){return f}}
-function save(){localStorage.setItem(LS_SC,JSON.stringify(scenarios));localStorage.setItem(LS_CO,JSON.stringify(comorbidities))}
-function activeY(v){return String(v??'Y').trim().toUpperCase()!=='N'}
-function esc(s){return String(s??'').replace(/[&<>\"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
-function parts(s){return String(s||'').split('|').map(x=>x.trim()).filter(Boolean)}
-function showView(id){views.forEach(v=>v.classList.toggle('active',v.id===id));document.getElementById('topDesc').textContent=id==='homeView'?'진단·수술과 기저질환을 선택하면 질환별 환자교육 화면으로 이동합니다.':id==='adminView'?'Excel로 교육 콘텐츠를 관리하는 화면입니다.':'선택한 질환에 맞는 환자교육 자료입니다.';window.scrollTo(0,0)}
-
-function applyDefaultVideoPaths(){
-  const defaultsById=Object.fromEntries(DEFAULT_SCENARIOS.map(s=>[String(s.Scenario_ID),s]));
-  let changed=false;
-  scenarios.forEach(s=>{
-    const d=defaultsById[String(s.Scenario_ID)];
-    if(!d)return;
-    if(!String(s.Anatomy_Video_URL||'').trim() && String(d.Anatomy_Video_URL||'').trim()){
-      s.Anatomy_Video_URL=d.Anatomy_Video_URL;
-      changed=true;
-    }
-    if(!String(s.Procedure_Video_URL||'').trim() && String(d.Procedure_Video_URL||'').trim()){
-      s.Procedure_Video_URL=d.Procedure_Video_URL;
-      changed=true;
-    }
-  });
-  if(changed)save();
-}
-applyDefaultVideoPaths();
-
-function renderHome(){
- const active=scenarios.filter(x=>activeY(x.Active));
- const diagnoses=[...new Set(active.map(x=>x.Diagnosis).filter(Boolean))];
- const prev=dx.value;dx.innerHTML=diagnoses.map(v=>`<option value="${esc(v)}">${esc(v)}</option>`).join('');if(diagnoses.includes(prev))dx.value=prev;fillOps();
- chips.innerHTML=comorbidities.filter(x=>activeY(x.Active)).map(c=>`<div class="chip"><input type="checkbox" id="co_${esc(c.Keyword)}" value="${esc(c.Keyword)}"><label for="co_${esc(c.Keyword)}">${esc(c.Display_Name||c.Keyword)}</label></div>`).join('');
- document.getElementById('scenarioCount').textContent=active.length;document.getElementById('comorbCount').textContent=comorbidities.filter(x=>activeY(x.Active)).length;
-}
-function fillOps(){const active=scenarios.filter(x=>activeY(x.Active)&&x.Diagnosis===dx.value);op.innerHTML=active.map(x=>`<option value="${esc(x.Scenario_ID)}">${esc(x.Procedure)}</option>`).join('')}
-function selectedComorbidities(){const keys=[...chips.querySelectorAll('input:checked')].map(x=>x.value);return comorbidities.filter(c=>keys.includes(String(c.Keyword))&&activeY(c.Active))}
-function youtubeEmbed(url){if(!url)return'';try{const u=new URL(url);let id='';if(u.hostname.includes('youtu.be'))id=u.pathname.split('/').filter(Boolean)[0]||'';if(u.hostname.includes('youtube.com')){if(u.pathname==='/watch')id=u.searchParams.get('v')||'';else if(u.pathname.startsWith('/embed/'))id=u.pathname.split('/embed/')[1].split('/')[0];else if(u.pathname.startsWith('/shorts/'))id=u.pathname.split('/shorts/')[1].split('/')[0]}return id?`https://www.youtube-nocookie.com/embed/${id}?rel=0`:''}catch(e){return''}}
-function videoBlock(label,url){
-  if(!url){
-    return `<div class="video"><b>${esc(label)}</b><span>등록된 영상 URL이 없습니다.</span></div>`;
-  }
-
-  const cleanUrl=String(url).trim();
-
-  // GitHub Pages 등에서 직접 재생하는 영상 파일
-  if(/\.(mp4|webm|ogg)(\?.*)?$/i.test(cleanUrl)){
-    return `
-      <div class="video">
-        <b>${esc(label)}</b>
-        <video controls playsinline preload="metadata"
-          style="width:100%;margin-top:10px;border-radius:12px;background:#000;display:block;">
-          <source src="${esc(cleanUrl)}">
-          이 브라우저에서는 영상을 재생할 수 없습니다.
-        </video>
-      </div>
-    `;
-  }
-
-  // YouTube 링크
-  const emb=youtubeEmbed(cleanUrl);
-  if(emb){
-    return `
-      <div class="video">
-        <b>${esc(label)}</b>
-        <div class="videoFrame">
-          <iframe
-            src="${esc(emb)}"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowfullscreen
-            loading="lazy"></iframe>
-        </div>
-      </div>
-    `;
-  }
-
-  return `
-    <div class="video">
-      <b>${esc(label)}</b>
-      <span>지원되는 영상 형식이 아닙니다.</span>
-      <a href="${esc(cleanUrl)}" target="_blank" rel="noopener"
-         style="display:inline-block;margin-top:8px;color:var(--blue);font-weight:800">
-         영상 열기
-      </a>
-    </div>
-  `;
-}
-function openEducation(){
-  const s=scenarios.find(x=>String(x.Scenario_ID)===String(op.value)&&activeY(x.Active));
-  if(!s){alert('선택한 수술에 대한 교육자료가 없습니다.');return;}
-
-  document.getElementById('eduDiagnosis').textContent=s.Diagnosis||'';
-  document.getElementById('eduProcedure').textContent=s.Procedure||'';
-  document.getElementById('eduAnatomyText').textContent=s.Anatomy_Text||'등록된 해부학 설명이 없습니다.';
-  document.getElementById('eduExplanation').textContent=s.Patient_Explanation||'';
-
-  document.getElementById('eduSurgeryPurpose').textContent=
-    s.Surgery_Purpose||'신경 압박을 줄이고 통증과 신경학적 증상을 개선하는 것이 수술의 주된 목적입니다.';
-
-  document.getElementById('eduApproachText').textContent=
-    s.Approach_Text||'병변의 위치와 수술 범위에 따라 적절한 접근법을 사용하여 신경 구조를 확인하고 치료합니다.';
-
-  document.getElementById('eduSteps').innerHTML=
-    parts(s.Surgery_Steps).map((t,i)=>`<div class="step"><div class="num">${i+1}</div><div class="text">${esc(t)}</div></div>`).join('')
-    ||'<div class="note">등록된 수술 단계가 없습니다.</div>';
-
-  document.getElementById('eduComplications').innerHTML=
-    parts(s.Complications).map(t=>`<div class="comp">${esc(t)}</div>`).join('')
-    ||'<div class="note">등록된 합병증 안내가 없습니다.</div>';
-
-  const cs=selectedComorbidities();
-  document.getElementById('eduComorbidities').innerHTML=
-    cs.length
-      ?cs.map(c=>`<div class="risk"><b>${esc(c.Display_Name||c.Keyword)}</b>${esc(c.Patient_Text||'')}</div>`).join('')
-      :'<div class="text" style="color:var(--muted)">선택한 기저질환이 없습니다.</div>';
-
-  document.getElementById('eduPostopCare').textContent=
-    s.Postop_Care||'수술 후 통증 조절과 보행을 단계적으로 진행하며 상처 상태와 신경학적 증상을 관찰합니다.';
-
-  document.getElementById('eduWarningSigns').innerHTML=
-    parts(s.Warning_Signs||'새로운 근력 저하|감각 저하가 급격히 악화되는 경우|대소변 조절의 갑작스러운 변화|고열 또는 수술 상처의 심한 발적·분비물')
-    .map(t=>`<div class="comp">${esc(t)}</div>`).join('');
-
-  document.getElementById('eduAnatomyVideo').innerHTML=
-    videoBlock('해부학 / 질환 설명 영상',s.Anatomy_Video_URL);
-
-  document.getElementById('eduProcedureVideo').innerHTML=
-    videoBlock('수술 및 접근법 설명 영상',s.Procedure_Video_URL);
-
-  document.getElementById('eduReferences').textContent=
-    s.Reference_Text||'Youmans & Winn Neurological Surgery; 대한신경외과학회 『신경외과학』의 일반 원칙을 바탕으로 환자교육용으로 재구성.';
-
-  showView('educationView');
-  showEduPage(1);
-}
-
-let currentEduPage=1;
-function showEduPage(page){
-  currentEduPage=page;
-  document.getElementById('eduPage1').style.display=page===1?'block':'none';
-  document.getElementById('eduPage2').style.display=page===2?'block':'none';
-  document.getElementById('eduPage3').style.display=page===3?'block':'none';
-  document.getElementById('eduProgressText').textContent=page+' / 3';
-  document.getElementById('eduProgressBar').style.width=(page*33.333)+'%';
-  document.getElementById('eduPrev').style.visibility=page===1?'hidden':'visible';
-  document.getElementById('eduNext').textContent=page===3?'처음으로':'다음';
-  window.scrollTo(0,0);
-}
-function cleanRows(rows){return rows.map(r=>{const o={};Object.keys(r||{}).forEach(k=>o[String(k).trim()]=typeof r[k]==='string'?r[k].trim():r[k]);return o})}
-function loadSheetJS(){
- return new Promise((resolve,reject)=>{
-  if(typeof XLSX!=='undefined'){resolve();return;}
-  const s=document.createElement('script');
-  s.src='https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js';
-  s.onload=()=>resolve();
-  s.onerror=()=>reject(new Error('Excel 라이브러리를 불러오지 못했습니다.'));
-  document.head.appendChild(s);
- });
-}
-async function importExcel(){
- const file=document.getElementById('excelFile').files[0],status=document.getElementById('importStatus');
- if(!file){status.textContent='먼저 Excel 파일을 선택해주세요.';return;}
- try{
-  await loadSheetJS();
-  const data=await file.arrayBuffer();
-  const wb=XLSX.read(data,{type:'array'});
-  if(!wb.Sheets['Scenarios']||!wb.Sheets['Comorbidities'])throw new Error('Scenarios / Comorbidities 시트가 모두 필요합니다.');
-  const sc=cleanRows(XLSX.utils.sheet_to_json(wb.Sheets['Scenarios'],{defval:''}));
-  const co=cleanRows(XLSX.utils.sheet_to_json(wb.Sheets['Comorbidities'],{defval:''}));
-  const reqSc=['Scenario_ID','Diagnosis','Procedure','Patient_Explanation','Surgery_Steps','Complications','Medical_Detail','Anatomy_Video_URL','Procedure_Video_URL','Active'];
-  const reqCo=['Keyword','Display_Name','Aliases','Patient_Text','Medical_Text','Active'];
-  if(!sc.length||!co.length)throw new Error('시트에 데이터 행이 없습니다.');
-  const missSc=reqSc.filter(k=>!(k in sc[0])),missCo=reqCo.filter(k=>!(k in co[0]));
-  if(missSc.length||missCo.length)throw new Error('필수 열 누락: '+[...missSc,...missCo].join(', '));
-  scenarios=sc;comorbidities=co;save();renderHome();
-  status.textContent=`반영 완료: 활성 시나리오 ${scenarios.filter(x=>activeY(x.Active)).length}개, 기저질환 ${comorbidities.filter(x=>activeY(x.Active)).length}개`;
-  status.className='status';
- }catch(e){status.textContent='업로드 실패: '+e.message;status.className='status danger';}
-}
-function bindApp(){
-  renderHome();
-  dx.addEventListener('change',fillOps);
-  document.getElementById('openEducation').onclick=function(e){
-    e.preventDefault();
-    try{
-      if(!op.value){fillOps();}
-      openEducation();
-    }catch(err){
-      console.error(err);
-      alert('교육자료 화면을 여는 중 오류가 발생했습니다: '+err.message);
-    }
-  };
-  async function exportExcel(){
-
-  try{
-
-    // SheetJS가 아직 로드되지 않았다면 불러오기
-    if(typeof XLSX === 'undefined'){
-
-      await new Promise((resolve,reject)=>{
-
-        const script = document.createElement('script');
-
-        script.src =
-          'https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js';
-
-        script.onload = resolve;
-
-        script.onerror = () =>
-          reject(new Error('Excel 라이브러리를 불러오지 못했습니다.'));
-
-        document.head.appendChild(script);
-
-      });
-
-    }
-
-
-    // -------------------------------
-    // 1. Scenarios 시트
-    // -------------------------------
-
-    const scenarioRows = scenarios.map(s => ({
-
-      Scenario_ID:
-        s.Scenario_ID || '',
-
-      Diagnosis:
-        s.Diagnosis || '',
-
-      Procedure:
-        s.Procedure || '',
-
-      Patient_Explanation:
-        s.Patient_Explanation || '',
-
-      Anatomy_Text:
-        s.Anatomy_Text || '',
-
-      Surgery_Purpose:
-        s.Surgery_Purpose || '',
-
-      Approach_Text:
-        s.Approach_Text || '',
-
-      Surgery_Steps:
-        s.Surgery_Steps || '',
-
-      Complications:
-        s.Complications || '',
-
-      Postop_Care:
-        s.Postop_Care || '',
-
-      Warning_Signs:
-        s.Warning_Signs || '',
-
-      Medical_Detail:
-        s.Medical_Detail || '',
-
-      Anatomy_Video_URL:
-        s.Anatomy_Video_URL || '',
-
-      Procedure_Video_URL:
-        s.Procedure_Video_URL || '',
-
-      Reference_Text:
-        s.Reference_Text || '',
-
-      Active:
-        s.Active || 'Y'
-
-    }));
-
-
-    // -------------------------------
-    // 2. Comorbidities 시트
-    // -------------------------------
-
-    const comorbidityRows = comorbidities.map(c => ({
-
-      Keyword:
-        c.Keyword || '',
-
-      Display_Name:
-        c.Display_Name || '',
-
-      Aliases:
-        c.Aliases || '',
-
-      Patient_Text:
-        c.Patient_Text || '',
-
-      Medical_Text:
-        c.Medical_Text || '',
-
-      Active:
-        c.Active || 'Y'
-
-    }));
-
-
-    // -------------------------------
-    // Excel workbook 생성
-    // -------------------------------
-
-    const wb = XLSX.utils.book_new();
-
-    const wsScenario =
-      XLSX.utils.json_to_sheet(scenarioRows);
-
-    const wsComorbidity =
-      XLSX.utils.json_to_sheet(comorbidityRows);
-
-
-    XLSX.utils.book_append_sheet(
-      wb,
-      wsScenario,
-      'Scenarios'
-    );
-
-    XLSX.utils.book_append_sheet(
-      wb,
-      wsComorbidity,
-      'Comorbidities'
-    );
-
-
-    // -------------------------------
-    // README 시트
-    // -------------------------------
-
-    const readmeRows = [
-
-      {
-        항목:'Scenarios',
-        설명:'진단·수술별 환자교육 콘텐츠'
-      },
-
-      {
-        항목:'Scenario_ID',
-        설명:'각 수술 시나리오의 고유 ID. 기존 내용을 수정하려면 같은 ID를 사용하세요.'
-      },
-
-      {
-        항목:'Surgery_Steps',
-        설명:'여러 단계는 | 기호로 구분합니다.'
-      },
-
-      {
-        항목:'Complications',
-        설명:'여러 합병증은 | 기호로 구분합니다.'
-      },
-
-      {
-        항목:'Warning_Signs',
-        설명:'여러 경고 증상은 | 기호로 구분합니다.'
-      },
-
-      {
-        항목:'Comorbidities',
-        설명:'기저질환별 추가 환자교육 콘텐츠'
-      },
-
-      {
-        항목:'Keyword',
-        설명:'기저질환의 고유 ID입니다.'
-      },
-
-      {
-        항목:'Active',
-        설명:'Y = 화면 표시 / N = 비활성'
-      }
-
-    ];
-
-    const wsReadme =
-      XLSX.utils.json_to_sheet(readmeRows);
-
-    XLSX.utils.book_append_sheet(
-      wb,
-      wsReadme,
-      'README'
-    );
-
-
-    // -------------------------------
-    // 파일명
-    // -------------------------------
-
-    const now = new Date();
-
-    const date =
-      now.getFullYear() +
-      '-' +
-      String(now.getMonth()+1).padStart(2,'0') +
-      '-' +
-      String(now.getDate()).padStart(2,'0');
-
-
-    XLSX.writeFile(
-      wb,
-      `환자교육_DB_${date}.xlsx`
-    );
-
-
-  }catch(e){
-
-    alert(
-      'Excel 내보내기에 실패했습니다.\n' +
-      e.message
-    );
-
-  }
-}
-  document.getElementById('exportExcel').onclick = exportExcel;
-  document.getElementById('eduPrev').onclick=()=>{if(currentEduPage>1)showEduPage(currentEduPage-1);};
-  document.getElementById('eduNext').onclick=()=>{if(currentEduPage<3)showEduPage(currentEduPage+1);else showView('homeView');};
-  document.getElementById('navHome').onclick=()=>showView('homeView');
-  document.getElementById('navAdmin').onclick=()=>showView('adminView');
-  document.querySelectorAll('[data-home]').forEach(b=>b.onclick=()=>showView('homeView'));
-  document.getElementById('importExcel').onclick=importExcel;
-  document.getElementById('resetData').onclick=()=>{
-    scenarios=JSON.parse(JSON.stringify(DEFAULT_SCENARIOS));
-    comorbidities=JSON.parse(JSON.stringify(DEFAULT_COMORBIDITIES));
-    save();renderHome();
-    const st=document.getElementById('importStatus');
-    st.textContent='기본 예시 데이터로 초기화했습니다.';st.className='status warn';
-  };
-}
-if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bindApp);else bindApp();
+const DATA={
+ aneurysm:{
+   ops:["개두술 및 뇌동맥류 결찰술","뇌동맥류 코일색전술 / 스텐트 보조 코일색전술"],
+   dx:"뇌혈관 일부가 국소적으로 부풀어 있는 뇌동맥류가 확인되었습니다.",
+   purpose:"치료의 목적은 동맥류가 파열되어 뇌지주막하출혈이 발생할 위험을 줄이는 것입니다. 치료 필요성은 동맥류의 크기·위치·모양, 환자의 나이와 동반질환, 과거력 등을 함께 고려하여 판단합니다.",
+   procedure:"선택한 치료법에 따라 개두 후 동맥류의 목을 클립으로 차단하거나, 혈관 안으로 카테터를 넣어 코일 또는 스텐트를 이용해 동맥류로 들어가는 혈류를 줄입니다.",
+   risks:["뇌경색 또는 혈관 폐색에 따른 신경학적 장애","수술/시술 중 또는 이후 출혈과 동맥류 파열","혈관 또는 주변 신경 구조물 손상","감염, 경련, 마취 관련 합병증","잔여 동맥류 또는 재발로 인한 추가 치료 가능성"],
+   alt:"상황에 따라 영상 추적 관찰, 다른 혈관내 치료법 또는 개두술을 대안으로 고려할 수 있습니다. 치료하지 않을 경우에도 동맥류가 평생 파열되지 않을 수 있으나, 파열 시 심각한 신경학적 장애나 사망을 초래할 수 있어 개별 위험을 비교해 결정합니다.",
+   note:"위치, neck/branch relationship, morphology, rupture risk factor와 선택 술식의 이유를 실제 영상과 함께 확인."
+ },
+ tumor:{
+   ops:["개두술 및 뇌종양 제거술","정위적 조직검사"],
+   dx:"뇌 안 또는 뇌를 둘러싼 구조에 종양성 병변이 확인되었습니다.",
+   purpose:"수술의 목적은 가능한 범위에서 종양을 제거하여 조직학적 진단을 얻고, 종양에 의한 압박과 신경학적 증상을 줄이며 이후 치료 계획을 세우는 것입니다. 병변의 위치에 따라 완전 제거보다 신경 기능 보존이 우선될 수 있습니다.",
+   procedure:"전신마취 후 병변 위치에 맞는 두개골 절개를 시행하고, 정상 뇌와 주요 혈관·신경을 보호하면서 종양을 제거합니다. 필요에 따라 내비게이션, 신경계 감시, 형광 또는 기타 보조 장비를 사용할 수 있습니다.",
+   risks:["출혈 또는 뇌경색","병변 위치와 관련된 운동·감각·언어·시야 등 신경학적 장애","뇌부종, 경련, 의식 저하","감염 및 뇌척수액 누출","잔여 종양, 재발 또는 추가 치료 필요 가능성"],
+   alt:"병변의 종류와 임상 상황에 따라 관찰, 방사선치료, 항암치료 또는 조직검사만 시행하는 방법이 대안이 될 수 있습니다. 치료하지 않을 경우 종양의 성장이나 부종으로 증상이 진행할 가능성이 있습니다.",
+   note:"eloquent area, vessel/cranial nerve relationship, expected extent of resection, pathology uncertainty를 환자별로 강조."
+ },
+ disc:{
+   ops:["요추 디스크 제거술 · 내시경/미세현미경"],
+   dx:"허리 디스크 안쪽의 수핵이 바깥으로 밀려나와 신경근을 압박하는 병변이 확인되었습니다.",
+   purpose:"수술의 주된 목적은 눌린 신경을 감압하여 다리로 뻗치는 통증, 저림 또는 근력저하를 호전시키는 것입니다. 이미 오래 지속된 신경 손상은 수술 후에도 완전히 회복되지 않을 수 있습니다.",
+   procedure:"전신마취 후 병변 위치를 확인하고 작은 절개 또는 내시경 통로로 접근하여 신경을 보호하면서 탈출된 디스크 조각을 제거합니다.",
+   risks:["수술 부위 출혈 또는 혈종","감염 및 상처 문제","신경근 손상에 따른 통증·감각저하·근력저하","경막 손상 및 뇌척수액 누출","잔여 증상 또는 디스크 재발과 재수술 가능성"],
+   alt:"약물치료, 물리치료, 신경차단술 등 보존적 치료를 계속할 수 있습니다. 진행하는 근력저하나 마미증후군 등에서는 수술 필요성이 높아질 수 있습니다.",
+   note:"level/side와 실제 증상·neurologic deficit의 concordance를 확인하고 수술이 주로 radicular symptom을 목표로 함을 설명."
+ },
+ stenosis:{
+   ops:["요추 감압술","요추 감압술 및 유합술"],
+   dx:"허리의 신경이 지나가는 척추관 또는 신경공이 좁아져 신경이 압박되는 상태입니다.",
+   purpose:"수술의 목적은 신경을 압박하는 구조물을 제거해 보행 시 다리 통증과 저림을 줄이고 신경 기능 악화를 막는 것입니다. 불안정성이 있는 경우 유합술을 함께 시행할 수 있습니다.",
+   procedure:"허리 뒤쪽으로 접근하여 후궁 일부, 두꺼워진 인대 또는 필요 시 후관절 일부를 제거해 신경을 감압합니다. 유합이 필요한 경우 나사·금속봉과 골이식을 사용할 수 있습니다.",
+   risks:["출혈 및 수술 후 혈종","감염 및 상처 문제","신경 손상에 따른 감각저하·통증·근력저하","경막 손상 및 뇌척수액 누출","불완전한 증상 호전 또는 재협착","유합술 시 나사 위치 이상, 불유합, 인접 분절 질환"],
+   alt:"약물, 재활, 주사치료 등 보존적 치료가 대안이 될 수 있습니다. 신경 압박이 지속되면 통증과 보행장애가 지속되거나 일부에서는 신경학적 기능이 악화될 수 있습니다.",
+   note:"central/foraminal/lateral recess 위치, instability 여부, decompression 범위와 fusion 필요성을 구분해 설명."
+ }
+};
+const comorb={
+ htn:["고혈압","수술 전후 혈압 변화와 출혈·심혈관계 위험을 함께 고려합니다."],
+ dm:["당뇨","감염과 상처 회복 지연 위험 및 수술 전후 혈당 관리가 중요합니다."],
+ stroke:["뇌경색 병력","기존 신경학적 상태와 항혈소판제 사용, 추가 허혈성 사건 위험을 고려합니다."],
+ cad:["관상동맥질환","마취 및 수술 전후 심혈관계 위험과 약제 조정을 함께 평가합니다."],
+ ap:["항혈소판제 복용","중단 시 혈전 위험과 유지 시 출혈 위험을 비교하여 중단·재개 계획을 결정합니다."],
+ ac:["항응고제 복용","수술 출혈 위험과 혈전색전 위험을 함께 고려하여 중단·bridging·재개 계획을 결정합니다."]
+};
+const $=id=>document.getElementById(id);
+const DOMAIN={common:"공통 주요 합병증",lumbar:'요추 공통 (디스크·협착증)',aneurysm:'비파열성 뇌동맥류',tumor:'뇌종양',disc:'요추 추간판 탈출증',stenosis:'요추 척추관 협착증'};
+const GROUP={aneurysm:'뇌혈관',tumor:'뇌종양',disc:'척추',stenosis:'척추'};
+const CATS={anatomy:'정상 해부학',lesion:'질환·병변 위치',approach:'수술 접근법',procedure:'수술·시술 과정',risk:'합병증',aftercare:'회복·주의사항'};
+const OPS={common:[],lumbar:['discectomy','decompression','fusion'],aneurysm:['clip','coil','stentcoil'],tumor:['resection','biopsy'],disc:['discectomy'],stenosis:['decompression','fusion']};
+const OP_NAMES={clip:'개두술 및 뇌동맥류 결찰술',coil:'뇌동맥류 코일색전술',stentcoil:'스텐트 보조 코일색전술',resection:'개두술 및 뇌종양 제거술',biopsy:'정위적 조직검사',discectomy:'요추 디스크 제거술 · 내시경/미세현미경',decompression:'요추 감압술',fusion:'요추 감압술 및 유합술'};
+const PROCEDURES={clip:'개두 후 동맥류의 목에 클립을 적용하여 동맥류로 들어가는 혈류를 차단합니다.',coil:'혈관 안으로 카테터를 넣고 동맥류 내부에 코일을 삽입합니다.',stentcoil:'혈관 안으로 카테터를 넣고 스텐트로 코일을 지지하면서 동맥류 내부에 코일을 삽입합니다.',biopsy:'영상으로 병변의 위치를 확인하고 조직 일부를 채취하여 병리검사를 시행합니다.',resection:DATA.tumor.procedure,discectomy:DATA.disc.procedure,decompression:'신경을 압박하는 뼈·인대 등의 일부를 제거하여 신경이 지나가는 공간을 넓힙니다.',fusion:DATA.stenosis.procedure};
+const RISKS={aneurysm:['출혈 및 파열','뇌경색','신경손상','감염','경련','잔여·재발','추가치료','중증 장애·사망'],tumor:['출혈','뇌경색','신경기능 저하','뇌부종','경련','감염','뇌척수액 누출','추가치료','중증 장애·사망'],disc:['출혈·혈종','감염','신경손상','경막손상·뇌척수액 누출','잔여 증상','재발·재수술'],stenosis:['출혈·혈종','감염','신경손상','경막손상·뇌척수액 누출','잔여 증상','재협착']};
+const MAX=40*1024*1024;const mediaCache=new WeakMap();
+let assets=[],feedback={},db=null,editing=null,generated=false,patientFiles=[],patientURLs=[],objectURLs=[],snapshot=null;
+function el(tag,cls,text){const n=document.createElement(tag);if(cls)n.className=cls;if(text!==undefined)n.textContent=text;return n}
+function button(text,fn,cls='btn ghost small'){const b=el('button',cls,text);b.type='button';b.onclick=fn;return b}
+let toastTimer;function toast(t){$('toast').textContent=t;$('toast').style.display='block';clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').style.display='none',5000)}
+function show(id){document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v.id===id));window.scrollTo(0,0);if(id==='assetView')renderLibrary()}
+function fillOps(){const d=$('dx').value;$('op').replaceChildren(...OPS[d].map(k=>{const o=el('option','',OP_NAMES[k]);o.value=k;return o}));$('category').value=GROUP[d]}
+function fillAssetOps(){const all=el('option','','공통 · 특정 술식 제한 없음');all.value='';$('assetProcedure').replaceChildren(all,...(OPS[$('assetDomain').value]||[]).map(k=>{const o=el('option','',OP_NAMES[k]);o.value=k;return o}))}
+$('dx').onchange=fillOps;$('category').onchange=()=>{const d=Object.keys(GROUP).find(k=>GROUP[k]===$('category').value);$('dx').value=d;fillOps()};$('assetDomain').onchange=fillAssetOps;fillOps();fillAssetOps();
+function openDB(){return new Promise((resolve,reject)=>{const req=indexedDB.open('neuroConsentV3',1);req.onupgradeneeded=()=>{req.result.createObjectStore('assets',{keyPath:'id'});req.result.createObjectStore('settings')};req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error)})}
+function readDB(store,key){return new Promise((res,rej)=>{const tx=db.transaction(store);const req=key===undefined?tx.objectStore(store).getAll():tx.objectStore(store).get(key);req.onsuccess=()=>res(req.result);req.onerror=()=>rej(req.error)})}
+function writeDB(store,data,key,remove=false){return new Promise((res,rej)=>{const tx=db.transaction(store,'readwrite'),s=tx.objectStore(store);if(remove)s.delete(key);else if(key!==undefined)s.put(data,key);else s.put(data);tx.oncomplete=res;tx.onerror=()=>rej(tx.error);tx.onabort=()=>rej(tx.error)})}
+function storageStatus(){ $('storageStatus').textContent=db?'이 브라우저에 저장 중 · 기기 간 자동 동기화 없음':'브라우저 저장을 사용할 수 없습니다. 현재 화면에서만 보관되므로 자료 포함 HTML로 다운로드하세요.'}
+function safeURL(v,base){v=String(v||'').trim();if(!v)return '';if(/^data:(image\/(png|jpeg|webp|gif)|video\/(mp4|webm));base64,[a-z0-9+/=\s]+$/i.test(v))return v;if(/^(https?:)\/\//i.test(v))return new URL(v).href;if(/^(?:[a-z][a-z0-9+.-]*:|\/\/|\/|\\)/i.test(v)||v.includes('\\')||v.includes('..')||/[<>"\r\n]/.test(v))throw Error('안전한 HTTPS 주소 또는 media/파일명 형식을 사용하세요.');return base?new URL(v,base).href:v}
+function normalize(t){return String(t).toLowerCase().replace(/중대뇌동맥/g,'mca').replace(/전교통동맥/g,'acom').replace(/후교통동맥/g,'pcom').replace(/내경동맥/g,'ica').replace(/측두엽/g,'temporal').replace(/전두엽/g,'frontal').replace(/두정엽/g,'parietal').replace(/후두엽/g,'occipital').replace(/소뇌/g,'cerebellum').replace(/추간공/g,'foraminal').replace(/분지부/g,'bifurcation').replace(/테리오날/g,'pterional').replace(/[‐–—]/g,'-').replace(/\s+/g,' ').trim()}
+function splitTags(v){return [...new Set(v.split(/[,;\n]/).map(normalize).filter(Boolean))]}
+function context(){const sites=detectLocations($('location').value);return {sites,domain:$('dx').value,procedure:$('op').value,side:$('side').value,age:$('age').value===''?null:Number($('age').value),sex:$('sex').value,text:normalize([$ ('location').value,$('approach').value,...sites].join(' '))}}
+function matchesTag(text,t){const i=text.indexOf(t);if(i<0)return false;if(/^[a-z0-9 -]+$/.test(t))return (i===0||!/\w/.test(text[i-1]))&&(i+t.length===text.length||!/\w/.test(text[i+t.length]));return true}
+function score(a,c){if(a.aneurysmOnly&&c.domain!=='aneurysm')return null;if(!a.reviewed||!(a.domain===c.domain||a.domain==='common'&&a.category==='risk'||a.domain==='lumbar'&&['disc','stenosis'].includes(c.domain)))return null;if(a.procedure&&a.procedure!==c.procedure)return null;if(a.locationKey&&!c.sites.includes(a.locationKey))return null;if(a.side&&a.side!==c.side)return null;if(a.sex&&a.sex!==c.sex)return null;if((a.minAge!==null||a.maxAge!==null)&&c.age===null)return null;if(a.minAge!==null&&c.age<a.minAge||a.maxAge!==null&&c.age>a.maxAge)return null;const hits=a.tags.filter(t=>matchesTag(c.text,normalize(t)));if(a.tags.length&&!hits.length)return null;const f=feedback[c.domain+'|'+c.procedure+'|'+a.id]||0;return {...a,score:10+hits.length*6+(a.procedure?5:0)+Math.max(-2,Math.min(2,f)),reason:[a.procedure?'술식 일치':'질환 공통',...hits].join(' · ')}}
+function recommend(c,cat){return assets.map(a=>score(a,c)).filter(a=>a&&cat.includes(a.category)&&!a.riskKey).sort((a,b)=>b.score-a.score||a.title.localeCompare(b.title)).slice(0,8)}
+function mediaURL(a){if(a.blob){if(mediaCache.has(a.blob))return mediaCache.get(a.blob);const u=URL.createObjectURL(a.blob);objectURLs.push(u);mediaCache.set(a.blob,u);return u}return a.url}
+function mediaCard(a,manage=false){const card=el('article','mediaCard');const m=document.createElement(a.type==='video'?'video':'img');if(a.type==='video'){m.controls=true;m.preload='metadata';m.playsInline=true}else{m.alt=a.title;m.loading='lazy'}m.src=mediaURL(a);m.onerror=()=>{if(!card.querySelector('.loadError'))card.prepend(el('div','empty loadError','자료를 읽을 수 없습니다. 파일 주소·네트워크·영상 형식을 확인하세요.'))};card.append(m);const meta=el('div','meta');meta.append(el('h3','',a.title));if(a.caption)meta.append(el('div','text',a.caption));meta.append(el('div','note',(CATS[a.category]||'미분류')+' · '+(DOMAIN[a.domain]||'질환 미분류')));if(manage){if(a.legacyRiskKey)meta.append(el('div','note','기존 위치별 영상 · 주요 합병증 분류로 다시 확인하세요.'));meta.append(el('div',a.reviewed?'status':'risk',a.reviewed?'자동 추천에 사용 중':'분류 확인 필요 · 추천 제외'));if(a.locationKey)meta.append(el('div','note',LOCATIONS[a.locationKey].name));if(a.procedure)meta.append(el('div','note',OP_NAMES[a.procedure]));}if(a.reason)meta.append(el('div','note','추천 근거: '+a.reason));meta.append(el('div','note',[a.source,a.license].filter(Boolean).join(' · ')||'출처 미기재'));const actions=el('div','actions');actions.append(button('크게 보기',()=>presentMedia(a)));if(manage){actions.append(button('수정',()=>editAsset(a)),button('삭제',async()=>{if(!confirm('이 교육 자료를 삭제할까요?'))return;try{if(db)await writeDB('assets',null,a.id,true);assets=assets.filter(x=>x.id!==a.id);renderLibrary();if(generated)renderRecommendations()}catch(e){toast('삭제 실패: '+e.message)}},'btn ghost small deleteAsset'))}else{const use=button('사용',()=>rate(a.id,1),'btn ghost small feedback'),skip=button('제외',()=>rate(a.id,-1),'btn ghost small feedback');actions.append(use,skip)}meta.append(actions);card.append(meta);return card}
+let activeCategory='';
+function renderLibrary(){const q=normalize($('assetSearch').value),domain=$('domainFilter').value,status=$('reviewFilter').value;$('assetCount').textContent=assets.length;const reviewed=assets.filter(a=>a.reviewed).length;$('libraryStats').textContent=`전체 ${assets.length}개 · 이미지 ${assets.filter(a=>a.type==='image').length}개 · 동영상 ${assets.filter(a=>a.type==='video').length}개 · 추천 사용 ${reviewed}개 · 분류 확인 필요 ${assets.length-reviewed}개`;$('categoryFilters').replaceChildren();for(const [key,label] of [['','전체'],...Object.entries(CATS),['unknown','미분류']]){const count=assets.filter(a=>!key||(key==='unknown'?!a.category:a.category===key)).length;const b=button(label+' '+count,()=>{activeCategory=key;renderLibrary()},'btn ghost small categoryButton'+(activeCategory===key?' active':''));b.setAttribute('aria-pressed',String(activeCategory===key));$('categoryFilters').append(b)}const list=assets.filter(a=>(!activeCategory||(activeCategory==='unknown'?!a.category:a.category===activeCategory))&&(!domain||a.domain===domain)&&(!status||(status==='ready'?a.reviewed:!a.reviewed))&&normalize([a.title,...a.tags,DOMAIN[a.domain],LOCATIONS[a.locationKey]?.name,OP_NAMES[a.procedure]].join(' ')).includes(q));$('assetList').replaceChildren();for(const key of [...Object.keys(CATS),'']){const group=list.filter(a=>a.category===key);if(!group.length)continue;const section=el('section','categorySection');section.append(el('h3','',(CATS[key]||'미분류')+' · '+group.length+'개'));const grid=el('div','mediaGrid');group.forEach(a=>grid.append(mediaCard(a,true)));section.append(grid);$('assetList').append(section)}if(!list.length)$('assetList').append(el('div','empty',assets.length?'해당 조건의 자료가 없습니다.':'아직 등록된 자료가 없습니다. 아래에서 여러 파일을 한 번에 등록하세요.'))}
+
+function renderRecommendations(){if(!snapshot)return;renderLocationRisks();renderMajorRisks($('riskVisual'));for(const [id,cats] of [['diagnosisVisual',['anatomy','lesion']],['procedureVisual',['approach','procedure']],['aftercareVisual',['aftercare']]]){const list=recommend(snapshot,cats);$(id).replaceChildren(...list.map(a=>mediaCard(a)));if(!list.length)$(id).append(el('div','empty','조건에 맞는 등록 자료가 없습니다. 자료실에서 질환·술식과 위치 태그를 확인하세요.'))}}
+async function rate(id,n){if(!snapshot)return;const k=snapshot.domain+'|'+snapshot.procedure+'|'+id;feedback[k]=Math.max(-2,Math.min(2,(feedback[k]||0)+n));try{if(db)await writeDB('settings',feedback,'feedback');toast(n>0?'사용 피드백을 반영했습니다.':'제외 피드백을 반영했습니다.');renderRecommendations()}catch(e){toast('현재 화면에만 반영했습니다. 백업을 다운로드하세요.')}}
+async function init(){try{db=await openDB();assets=(await readDB('assets')).map(upgradeRiskAsset);feedback=(await readDB('settings','feedback'))||{}}catch(e){db=null}let embedded=[];try{embedded=JSON.parse($('embeddedAssets').textContent||'[]')}catch(e){toast('내장 자료를 읽을 수 없습니다.')}const embeddedText=$('embeddedAssets').textContent;let hash=0;for(let i=0;i<embeddedText.length;i++)hash=(hash*31+embeddedText.charCodeAt(i))|0;const importKey='embedded_'+hash;const imported=db?await readDB('settings',importKey):false;for(const raw of imported?[]:embedded){try{const a=validateAsset(raw);if(!assets.some(x=>x.id===a.id)){assets.push(a);if(db)await writeDB('assets',a)}}catch(e){toast('내장 자료 일부를 불러오지 못했습니다.')}}if(db&&!imported)await writeDB('settings',true,importKey);storageStatus();renderLibrary()}
+function renderPatient(){for(const u of patientURLs)URL.revokeObjectURL(u);patientURLs=[];$('patientGallery').replaceChildren();for(const f of patientFiles){const u=URL.createObjectURL(f);patientURLs.push(u);const c=el('article','mediaCard');if(f.type==='application/pdf'){const a=el('a','btn ghost small','선택한 환자 PDF 열기');a.href=u;a.target='_blank';a.rel='noopener';c.append(a)}else{const img=el('img');img.src=u;img.alt='현재 환자 영상';c.append(img);c.append(button('환자 영상 크게 보기',()=>{openPresenter('환자 영상','');const im=el('img');im.src=u;im.alt='현재 환자 영상';im.style='width:100%;max-height:75vh;object-fit:contain';$('pVisual').append(im)}))}c.append(el('div','note','현재 환자 영상 · 임시 표시'));$('patientGallery').append(c)}}
+$('patientFiles').onchange=()=>{patientFiles=[...$('patientFiles').files].filter(f=>/^(image\/(png|jpeg|webp)|application\/pdf)$/.test(f.type));$('patientFileCount').textContent=patientFiles.length+'개 선택 · 새 환자 버튼으로 제거'};
+function generate(){if(!$('age').checkValidity()){$('age').reportValidity();return}snapshot=context();const d=DATA[snapshot.domain],loc=$('location').value.trim(),appr=$('approach').value.trim(),spec=$('specific').value.trim();$('rTitle').textContent=DOMAIN[snapshot.domain];$('rSub').textContent=OP_NAMES[snapshot.procedure];$('rPatient').textContent=[snapshot.age===null?'나이 미입력':snapshot.age+'세',snapshot.sex||'성별 미입력'].join(' · ');$('rLesion').textContent=(loc||'위치 미입력')+' · '+snapshot.side;$('rApproach').textContent=appr||'미입력';$('rSpecific').textContent=spec||'없음';$('diagnosisText').textContent=d.dx+(loc?' 병변 위치: '+snapshot.side+' '+loc+'.':'');$('diagnosisNote').textContent=d.note;$('purposeText').textContent=snapshot.procedure==='biopsy'?'조직을 채취하여 진단을 확인하고 이후 치료 계획을 세우기 위한 검사입니다. 종양 제거를 목적으로 하는 수술과는 구분됩니다.':d.purpose;$('procedureText').textContent=PROCEDURES[snapshot.procedure]+(appr?' 접근법: '+appr:'');let risks=[...RISKS[snapshot.domain]];if(snapshot.procedure==='fusion')risks.push('나사 위치 이상','불유합','인접 분절 질환');$('riskList').replaceChildren(...risks.map(t=>el('span','risk',t)));$('patientRiskList').replaceChildren();for(const i of document.querySelectorAll('.chip input:checked')){const box=el('div','patientRisk');box.append(el('b','',comorb[i.value][0]),el('div','',comorb[i.value][1]));$('patientRiskList').append(box)}const box=el('div','patientRisk');box.append(el('b','','추가 설명'),el('div','',spec||'입력된 추가 사항 없음'));$('patientRiskList').append(box);$('alternativeText').textContent=d.alt;generated=true;renderPatient();renderRecommendations();show('resultView')}
+$('generateBtn').onclick=generate;$('backBtn').onclick=()=>show('inputView');$('navInput').onclick=()=>show('inputView');$('navResult').onclick=()=>{if(generated)show('resultView');else generate()};$('navAssets').onclick=()=>show('assetView');$('assetSearch').oninput=renderLibrary;
+function openPresenter(title,body){$('pTitle').textContent=title;$('pBody').textContent=body;$('pVisual').replaceChildren();$('pVisual').style.display='block';$('presenter').classList.add('active');$('closePresenter').focus()}
+function closePresenter(){$('presenter').classList.remove('active');$('pVisual').querySelectorAll('video').forEach(v=>v.pause());$('pVisual').replaceChildren()}
+function presentMedia(a){openPresenter(a.title,a.caption||'');$('pVisual').append(mediaCard(a))}
+$('closePresenter').onclick=closePresenter;document.addEventListener('keydown',e=>{if(e.key==='Escape')closePresenter()});
+document.querySelectorAll('[data-present]').forEach(b=>b.onclick=()=>{const k=b.dataset.present;const map={diagnosis:['진단 및 병변 위치','diagnosisText','diagnosisVisual'],purpose:['치료 목적과 필요성','purposeText'],procedure:['수술 / 시술 방법','procedureText','procedureVisual'],risk:['주요 합병증 및 위험','riskList','riskVisual'],alternative:['대안 및 치료하지 않을 경우','alternativeText','aftercareVisual']};const [t,id,visual]=map[k];openPresenter(t,k==='risk'?[...$('riskList').children].map(x=>x.textContent).join(' · '):$(id).textContent);if(k==='diagnosis')for(const img of $('patientGallery').querySelectorAll('img')){$('pVisual').append(img.cloneNode(true))}if(visual&&k!=='risk'){const cats={diagnosis:['anatomy','lesion'],procedure:['approach','procedure'],risk:['risk'],alternative:['aftercare']}[k];for(const a of recommend(snapshot,cats))$('pVisual').append(mediaCard(a))}if(k==='risk'){renderMajorRisks($('pVisual'),true);appendLocationText($('pVisual'));}if(!$('pVisual').children.length)$('pVisual').style.display='none'});
+function updateProgress(){$('checkProgress').textContent=document.querySelectorAll('.checklist input:checked').length+' / 8 설명 완료'}document.querySelectorAll('.checklist input').forEach(i=>i.onchange=updateProgress);
+$('resetPatient').onclick=()=>{for(const id of ['age','sex','location','approach','specific','patientFiles'])$(id).value='';document.querySelectorAll('.chip input,.checklist input').forEach(i=>i.checked=false);document.querySelector('.checklist textarea').value='';$('dx').value='aneurysm';fillOps();$('side').selectedIndex=0;patientFiles=[];for(const u of patientURLs)URL.revokeObjectURL(u);patientURLs=[];$('patientGallery').replaceChildren();$('patientFileCount').textContent='';for(const id of ['rTitle','rSub','rPatient','rLesion','rApproach','rSpecific','diagnosisText','diagnosisNote','purposeText','procedureText','riskList','patientRiskList','alternativeText','diagnosisVisual','procedureVisual','riskVisual','aftercareVisual','locationRiskSection','locationHint'])$(id).replaceChildren();generated=false;snapshot=null;updateProgress();closePresenter();show('inputView');toast('새 환자 입력을 준비했습니다.')};
+function validateAsset(raw,base){raw=upgradeRiskAsset(raw);if(!raw||typeof raw!=='object')throw Error('자료 형식이 올바르지 않습니다.');const a={id:typeof raw.id==='string'&&/^[\w-]{1,100}$/.test(raw.id)?raw.id:'a_'+crypto.randomUUID(),title:String(raw.title||'').slice(0,200),fileKey:String(raw.fileKey||'').slice(0,500),domain:raw.domain,category:raw.category,procedure:raw.procedure||'',type:raw.type,tags:Array.isArray(raw.tags)?raw.tags.map(t=>normalize(String(t))).filter(Boolean).slice(0,30):[],side:raw.side||'',sex:raw.sex||'',minAge:raw.minAge==null||raw.minAge===''?null:Number(raw.minAge),maxAge:raw.maxAge==null||raw.maxAge===''?null:Number(raw.maxAge),source:String(raw.source||'').slice(0,500),license:String(raw.license||'').slice(0,200),caption:String(raw.caption||'').slice(0,500),reviewed:raw.reviewed===true,locationKey:raw.locationKey||'',riskKey:raw.riskKey||'',legacyRiskKey:raw.legacyRiskKey||'',aneurysmOnly:raw.aneurysmOnly===true,url:safeURL(raw.url,base)};if(!a.title||(a.domain&&!DOMAIN[a.domain])||(a.category&&!CATS[a.category])||!['image','video'].includes(a.type)||(a.reviewed&&(!DOMAIN[a.domain]||!CATS[a.category])))throw Error('제목·질환·카테고리·유형·검토 여부를 확인하세요.');if(a.locationKey&&(!LOCATIONS[a.locationKey]||a.domain!=='aneurysm'))throw Error('동맥류 위치를 확인하세요.');if(a.domain==='common'&&a.category!=='risk')throw Error('공통 자료는 주요 합병증 카테고리로 등록하세요.');if(a.riskKey&&(a.category!=='risk'||!MAJOR_RISKS[a.riskKey]))throw Error('합병증 연결 항목을 확인하세요.');if(a.procedure&&!(OPS[a.domain]||[]).includes(a.procedure))throw Error('질환과 술식이 맞지 않습니다.');if(a.side&&!['좌측','우측'].includes(a.side)||a.sex&&!['여성','남성'].includes(a.sex))throw Error('좌우·성별 형식 오류');if([a.minAge,a.maxAge].some(n=>n!==null&&(!Number.isInteger(n)||n<0||n>120))||a.minAge!==null&&a.maxAge!==null&&a.minAge>a.maxAge)throw Error('나이 범위를 확인하세요.');if(raw.blob instanceof Blob){a.blob=raw.blob;a.url=''}if(!a.url&&!a.blob)throw Error('자료 파일 또는 주소가 필요합니다.');return a}
+$('assetForm').onsubmit=async e=>{e.preventDefault();const submit=e.submitter;submit.disabled=true;try{const file=$('assetFile').files[0];if(file&&file.size>MAX)throw Error('파일당 40MB 이하로 등록하세요.');if(file&&!/^(image\/(png|jpeg|webp|gif)|video\/(mp4|webm))$/.test(file.type))throw Error('지원하지 않는 파일 형식입니다.');const old=assets.find(a=>a.id===editing);const sites=detectLocations($('assetLocation').value);if($('assetLocation').value.trim()&&sites.length!==1)throw Error('자료에는 한 개의 동맥류 위치를 입력하세요. 예: A.com');const raw={aneurysmOnly:old?.aneurysmOnly||false,locationKey:sites[0]||'',riskKey:$('assetRiskKey').value,id:editing||'a_'+crypto.randomUUID(),title:$('assetTitle').value.trim(),domain:$('assetDomain').value,category:$('assetCategory').value,procedure:$('assetProcedure').value,tags:splitTags($('assetTags').value),side:$('assetSide').value,sex:$('assetSex').value,minAge:$('assetMinAge').value,maxAge:$('assetMaxAge').value,source:$('assetSource').value,license:$('assetLicense').value,caption:$('assetCaption').value,reviewed:$('assetReviewed').checked,type:file?(file.type.startsWith('video')?'video':'image'):$('assetType').value,url:file?'':$('assetUrl').value,blob:file||(!$('assetUrl').value?old?.blob:null)};const a=validateAsset(raw);if(db)await writeDB('assets',a);assets=assets.filter(x=>x.id!==a.id);assets.push(a);cancelEdit();renderLibrary();if(generated)renderRecommendations();toast('자료를 저장했습니다.')}catch(err){toast(err.message)}finally{submit.disabled=false}};
+function cancelEdit(){editing=null;$('assetForm').reset();fillAssetOps();fillRiskOptions();$('editHeading').textContent='사진·영상 등록';$('cancelEdit').hidden=true}
+function editAsset(a){$('singleEditor').open=true;editing=a.id;$('assetTitle').value=a.title;$('assetDomain').value=a.domain;fillAssetOps();$('assetProcedure').value=a.procedure;$('assetCategory').value=a.category;$('assetTags').value=a.tags.join(', ');$('assetSide').value=a.side;$('assetSex').value=a.sex;$('assetMinAge').value=a.minAge??'';$('assetMaxAge').value=a.maxAge??'';$('assetSource').value=a.source;$('assetLicense').value=a.license;$('assetCaption').value=a.caption;$('assetType').value=a.type;$('assetUrl').value=a.url;$('assetFile').value='';$('assetReviewed').checked=a.reviewed;$('assetLocation').value=LOCATIONS[a.locationKey]?.name||'';fillRiskOptions();$('assetRiskKey').value=a.riskKey||'';$('cancelEdit').hidden=false;$('editHeading').textContent='자료 수정 · 파일을 새로 선택하지 않으면 기존 파일 유지';$('assetForm').scrollIntoView({behavior:'smooth'})}
+$('cancelEdit').onclick=cancelEdit;
+$('resetFeedback').onclick=async()=>{if(!confirm('등록 자료는 유지하고 추천 피드백만 초기화할까요?'))return;try{if(db)await writeDB('settings',{},'feedback');feedback={};toast('추천 피드백을 초기화했습니다.');if(generated)renderRecommendations()}catch(e){toast('초기화 실패: '+e.message)}};
+function blobData(blob){return new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=()=>rej(r.error);r.readAsDataURL(blob)})}
+async function serializable(){const out=[];for(const a of assets){const {blob,...b}=a;if(blob)b.url=await blobData(blob);out.push(b)}return out}
+function download(name,data,type){const url=URL.createObjectURL(new Blob([data],{type}));const a=el('a');a.href=url;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),30000)}
+$('exportCatalog').onclick=async()=>{try{download('neuro_consent_assets.json',JSON.stringify({version:1,assets:await serializable()},null,2),'application/json');toast('자료목록을 다운로드했습니다.')}catch(e){toast('내보내기 실패: '+e.message)}};
+$('downloadExample').onclick=()=>download('assets_example.json',JSON.stringify({version:1,assets:[{id:'mca_clip_01',title:'MCA 결찰술 단계별 영상',domain:'aneurysm',category:'procedure',procedure:'clip',type:'video',url:'media/mca_clip_01.mp4',tags:['mca'],side:'',sex:'',minAge:null,maxAge:null,source:'직접 제작',license:'직접 제작',caption:'준비한 영상 파일로 주소를 바꾸세요.',reviewed:false}]},null,2),'application/json');
+async function importList(json,base){const rows=Array.isArray(json)?json:json.assets;if(!Array.isArray(rows)||rows.length>500)throw Error('최대 500개 자료 목록만 가져올 수 있습니다.');const checked=rows.map(r=>validateAsset(r,base));if(new Set(checked.map(a=>a.id)).size!==checked.length)throw Error('중복 자료 ID가 있습니다.');if(db)await new Promise((resolve,reject)=>{const tx=db.transaction('assets','readwrite');checked.forEach(a=>tx.objectStore('assets').put(a));tx.oncomplete=resolve;tx.onerror=()=>reject(tx.error);tx.onabort=()=>reject(tx.error)});const map=new Map(assets.map(a=>[a.id,a]));checked.forEach(a=>map.set(a.id,a));assets=[...map.values()];renderLibrary();if(generated)renderRecommendations();toast(checked.length+'개 자료를 가져왔습니다.')}
+$('importCatalog').onchange=async()=>{try{const f=$('importCatalog').files[0];if(!f)return;if(f.size>150*1024*1024)throw Error('자료목록 파일이 너무 큽니다.');await importList(JSON.parse(await f.text()))}catch(e){toast('가져오기 실패: '+e.message)}finally{$('importCatalog').value=''}};
+$('fetchCatalog').onclick=async()=>{const b=$('fetchCatalog');b.disabled=true;try{const url=safeURL($('catalogUrl').value);if(!/^https?:\/\//.test(url))throw Error('자료목록의 전체 HTTPS 주소를 입력하세요.');const r=await fetch(url,{signal:AbortSignal.timeout(20000),credentials:'omit',referrerPolicy:'no-referrer'});if(!r.ok)throw Error('HTTP '+r.status);const body=await r.text();if(body.length>150*1024*1024)throw Error('자료목록이 너무 큽니다.');await importList(JSON.parse(body),r.url||url)}catch(e){toast('불러오기 실패: 주소·CORS·네트워크·JSON 형식을 확인하세요. '+e.message)}finally{b.disabled=false}};
+$('exportHtml').onclick=async()=>{const b=$('exportHtml');b.disabled=true;try{toast('자료를 포함한 HTML을 준비합니다.');const list=await serializable();const doc=document.documentElement.cloneNode(true);doc.querySelector('#embeddedAssets').textContent=JSON.stringify(list).replace(/</g,'\\u003c');doc.querySelectorAll('input').forEach(i=>{i.removeAttribute('value');i.removeAttribute('checked')});doc.querySelectorAll('textarea').forEach(i=>i.textContent='');doc.querySelectorAll('option').forEach(i=>i.removeAttribute('selected'));doc.querySelectorAll('button').forEach(i=>i.removeAttribute('disabled'));for(const id of ['assetList','patientGallery','diagnosisVisual','procedureVisual','riskVisual','aftercareVisual','rTitle','rSub','rPatient','rLesion','rApproach','rSpecific','diagnosisText','diagnosisNote','purposeText','procedureText','riskList','patientRiskList','alternativeText','pTitle','pBody','pVisual','patientFileCount','locationRiskSection','locationHint','bulkRows','bulkMessage','bulkCount'])doc.querySelector('#'+id).replaceChildren();doc.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v.id==='inputView'));doc.querySelector('#bulkStage').hidden=true;doc.querySelector('#singleEditor').open=false;doc.querySelector('#presenter').classList.remove('active');doc.querySelector('#toast').style.display='none';doc.querySelector('#toast').textContent='';doc.querySelector('#cancelEdit').hidden=true;doc.querySelector('#editHeading').textContent='사진·영상 등록';doc.querySelector('#checkProgress').textContent='0 / 8 설명 완료';download('neuro_consent_final.html','<!doctype html>\n'+doc.outerHTML,'text/html');toast('자료 포함 HTML을 다운로드했습니다. 주소로 등록한 자료는 원본 주소에서 불러옵니다.')}catch(e){toast('HTML 내보내기 실패: '+e.message)}finally{b.disabled=false}};
+
+const LOCATIONS={
+ mca:{name:'MCA · 중대뇌동맥',risks:[
+ {id:'motor',label:'반대쪽 얼굴·팔·다리 마비',note:'M1 천공지 또는 M2 분지 허혈. 깊은 운동 경로 손상 시 심한 마비 가능.'},
+ {id:'sensory',label:'반대쪽 감각저하',note:'감각 피질 또는 피질하 경로 허혈.'},
+ {id:'language',label:'언어장애',note:'언어 우세반구 침범 시. 좌우만으로 우세반구를 단정하지 않음.'},
+ {id:'neglect',label:'공간무시·주의력 저하',note:'주로 비우세반구 침범과 관련.'},
+ {id:'visual',label:'시야장애',note:'시방사 등 시각 경로가 영향을 받는 경우.'}]},
+ acom:{name:'A.com · 전교통동맥',risks:[
+ {id:'memory',label:'기억력 저하',note:'Subcallosal artery 등 기저전뇌 천공지 손상과 관련.'},
+ {id:'behavior',label:'무기력·성격·판단력 변화',note:'기저전뇌·전두엽 회로 또는 ACA 영역 손상 시.'},
+ {id:'motor',label:'다리 위주 마비·편마비',note:'ACA 영역 손상은 다리 위주, Heubner artery 등 심부 분지 손상은 편마비 가능.'},
+ {id:'hypothalamic',label:'의식·체온·수분조절 이상',note:'시상하부 천공지 손상 시 발생 가능. 환자별 해부학에 따라 강조.'},
+ {id:'smell',label:'후각저하',note:'개두 결찰술의 전두엽 견인 및 후각신경 손상과 관련.',clipOnly:true}]},
+ pcom:{name:'P.com · 후교통동맥',risks:[
+ {id:'diplopia',label:'복시·안구운동장애',note:'동안신경(CN III) 관련. 기존 마비의 잔존·악화와 신규 발생을 구분.'},
+ {id:'ptosis',label:'눈꺼풀 처짐·동공 이상',note:'동안신경 손상 시. 신경 압박 자체로 수술 전부터 존재할 수도 있음.'},
+ {id:'motor',label:'반대쪽 마비·감각저하',note:'Pcom 천공지 및 인접 AChA의 허혈 위험을 영상으로 확인.'},
+ {id:'visual',label:'시야장애',note:'특히 fetal-type PCA가 Pcom에 의존하는 경우 혈류 저하·폐색에 주의.'},
+ {id:'memory',label:'기억·의식 저하',note:'시상 및 천공지 영역 허혈 시 가능.'}]},
+ acho:{name:'A.cho · 전맥락총동맥',risks:[
+ {id:'motor',label:'반대쪽 편마비',note:'AChA 영역의 내포 후각 등 운동 경로 허혈.'},
+ {id:'sensory',label:'반대쪽 감각저하',note:'AChA 영역 감각 경로 허혈.'},
+ {id:'visual',label:'반대쪽 동측반맹',note:'양쪽 눈에서 같은 방향의 시야가 줄어듦. 시삭·외측슬상체 등 관련.'}]},
+ basilar:{name:'Basilar top · 기저동맥 첨부',risks:[
+ {id:'consciousness',label:'의식저하·기억력 저하',note:'양측 시상 또는 상부 뇌간 천공지 허혈과 관련.'},
+ {id:'diplopia',label:'복시·안구운동장애·눈꺼풀 처짐',note:'동안신경 또는 중뇌 관련 경로 손상.'},
+ {id:'motor',label:'팔다리 마비',note:'중뇌 운동 경로 손상 범위에 따라 편측 또는 양측 가능.'},
+ {id:'visual',label:'시야장애',note:'P1/PCA 혈류 손상에 따른 후두엽·시각 경로 허혈.'},
+ {id:'ataxia',label:'균형·보행장애',note:'중뇌·소뇌 연결 경로 또는 인접 혈관 영역이 영향을 받는 경우.'}]}
+};
+function detectLocations(value){const t=String(value).toLowerCase().replace(/\b(lt|rt)\./g,'$1 ').replace(/[._-]/g,'').replace(/\s+/g,' ');const patterns={mca:/\bmca\b|중대뇌동맥|middle cerebral/,acom:/\ba ?co(?:m(?:m)?a?|a)\b|전교통|anterior communicating/,pcom:/\bp ?co(?:m(?:m)?a?|a)\b|후교통|posterior communicating/,acho:/\ba ?ch(?:o|a|oa)?\b|전맥락총|anterior choroidal/,basilar:/basilar\s*(top|tip|apex)|\bba\s*(top|tip|apex)\b|기저동맥\s*(첨부|끝|분지부)/};return Object.keys(patterns).filter(k=>patterns[k].test(t))}
+function locationRisks(key){return LOCATIONS[key].risks.filter(r=>!r.clipOnly||snapshot?.procedure==='clip')}
+const MAJOR_RISKS={hemorrhage:'출혈 및 파열',infarction:'뇌경색',nerve:'신경손상',infection:'감염',seizure:'경련'};
+function majorKeys(){return Object.keys(MAJOR_RISKS).filter(k=>['infarction','seizure'].includes(k)?['aneurysm','tumor'].includes(snapshot.domain):true)}
+function majorMedia(key){return assets.map(a=>score(a,snapshot)).filter(a=>a&&a.category==='risk'&&a.riskKey===key).sort((a,b)=>b.score-a.score).slice(0,4)}
+function renderMajorRisks(root,present=false){root.replaceChildren();if(!snapshot)return;const grid=el('div','mediaGrid');for(const key of majorKeys()){const card=el('section','card');card.append(el('h3','',MAJOR_RISKS[key]));const list=majorMedia(key);if(list.length)list.forEach(a=>card.append(mediaCard(a)));else card.append(el('div','note','등록된 영상·이미지 없음'));grid.append(card)}root.append(grid);const general=recommend(snapshot,['risk']);if(general.length){root.append(el('h3','','그 밖의 합병증 설명자료'));const extra=el('div','mediaGrid');general.forEach(a=>extra.append(mediaCard(a)));root.append(extra)}}
+function appendLocationText(root){if(snapshot.domain!=='aneurysm'||!snapshot.sites.length)return;root.append(el('h3','','위치별 추가 합병증 · 글로 설명'));for(const key of snapshot.sites){const box=el('div','card');box.append(el('h3','',LOCATIONS[key].name));const chips=el('div','chips');locationRisks(key).forEach(r=>chips.append(el('span','risk',r.label)));box.append(chips);root.append(box)}}
+function renderLocationRisks(){const root=$('locationRiskSection');root.replaceChildren();if(snapshot.domain!=='aneurysm')return;if(!snapshot.sites.length){root.append(el('div','note','위치 입력 시 위치별 추가 합병증을 글로 보여줍니다.'));return}appendLocationText(root);const details=el('details','clinicianBox');details.append(el('summary','','의료진 참고'));for(const key of snapshot.sites)for(const r of locationRisks(key))details.append(el('div','',LOCATIONS[key].name+' · '+r.label+': '+r.note));root.append(details)}
+function fillRiskOptions(){const old=$('assetRiskKey').value,opt=el('option','','기타 / 종합 설명');opt.value='';$('assetRiskKey').replaceChildren(opt);for(const [key,label] of Object.entries(MAJOR_RISKS)){const o=el('option','',label);o.value=key;$('assetRiskKey').append(o)}$('assetRiskKey').value=MAJOR_RISKS[old]?old:''}
+window.addEventListener('DOMContentLoaded',fillRiskOptions);
+$('assetLocation').addEventListener('input',fillRiskOptions);
+$('location').addEventListener('input',()=>{const sites=detectLocations($('location').value);$('locationHint').textContent=$('dx').value==='aneurysm'?(sites.length?'인식: '+sites.map(k=>LOCATIONS[k].name).join(' / '):'위치를 입력하면 관련 항목이 연결됩니다.'):'';const t=$('location').value.toLowerCase();if(/\b(lt|left)\b|좌측/.test(t))$('side').value='좌측';else if(/\b(rt|right)\b|우측/.test(t))$('side').value='우측';else if(sites.length===1&&['acom','basilar'].includes(sites[0]))$('side').value='중앙 / 해당 없음'});
+function buildLocationGuide(){$('locationGuide').replaceChildren();$('clinicalSources').replaceChildren();for(const [key,l] of Object.entries(LOCATIONS)){const box=el('div','card');box.append(el('h3','',l.name));for(const r of l.risks){const line=el('div','text',r.label+(r.clipOnly?' · 개두 결찰술':'')+' — '+r.note);box.append(line)}$('locationGuide').append(box)}const links=[['MCA 허혈성 합병증','https://pubmed.ncbi.nlm.nih.gov/33462782/'],['MCA 기능장애','https://pmc.ncbi.nlm.nih.gov/articles/PMC10400477/'],['A.com 기억장애','https://pubmed.ncbi.nlm.nih.gov/25082820/'],['A.com 해부학·천공지','https://www.frontiersin.org/journals/neurology/articles/10.3389/fneur.2020.01020/full'],['A.com 후각','https://pubmed.ncbi.nlm.nih.gov/26274995/'],['P.com 허혈','https://pmc.ncbi.nlm.nih.gov/articles/PMC9670603/'],['P.com 동안신경 손상','https://pmc.ncbi.nlm.nih.gov/articles/PMC7192810/'],['A.cho 허혈 증후군','https://pubmed.ncbi.nlm.nih.gov/3790969/'],['Basilar top 천공지·동안신경','https://pubmed.ncbi.nlm.nih.gov/25862105/']];$('clinicalSources').append(el('b','','임상 참고문헌 · 2026-09-29 확인'));for(const [t,u] of links){const a=el('a','',t);a.href=u;a.target='_blank';a.rel='noopener noreferrer';a.style='display:block;margin:7px 0';$('clinicalSources').append(a)}}
+window.addEventListener('DOMContentLoaded',buildLocationGuide);
+
+function upgradeRiskAsset(a){if(a?.category==='risk'&&a.riskKey==='rupture')a={...a,riskKey:'hemorrhage',aneurysmOnly:true};if(a&&a.category==='risk'&&a.riskKey&&!['hemorrhage','infarction','nerve','infection','seizure'].includes(a.riskKey))return {...a,legacyRiskKey:a.riskKey,riskKey:'',reviewed:false};return a}
+window.neuroConsent={recommend,validateAsset,normalize,detectLocations};
+let staged=[];
+function guessFile(file){const raw=(file.webkitRelativePath||file.name).replace(/\.[^.]+$/,'');const t=raw.toLowerCase().replace(/[_/\\-]+/g,' ');const sites=detectLocations(t);const has=re=>re.test(t);let procedure='',domain='',category='',riskKey='';
+const procedures=[['stentcoil',/stent|스텐트/],['clip',/clipping|\bclip\b|결찰|클립/],['coil',/coiling|\bcoil\b|색전|코일/],['biopsy',/biopsy|조직검사/],['resection',/resection|종양.*제거/],['discectomy',/discectomy|디스크.*제거|추간판.*제거/],['fusion',/fusion|tlif|plif|유합/],['decompression',/decompression|감압/]].filter(([,re])=>has(re)).map(([k])=>k);
+if(procedures.includes('stentcoil')){const i=procedures.indexOf('coil');if(i>=0)procedures.splice(i,1)}if(procedures.includes('fusion')){const i=procedures.indexOf('decompression');if(i>=0)procedures.splice(i,1)}if(procedures.length===1)procedure=procedures[0];
+const domains=[];if(sites.length||has(/aneurysm|동맥류|뇌혈관/)||['clip','coil','stentcoil'].includes(procedure))domains.push('aneurysm');if(has(/tumor|glioma|meningioma|종양|수막종|교종/)||['biopsy','resection'].includes(procedure))domains.push('tumor');if(has(/\bdisc\b|디스크|추간판|hld|hivd/)||procedure==='discectomy')domains.push('disc');if(has(/stenosis|협착/)||['fusion','decompression'].includes(procedure))domains.push('stenosis');if(!domains.length&&has(/lumbar|요추|허리/))domains.push('lumbar');if(domains.length===1)domain=domains[0];if(domains.length===2&&domains.includes('disc')&&domains.includes('stenosis'))domain='lumbar';
+const categories=[['risk',/complication|\brisk\b|합병증|편마비|반맹|복시|후각|기억.*저하/],['aftercare',/aftercare|recovery|회복|주의사항|퇴원/],['anatomy',/anatomy|해부|정상/],['approach',/approach|접근/],['lesion',/lesion|병변|질환|압박|compression/],['procedure',/procedure|수술과정|수술방법|시술과정/]].filter(([,re])=>has(re)).map(([k])=>k);
+if(categories.length===1)category=categories[0];if(!categories.length&&procedure)category='procedure';
+const riskTerms=[['hemorrhage',/hemorrhage|bleeding|출혈|\brupture(?:d)?\b|(?:^|[^비])파열/],['infarction',/infarct|ischemia|뇌경색|허혈/],['nerve',/nerve.?injury|신경손상|신경 손상/],['infection',/infection|감염/],['seizure',/seizure|convulsion|경련|발작/]].filter(([,re])=>has(re)).map(([k])=>k);if(riskTerms.length){if(!category||category==='procedure')category='risk';if(category==='risk'&&riskTerms.length===1)riskKey=riskTerms[0];if(!domain&&category==='risk')domain=has(/\brupture(?:d)?\b|(?:^|[^비])파열/)?'aneurysm':'common'}
+if(procedure&&domain&&!(OPS[domain]||[]).includes(procedure))procedure='';
+return {file,title:file.name.replace(/\.[^.]+$/,'').replace(/[_-]/g,' '),domain,category,procedure,locationText:sites.length===1?LOCATIONS[sites[0]].name:'',riskKey,multipleSites:sites.length>1,multipleProcedures:procedures.length>1};}
+function stageReady(row){return !!row.domain&&!!row.category&&!row.multipleSites&&!row.multipleProcedures&&(!row.locationText||detectLocations(row.locationText).length===1)}
+function optionSelect(values,value,onchange){const select=el('select');for(const [k,v] of values){const o=el('option','',v);o.value=k;select.append(o)}select.value=value;select.onchange=()=>onchange(select.value);return select}
+function renderStage(){ $('bulkStage').hidden=!staged.length;$('bulkCount').textContent=staged.length+'개 선택 · '+staged.filter(stageReady).length+'개 분류됨 · '+staged.filter(r=>!stageReady(r)).length+'개 확인 필요';$('bulkRows').replaceChildren();for(const [index,row] of staged.entries()){const tr=el('tr');const name=el('td');name.append(el('div','batchName',row.file.webkitRelativePath||row.file.name),el('div',stageReady(row)?'note':'risk',stageReady(row)?'분류됨 · 아래 확인 후 추천 사용':row.multipleSites?'위치가 여러 개입니다. 한 위치로 지정하거나 자료 분리':row.multipleProcedures?'술식이 여러 개입니다. 공통 또는 특정 술식 선택':'미분류 · 저장 후에도 수정 가능'));tr.append(name);const update=(key,value)=>{row[key]=value;if(key==='domain'&&row.procedure&&!(OPS[value]||[]).includes(row.procedure))row.procedure='';if(key==='domain'&&value!=='aneurysm'){row.locationText='';row.multipleSites=false}if(key==='category'&&value!=='risk')row.riskKey='';renderStage()};const dom=el('td');dom.append(optionSelect([['','확인 필요'],...Object.entries(DOMAIN)],row.domain,v=>update('domain',v)));tr.append(dom);const cat=el('td');cat.append(optionSelect([['','확인 필요'],...Object.entries(CATS)],row.category,v=>update('category',v)));tr.append(cat);const loc=el('td'),input=el('input','field');input.value=row.locationText;input.placeholder='공통 / MCA 등';input.disabled=row.domain!=='aneurysm';input.onchange=()=>{row.locationText=input.value;row.multipleSites=false;renderStage()};loc.append(input);tr.append(loc);const proc=el('td');proc.append(optionSelect([['','공통'],...(OPS[row.domain]||[]).map(k=>[k,OP_NAMES[k]])],row.procedure,v=>{row.multipleProcedures=false;update('procedure',v)}));tr.append(proc);const risk=el('td'),sites=detectLocations(row.locationText);const choices=row.category==='risk'?Object.entries(MAJOR_RISKS):[];risk.append(optionSelect([['','공통'],...choices],row.riskKey,v=>update('riskKey',v)));tr.append(risk);const remove=el('td');remove.append(button('제외',()=>{staged.splice(index,1);renderStage()}));tr.append(remove);$('bulkRows').append(tr)}}
+function stageFiles(files){const rejected=[],duplicates=[];for(const file of files){if(!/^(image\/(png|jpeg|webp|gif)|video\/(mp4|webm))$/.test(file.type)||file.size>MAX){rejected.push(file.name);continue}const key=[file.name,file.size,file.lastModified].join('|');if(staged.some(r=>[r.file.name,r.file.size,r.file.lastModified].join('|')===key)||assets.some(a=>a.fileKey===key)){duplicates.push(file.name);continue}if(staged.length>=500||staged.reduce((n,r)=>n+r.file.size,0)+file.size>500*1024*1024){rejected.push(file.name);continue}staged.push(guessFile(file))}$('bulkMessage').textContent=[rejected.length?rejected.length+'개 제외: 지원 형식·파일당 40MB·일괄 500MB/500개 제한 확인':'',duplicates.length?duplicates.length+'개 중복 파일 건너뜀':''].filter(Boolean).join(' / ');$('bulkConfirmed').checked=false;renderStage()}
+$('bulkFiles').onchange=()=>{stageFiles([...$('bulkFiles').files]);$('bulkFiles').value=''};$('bulkFolder').onchange=()=>{stageFiles([...$('bulkFolder').files]);$('bulkFolder').value=''};
+const drop=$('dropZone');drop.ondragover=e=>{e.preventDefault();drop.classList.add('dragover')};drop.ondragleave=()=>drop.classList.remove('dragover');drop.ondrop=e=>{e.preventDefault();drop.classList.remove('dragover');stageFiles([...e.dataTransfer.files])};drop.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();$('bulkFiles').click()}};
+$('clearBulk').onclick=()=>{staged=[];renderStage();$('bulkMessage').textContent=''};
+$('saveBulk').onclick=async()=>{const b=$('saveBulk');if(!staged.length)return;if(staged.some(stageReady)&&!$('bulkConfirmed').checked){toast('자동 분류된 자료를 확인한 뒤 확인란을 체크하세요.');return}b.disabled=true;try{const rows=staged.map(row=>{const ready=stageReady(row);const site=detectLocations(row.locationText);const a=validateAsset({id:'a_'+crypto.randomUUID(),title:row.title,domain:row.domain,category:row.category,procedure:row.procedure,locationKey:site.length===1?site[0]:'',riskKey:row.riskKey,tags:[],type:row.file.type.startsWith('video')?'video':'image',blob:row.file,reviewed:ready&&$('bulkConfirmed').checked,source:'직접 등록',license:'',fileKey:[row.file.name,row.file.size,row.file.lastModified].join('|')});return a});if(db)await new Promise((res,rej)=>{const tx=db.transaction('assets','readwrite');rows.forEach(a=>tx.objectStore('assets').put(a));tx.oncomplete=res;tx.onerror=()=>rej(tx.error);tx.onabort=()=>rej(tx.error)});assets.push(...rows);staged=[];renderStage();renderLibrary();if(generated)renderRecommendations();$('bulkMessage').textContent=rows.length+'개 저장 완료 · '+rows.filter(a=>a.reviewed).length+'개 자동 추천 사용 · '+rows.filter(a=>!a.reviewed).length+'개 분류 확인 필요';$('libraryInventory').scrollIntoView({behavior:'smooth'});toast('공용 자료실에 저장했습니다. 환자마다 다시 등록할 필요가 없습니다.')}catch(e){toast('저장 실패: '+e.message)}finally{b.disabled=false}};
+$('domainFilter').replaceChildren(Object.assign(el('option','','모든 질환'),{value:''}),...Object.entries(DOMAIN).map(([k,v])=>{const o=el('option','',v);o.value=k;return o}));$('domainFilter').onchange=renderLibrary;$('reviewFilter').onchange=renderLibrary;
+window.neuroConsent.guessFile=guessFile;
+
+window.addEventListener('beforeunload',()=>{[...objectURLs,...patientURLs].forEach(u=>URL.revokeObjectURL(u))});
+window.addEventListener('DOMContentLoaded',init);
 </script>
+<script id="embeddedAssets" type="application/json">[]</script>
+<div id="toast" role="status" aria-live="polite"></div>
 </body></html>
