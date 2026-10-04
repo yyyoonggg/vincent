@@ -96,10 +96,6 @@ textarea{min-height:86px;resize:vertical;line-height:1.55}
       <textarea id="historyText" placeholder="예: HTN, DM, old infarction, PCI s/p, aspirin 복용, CKD, COPD... 자유롭게 붙여 넣으세요."></textarea>
       <div class="note">입력한 문장에서 위험 관련 키워드를 자동 추출하여 동의 설명 시 참고할 환자별 위험과 관련 합병증을 표시합니다. 입력 원문은 현재 설명 화면에서만 사용합니다.</div>
 
-      <label class="h">환자 영상</label>
-      <input id="patientFiles" class="field" type="file" accept="image/png,image/jpeg,image/webp,application/pdf" multiple><div id="patientFileCount" class="note"></div>
-      <div class="note">환자 영상은 현재 설명에서만 사용하며 자료실·내보내기에 저장하지 않습니다. 이미지와 PDF를 선택할 수 있습니다.</div>
-
       <button id="resetPatient" class="btn ghost full" type="button">새 환자 · 입력 및 설명 기록 초기화</button><button id="generateBtn" class="btn full">동의 설명 자료 생성</button>
     </div>
     <div class="card">
@@ -130,12 +126,6 @@ textarea{min-height:86px;resize:vertical;line-height:1.55}
           <div id="diagnosisText" class="text"></div>
           <div class="visual"><div class="visualTitle">환자에게 보여줄 시각자료</div><div id="patientGallery" class="mediaGrid"></div><div id="diagnosisVisual" class="mediaGrid"></div></div>
           <div class="clinicianBox"><b>의료진 참고</b><br><span id="diagnosisNote"></span></div>
-        </div>
-
-        <div class="card sectionCard">
-          <div class="sectionTop"><div class="sectionTitle"><span class="sectionNo">2</span>치료 목적과 필요성</div><button class="showBtn" data-present="purpose">환자에게 크게 보여주기</button></div>
-          <div id="purposeText" class="text"></div>
-          <div class="clinicianBox"><b>설명 포인트</b><br>수술의 목적, 기대할 수 있는 효과와 한계, 치료하지 않았을 때의 경과를 환자의 실제 상황에 맞추어 설명합니다.</div>
         </div>
 
         <div class="card sectionCard">
