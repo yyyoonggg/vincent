@@ -177,7 +177,7 @@ textarea{min-height:86px;resize:vertical;line-height:1.55}
   </section>
 <section id="assetView" class="view">
  <div class="card"><div class="assetToolbar"><div><h2>공용 자료실</h2><div class="note">자료를 한 번 모아두면 모든 환자 케이스에서 함께 사용합니다. 질환·위치·술식에 맞는 자료를 자동으로 골라옵니다.</div></div><button class="btn" id="exportHtml">자료 포함 HTML 다운로드</button></div><div class="actions"><button class="btn ghost small" id="exportCatalog">자료목록 백업 (JSON)</button><label class="btn ghost small">자료목록 가져오기<input type="file" id="importCatalog" accept="application/json,.json" hidden></label><button class="btn ghost small" id="downloadExample">자료목록 양식</button></div><p id="storageStatus" class="note"></p><div class="help">교육 자료와 추천 피드백은 이 브라우저에 보관합니다. 다른 컴퓨터에서 사용하려면 <b>자료 포함 HTML</b>을 다운로드하세요. 환자 입력·설명 메모는 포함되지 않습니다.</div></div>
- <div class="card"><h2>영상·GIF 폴더 연결</h2><label class="h" for="mediaFolder">자료 폴더 주소</label><input id="mediaFolder" class="field" value="assets/videos/" placeholder="assets/video/ 또는 https://사이트주소/자료폴더/"><div class="note">index.html 기준 폴더 경로 또는 자료가 있는 웹 폴더 주소를 입력하세요. GitHub의 /blob/ 파일 보기 주소는 사용할 수 없습니다. 컴퓨터에서 HTML만 열면 GitHub 자료가 자동으로 연결되지 않습니다.</div><button id="saveMediaFolder" class="btn">폴더 주소 적용</button><div id="mediaFolderStatus" class="note" role="status"></div></div>
+ <div class="card"><h2>영상·GIF 폴더 연결</h2><label class="h" for="mediaFolder">자료 폴더 주소</label><input id="mediaFolder" class="field" value="Assets/Videos/" placeholder="assets/video/ 또는 https://사이트주소/자료폴더/"><div class="note">index.html 기준 폴더 경로 또는 자료가 있는 웹 폴더 주소를 입력하세요. GitHub의 /blob/ 파일 보기 주소는 사용할 수 없습니다. 컴퓨터에서 HTML만 열면 GitHub 자료가 자동으로 연결되지 않습니다.</div><button id="saveMediaFolder" class="btn">폴더 주소 적용</button><div id="mediaFolderStatus" class="note" role="status"></div></div>
  <div class="card" id="libraryInventory"><div class="assetToolbar"><h2>등록 자료 <span id="assetCount">0</span></h2><button class="btn ghost small" id="resetFeedback">추천 피드백 초기화</button></div><div id="libraryStats" class="note"></div><div id="categoryFilters" class="tabs" style="margin-top:16px"></div><div class="grid3"><input id="assetSearch" class="field" placeholder="제목·질환·위치·술식 검색"><select id="domainFilter" aria-label="질환별 필터"><option value="">모든 질환</option></select><select id="reviewFilter" aria-label="분류 상태 필터"><option value="">모든 상태</option><option value="ready">추천 사용 중</option><option value="pending">분류 확인 필요</option></select></div><div id="assetList"></div></div><div class="card"><h2>사진·영상 한꺼번에 등록</h2><div id="dropZone" tabindex="0" role="button" aria-label="여러 자료 파일 선택"><b>여기로 파일을 끌어 놓으세요</b><p>여러 사진·영상 또는 폴더를 한 번에 선택할 수 있습니다.</p><div class="actions"><label class="btn">여러 파일 선택<input id="bulkFiles" type="file" multiple accept="image/png,image/jpeg,image/webp,image/gif,video/mp4,video/webm" hidden></label><label class="btn ghost">폴더 선택<input id="bulkFolder" type="file" webkitdirectory multiple hidden></label></div></div><p class="note">파일명·폴더명에서 질환, 위치, 술식, 카테고리를 읽어 분류합니다. 영상 내용을 분석하는 기능은 아닙니다. 예: <code>MCA_clipping_procedure.mp4</code>, <code>공통_뇌경색.mp4</code>, <code>요추_해부학.png</code></p><div id="bulkStage" hidden><div class="assetToolbar"><h3 id="bulkCount"></h3><button id="clearBulk" class="btn ghost small">선택 목록 비우기</button></div><div class="tableScroll"><table class="guideTable batchTable"><thead><tr><th>파일명 / 상태</th><th>질환</th><th>카테고리</th><th>위치</th><th>술식</th><th>합병증 연결</th><th></th></tr></thead><tbody id="bulkRows"></tbody></table></div><label class="checkRow"><input id="bulkConfirmed" type="checkbox"><span>분류가 채워진 자료의 분류·내용·이용 권한을 확인했습니다. 미분류 자료는 ‘분류 확인 필요’로 보관합니다.</span></label><button id="saveBulk" class="btn">공용 자료실에 저장</button></div><div id="bulkMessage" class="note" role="status"></div></div><div class="card"><details id="singleEditor"><summary>자료 한 개 등록 / 분류 수정</summary><h2 id="editHeading">사진·영상 등록</h2><form id="assetForm">
  <div class="grid2"><div><label class="h" for="assetTitle">자료 제목 *</label><input id="assetTitle" class="field" required placeholder="예: MCA 분지부 동맥류 · 클립 결찰 과정"></div><div><label class="h" for="assetCategory">자료 카테고리</label><select id="assetCategory"><option value="">카테고리 분류 필요</option><option value="anatomy">① 정상 해부학</option><option value="lesion">② 질환·병변 위치</option><option value="approach">③ 수술 접근법</option><option value="procedure">④ 수술·시술 과정</option><option value="risk">⑤ 합병증 짧은 클립</option><option value="aftercare">⑥ 회복·주의사항</option></select></div></div>
  <div class="grid2"><div><label class="h" for="assetDomain">적용 질환</label><select id="assetDomain"><option value="">질환 분류 필요</option><option value="common">공통 주요 합병증 (모든 질환)</option><option value="lumbar">요추 공통 (디스크·협착증)</option><option value="aneurysm">비파열성 뇌동맥류</option><option value="tumor">뇌종양</option><option value="disc">요추 추간판 탈출증</option><option value="stenosis">요추 척추관 협착증</option></select></div><div><label class="h" for="assetProcedure">적용 술식</label><select id="assetProcedure"></select></div></div>
@@ -323,7 +323,11 @@ async function rate(id,n){if(!snapshot)return;const k=snapshot.domain+'|'+snapsh
 function folderURL(value){let v=String(value).trim();if(!v)throw Error('자료 폴더 주소를 입력하세요.');if(!v.endsWith('/'))v+='/';const u=new URL(v,document.baseURI);if(!['https:','http:','file:'].includes(u.protocol))throw Error('폴더 경로 또는 HTTP(S) 주소를 사용하세요.');if(u.pathname.includes('/blob/'))throw Error('GitHub 파일 보기 주소(/blob/) 대신 실제 자료 폴더 주소를 사용하세요.');return u.href;}
 function applyFolder(base){for(const a of assets)if(a.id.startsWith('linked_')&&!a.blob&&!a.url.startsWith('data:')){const file=new URL(a.url,document.baseURI).pathname.split('/').pop();a.url=new URL(file,base).href;}}
 $('saveMediaFolder').onclick=async()=>{try{const base=folderURL($('mediaFolder').value);applyFolder(base);if(db){for(const a of assets.filter(a=>a.id.startsWith('linked_')))await writeDB('assets',a);await writeDB('settings',$('mediaFolder').value.trim(),'mediaFolder');}renderLibrary();if(generated)renderRecommendations();$('mediaFolderStatus').textContent='적용 완료: '+base;toast('영상·GIF 폴더 주소를 적용했습니다.');}catch(e){$('mediaFolderStatus').textContent=e.message;}};
-async function init(){try{db=await openDB();assets=(await readDB('assets')).map(upgradeRiskAsset);feedback=(await readDB('settings','feedback'))||{}}catch(e){db=null}let embedded=[];try{embedded=JSON.parse($('embeddedAssets').textContent||'[]')}catch(e){toast('내장 자료를 읽을 수 없습니다.')}const embeddedText=$('embeddedAssets').textContent;let hash=0;for(let i=0;i<embeddedText.length;i++)hash=(hash*31+embeddedText.charCodeAt(i))|0;const importKey='embedded_'+hash;const imported=db?await readDB('settings',importKey):false;for(const raw of imported?[]:embedded){try{const a=validateAsset(raw);if(!assets.some(x=>x.id===a.id)){assets.push(a);if(db)await writeDB('assets',a)}}catch(e){toast('내장 자료 일부를 불러오지 못했습니다.')}}if(db&&!imported)await writeDB('settings',true,importKey);const savedFolder=db?await readDB('settings','mediaFolder'):null;if(savedFolder){$('mediaFolder').value=savedFolder;try{applyFolder(folderURL(savedFolder))}catch(e){toast(e.message)}}storageStatus();renderLibrary()}
+async function init(){try{db=await openDB();assets=(await readDB('assets')).map(upgradeRiskAsset);feedback=(await readDB('settings','feedback'))||{}}catch(e){db=null}let embedded=[];try{embedded=JSON.parse($('embeddedAssets').textContent||'[]')}catch(e){toast('내장 자료를 읽을 수 없습니다.')}const embeddedText=$('embeddedAssets').textContent;let hash=0;for(let i=0;i<embeddedText.length;i++)hash=(hash*31+embeddedText.charCodeAt(i))|0;const importKey='embedded_'+hash;const imported=db?await readDB('settings',importKey):false;for(const raw of imported?[]:embedded){try{const a=validateAsset(raw);if(!assets.some(x=>x.id===a.id)){assets.push(a);if(db)await writeDB('assets',a)}}catch(e){toast('내장 자료 일부를 불러오지 못했습니다.')}}if(db&&!imported)await writeDB('settings',true,importKey);let savedFolder=db?await readDB('settings','mediaFolder'):null;
+// Repair earlier generated lowercase paths without changing uploaded/custom media.
+for(const a of assets){if(!a.id.startsWith('linked_')||a.blob||!a.url)continue;const u=new URL(a.url,document.baseURI);if(u.pathname.endsWith('/assets/videos/'+u.pathname.split('/').pop())&&(u.origin===location.origin||u.origin==='https://yyyoonggg.github.io')){a.url=a.url.replace('/assets/videos/','/Assets/Videos/').replace(/^assets\/videos\//,'Assets/Videos/');if(db)await writeDB('assets',a);}}
+if(savedFolder&&['assets/videos/','https://yyyoonggg.github.io/vincent/assets/videos/'].includes(savedFolder)){savedFolder=savedFolder.replace('assets/videos/','Assets/Videos/');if(db)await writeDB('settings',savedFolder,'mediaFolder');}
+if(savedFolder){$('mediaFolder').value=savedFolder;try{applyFolder(folderURL(savedFolder))}catch(e){toast(e.message)}}storageStatus();renderLibrary()}
 function generate(){if(!$('age').checkValidity()){$('age').reportValidity();return}snapshot=context();const d=DATA[snapshot.domain],loc=$('location').value.trim(),appr=$('approach').value.trim();$('rTitle').textContent=DOMAIN[snapshot.domain];$('rSub').textContent=OP_NAMES[snapshot.procedure];$('rPatient').textContent=[snapshot.age===null?'나이 미입력':snapshot.age+'세',snapshot.sex||'성별 미입력'].join(' · ');$('rLesion').textContent=(loc||'위치 미입력')+' · '+snapshot.side;$('rApproach').textContent=appr||'미입력';$('rSpecific').textContent=snapshot.history||'없음';$('diagnosisText').textContent=d.dx+(loc?' 병변 위치: '+snapshot.side+' '+loc+'.':'');$('diagnosisNote').textContent=d.note;$('purposeText').textContent=snapshot.procedure==='biopsy'?'조직을 채취하여 진단을 확인하고 이후 치료 계획을 세우기 위한 검사입니다. 종양 제거를 목적으로 하는 수술과는 구분됩니다.':d.purpose;$('procedureText').textContent=PROCEDURES[snapshot.procedure]+(appr?' 접근법: '+appr:'');let risks=[...RISKS[snapshot.domain]];if(snapshot.procedure==='fusion')risks.push('나사 위치 이상','불유합','인접 분절 질환');$('riskList').replaceChildren(...risks.map(t=>el('span','risk',t)));$('patientRiskList').replaceChildren();const hx=parseHistory(snapshot.history);let addedRisk=false;if(snapshot.age!==null&&snapshot.age>=80){const box=el('div','patientRisk');box.append(el('b','','고령 환자 · 80세 이상'),el('div','','전신마취 및 수술 후 섬망, 호흡기 합병증(무기폐·폐렴·호흡부전), 심혈관계 합병증(부정맥·저혈압·심근허혈), 흡인, 신기능 악화, 회복 지연 위험이 증가할 수 있습니다.'),el('div','note','관련 설명 키워드: 수술 후 섬망 · 폐합병증 · 심혈관계 합병증 · 흡인 · 신기능 악화 · 회복 지연'));$('patientRiskList').append(box);addedRisk=true}if(hx.length){for(const r of hx){const box=el('div','patientRisk');box.append(el('b','',r.label),el('div','',r.risk),el('div','note','관련 설명 키워드: '+r.comp.join(' · ')));$('patientRiskList').append(box);addedRisk=true}}if(!addedRisk){$('patientRiskList').append(el('div','empty',snapshot.history?'등록된 규칙에서 위험 키워드를 찾지 못했습니다. 원문을 확인해 직접 설명 항목을 추가하세요.':'기저력이 입력되지 않았습니다.'))}$('alternativeText').textContent=d.alt;generated=true;renderRecommendations();show('resultView')}
 $('generateBtn').onclick=generate;$('backBtn').onclick=()=>show('inputView');$('navInput').onclick=()=>show('inputView');$('navResult').onclick=()=>{if(generated)show('resultView');else generate()};$('navAssets').onclick=()=>show('assetView');$('assetSearch').oninput=renderLibrary;
 function openPresenter(title,body){$('pTitle').textContent=title;$('pBody').textContent=body;$('pVisual').replaceChildren();$('pVisual').style.display='block';$('presenter').classList.add('active');$('closePresenter').focus()}
@@ -420,7 +424,7 @@ window.neuroConsent.guessFile=guessFile;
 window.addEventListener('beforeunload',()=>{objectURLs.forEach(u=>URL.revokeObjectURL(u))});
 window.addEventListener('DOMContentLoaded',init);
 </script>
-<!-- Media paths are relative to this HTML: assets/videos/ (case-sensitive). -->
+<!-- Media paths are relative to this HTML: Assets/Videos/ (case-sensitive). -->
 <script id="embeddedAssets" type="application/json">[
   {
     "id": "linked_aneurysm_web_mp4",
@@ -428,7 +432,7 @@ window.addEventListener('DOMContentLoaded',init);
     "domain": "aneurysm",
     "category": "lesion",
     "type": "video",
-    "url": "assets/videos/aneurysm_web.mp4",
+    "url": "Assets/Videos/aneurysm_web.mp4",
     "tags": [],
     "reviewed": true,
     "source": "사용자 제공 자료",
@@ -440,7 +444,7 @@ window.addEventListener('DOMContentLoaded',init);
     "domain": "aneurysm",
     "category": "procedure",
     "type": "video",
-    "url": "assets/videos/clip_web.mp4",
+    "url": "Assets/Videos/clip_web.mp4",
     "tags": [],
     "reviewed": true,
     "source": "사용자 제공 자료",
@@ -453,7 +457,7 @@ window.addEventListener('DOMContentLoaded',init);
     "domain": "aneurysm",
     "category": "procedure",
     "type": "video",
-    "url": "assets/videos/coil_web.mp4",
+    "url": "Assets/Videos/coil_web.mp4",
     "tags": [],
     "reviewed": true,
     "source": "사용자 제공 자료",
@@ -467,7 +471,7 @@ window.addEventListener('DOMContentLoaded',init);
     "domain": "lumbar",
     "category": "risk",
     "type": "image",
-    "url": "assets/videos/dura-tear.gif",
+    "url": "Assets/Videos/dura-tear.gif",
     "tags": [],
     "reviewed": true,
     "source": "사용자 제공 자료",
@@ -479,7 +483,7 @@ window.addEventListener('DOMContentLoaded',init);
     "domain": "common",
     "category": "risk",
     "type": "image",
-    "url": "assets/videos/infection.gif",
+    "url": "Assets/Videos/infection.gif",
     "tags": [],
     "reviewed": true,
     "source": "사용자 제공 자료",
@@ -492,7 +496,7 @@ window.addEventListener('DOMContentLoaded',init);
     "domain": "common",
     "category": "risk",
     "type": "image",
-    "url": "assets/videos/infection2.gif",
+    "url": "Assets/Videos/infection2.gif",
     "tags": [],
     "reviewed": true,
     "source": "사용자 제공 자료",
@@ -505,7 +509,7 @@ window.addEventListener('DOMContentLoaded',init);
     "domain": "common",
     "category": "risk",
     "type": "video",
-    "url": "assets/videos/largevessel_occlusion_web.mp4",
+    "url": "Assets/Videos/largevessel_occlusion_web.mp4",
     "tags": [],
     "reviewed": true,
     "source": "사용자 제공 자료",
@@ -518,7 +522,7 @@ window.addEventListener('DOMContentLoaded',init);
     "domain": "aneurysm",
     "category": "risk",
     "type": "image",
-    "url": "assets/videos/rupture.gif",
+    "url": "Assets/Videos/rupture.gif",
     "tags": [],
     "reviewed": true,
     "source": "사용자 제공 자료",
@@ -532,7 +536,7 @@ window.addEventListener('DOMContentLoaded',init);
     "domain": "",
     "category": "procedure",
     "type": "video",
-    "url": "assets/videos/thrombectomy_web.mp4",
+    "url": "Assets/Videos/thrombectomy_web.mp4",
     "tags": [],
     "reviewed": false,
     "source": "사용자 제공 자료",
