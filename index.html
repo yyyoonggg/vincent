@@ -55,8 +55,171 @@ textarea{min-height:86px;resize:vertical;line-height:1.55}
 @media(max-width:760px){.grid2,.grid3,.workspace,.summary{grid-template-columns:1fr}.top{display:block}.pill{display:inline-block;margin-top:10px}.checklist{position:static}.resultHead{display:block}.resultHead .btn{margin-top:10px}.shell{padding:16px 12px 95px}}
 
 .mediaGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:12px;margin-top:12px}.mediaCard{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#fff;min-width:0}.mediaCard img,.mediaCard video{width:100%;height:220px;object-fit:contain;background:#f0f3f8;display:block}.mediaCard .meta{padding:12px}.mediaCard h3{margin:0 0 6px;overflow-wrap:anywhere}.mediaCard .note{overflow-wrap:anywhere}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.empty{padding:22px;border:1px dashed #bac6dd;border-radius:12px;color:var(--muted);font-size:13px;line-height:1.7;background:#fafbff}.risk{font-weight:800}.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}.assetToolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}.guideTable{width:100%;border-collapse:collapse;font-size:13px;line-height:1.6}.guideTable th,.guideTable td{padding:12px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}.guideTable th{background:var(--soft)}.tableScroll{overflow:auto}.presenter .mediaCard img,.presenter .mediaCard video{height:auto;max-height:65vh}.presenter .mediaGrid{grid-template-columns:1fr}.presenter .feedback,.presenter .deleteAsset{display:none}.presenter .meta .note{font-size:14px}#toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:#202634;color:#fff;padding:14px 20px;border-radius:12px;z-index:200;max-width:90vw;display:none;font-size:14px}.bottomNav{gap:clamp(20px,8vw,80px)}button:focus-visible{outline:3px solid #97adff;outline-offset:3px}.chip input:focus-visible+label{outline:3px solid #97adff}.help{background:var(--soft);padding:12px;border-radius:12px;font-size:13px;line-height:1.7}details>summary{cursor:pointer;font-weight:800;padding:10px 0}code{overflow-wrap:anywhere}#assetView .field{margin-bottom:3px}dialog{border:1px solid var(--line);border-radius:18px;max-width:600px;width:90vw;padding:25px}dialog::backdrop{background:#17234099}
-@media print{body{background:#fff}.bottomNav,.btn,.back,.showBtn,.feedback,.clinicianBox,.brand{display:none!important}.checklist{display:block!important;position:static!important;break-inside:avoid}.view{display:none!important}#resultView.active{display:block!important}.workspace{display:block}.card{box-shadow:none;break-inside:avoid}.shell{padding:0;max-width:none}.presenter.active{position:static}.presenter:not(.active){display:none}video{height:120px!important}.mediaCard img{height:160px}.summary{grid-template-columns:repeat(4,1fr)}.checklist textarea{height:auto!important;min-height:110px!important;overflow:visible!important;white-space:pre-wrap!important}}
+@media print{body{background:#fff}.bottomNav,#toast,.btn,.showBtn,.back,.mediaSection,.clinicianBox,.stepFoot textarea:placeholder-shown{display:none!important}.caseBar{position:static}.board{display:block}.step{break-inside:avoid;margin-bottom:10px}body.handout-open>*:not(#handoutView){display:none!important}.handoutBar{display:none!important}.handoutView{position:static!important;background:#fff!important;padding:0!important;overflow:visible!important}.handout{box-shadow:none!important;margin:0!important;padding:0!important;max-width:none!important}.hoSec,.hoSign{break-inside:avoid}@page{size:A4;margin:15mm}}
 #dropZone{padding:28px;border:2px dashed #bbc8e8;border-radius:16px;background:#f6f8ff;text-align:center;cursor:pointer}#dropZone .actions{justify-content:center}#dropZone.dragover{background:#e8eeff;border-color:var(--blue)}.categoryButton.active{background:var(--blue);color:white}.categorySection{margin-top:22px}.categorySection h3{font-size:16px}.batchTable{min-width:980px}.batchTable td{padding:9px;max-width:220px}.batchTable select,.batchTable input{padding:8px;font-size:12px;min-width:125px}.batchName{overflow-wrap:anywhere;font-size:12px}#libraryStats{padding:12px;background:var(--soft);border-radius:12px}
+/* ---- 설명 화면 (한 페이지 구성) ---- */
+.caseBar{position:sticky;top:0;z-index:20;background:rgba(244,246,250,.97);backdrop-filter:blur(8px);margin:-6px -16px 14px;padding:12px 16px;border-bottom:1px solid var(--line);display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px 16px;align-items:end}
+.caseMain .back{margin:0 0 4px}.caseMain .resultTitle{font-size:21px}
+.caseFacts{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:6px}
+.caseFacts div{background:#fff;border:1px solid var(--line);border-radius:999px;padding:5px 11px;font-size:12px;max-width:100%;overflow-wrap:anywhere}
+.caseFacts b{color:var(--muted);font-weight:800;margin-right:6px}
+.caseActions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+.progressPill{font-size:12px;font-weight:900;color:#1d7a4a;background:var(--green);padding:8px 12px;border-radius:999px;white-space:nowrap}
+.board{display:grid;grid-template-columns:1fr 1fr;gap:13px;align-items:stretch}
+.step{background:#fff;border:1px solid var(--line);border-left:4px solid #cfd7e6;border-radius:16px;padding:18px;display:flex;flex-direction:column;min-width:0}
+.step.wide{grid-column:1/-1}.step.done{border-left-color:#2f9e63}
+.step header{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.step header h2{font-size:17px;margin:0;flex:1}
+.stepNo{width:28px;height:28px;border-radius:50%;background:var(--soft);color:var(--blue);display:inline-flex;align-items:center;justify-content:center;font-weight:900;font-size:13px;flex:none}
+.step.done .stepNo{background:#2f9e63;color:#fff}
+.step h3{font-size:12.5px;color:var(--muted);margin:12px 0 4px}
+.step .text{margin:0}.stepBody{flex:1}
+.stepFoot{margin-top:14px;padding-top:12px;border-top:1px dashed var(--line);display:grid;gap:8px}
+.doneToggle{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:850;cursor:pointer;justify-self:start;padding:7px 13px;border:1px solid var(--line);border-radius:999px;background:#fff}
+.step.done .doneToggle{background:var(--green);border-color:#bfe5cf;color:#1d7a4a}
+textarea.oral{min-height:46px;font-size:13px;overflow:hidden}
+.riskCols{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px}.riskCols>div{min-width:0}.riskCols h3{margin-top:4px}
+.siteBox{margin-bottom:10px}.siteName{font-weight:900;font-size:13px;margin-bottom:2px}
+.siteList{margin:0;padding-left:18px;font-size:13px;line-height:1.55}.siteList li{margin:5px 0}.siteList .note{display:block}
+.patientRisk b{display:block;margin-bottom:2px}
+.mediaSection{margin-top:22px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px;scroll-margin-top:150px}
+.mediaHead{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.mediaHead h2{margin:0 0 4px;font-size:17px}.mediaHead .actions{margin-top:0;align-items:center}
+.mediaSection .mediaGrid{grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr))}.mediaGroup{margin-top:18px}.mediaGroup h3{font-size:15px;margin:0 0 4px}
+.mediaTag{font-size:11px;font-weight:900;color:var(--blue);margin-bottom:3px}
+.pickToggle{display:flex;gap:8px;align-items:center;padding:9px 12px;border-bottom:1px solid var(--line);font-size:12px;font-weight:850;background:var(--green);cursor:pointer}
+.mediaCard.off{opacity:.55}.mediaCard.off .pickToggle{background:#f4f5f8}
+.presenter .pickToggle{display:none}#pBody{white-space:pre-line}
+/* ---- 환자용 설명서 ---- */
+.handoutView{position:fixed;inset:0;z-index:150;background:#dfe4ec;overflow:auto;padding:0 12px 40px}
+.handoutBar{position:sticky;top:0;z-index:1;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;max-width:794px;margin:0 auto;padding:14px 0;background:#dfe4ec}
+.handoutBar .actions{margin:0}#handoutWarn{font-size:12px;color:#7a5200;margin-top:2px}
+.handout{max-width:794px;margin:0 auto;background:#fff;padding:48px 56px;box-shadow:0 4px 24px rgba(20,30,50,.12);font-size:13.5px;line-height:1.75;color:#1b2230}
+.hoHead{border-bottom:2px solid #1b2230;padding-bottom:10px;margin-bottom:16px}
+.hoHead h1{font-size:24px;margin:0}.hoHead p{margin:4px 0 0;color:#555;font-size:12px}
+.hoInfo{width:100%;border-collapse:collapse;margin-bottom:20px;font-size:13px}.hoInfo th,.hoInfo td{border:1px solid #c9d0db;padding:7px 10px;text-align:left;vertical-align:top}.hoInfo th{background:#f2f4f8;width:130px;font-weight:800}
+.hoSec{margin:0 0 18px}.hoSec h2{font-size:15px;margin:0 0 6px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #d5dbe5;padding-bottom:5px}
+.hoNo{width:22px;height:22px;border-radius:50%;background:#1b2230;color:#fff;font-size:12px;display:inline-flex;align-items:center;justify-content:center;flex:none}
+.hoMark{margin-left:auto;font-size:12px;font-weight:700;color:#666}
+.hoSec h3{font-size:13px;margin:10px 0 2px}.hoSec p{margin:4px 0}.hoSec ul{margin:4px 0;padding-left:20px}.hoSec ul.cols{columns:2;column-gap:32px}
+.hoOral{background:#f5f7fb;border-left:3px solid var(--blue);padding:8px 12px;margin-top:8px}.hoOral p{white-space:pre-wrap;margin:2px 0 0}
+.hoSmall{font-size:12px;color:#666}
+.hoSign{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:30px}.hoSign div{display:flex;flex-direction:column;gap:4px;font-size:12px}.hoSign i{border-bottom:1px solid #333;height:36px}
+.hoFoot{margin-top:22px;font-size:11px;color:#666;border-top:1px solid #ddd;padding-top:8px}
+@media(max-width:860px){.board,.riskCols{grid-template-columns:1fr}.caseBar{position:static;grid-template-columns:1fr;margin:-6px -12px 14px;padding:12px}.caseActions{justify-content:flex-start}}
+@media(max-width:600px){.handout{padding:26px 18px}.hoSign{grid-template-columns:1fr}}
+
+/* ---- 영상 뷰어: 스크롤 없이 한 화면 ---- */
+.mediaSection{display:flex;flex-direction:column;height:calc(100vh - 215px);min-height:500px}
+.mediaSection .mediaHead{margin-bottom:8px}.mediaSection .tabs{margin-bottom:10px}
+.mediaViewer{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:14px}
+.mvStage{display:flex;flex-direction:column;min-height:0;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.mvMedia{flex:1;min-height:0;background:#eef1f6;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden}
+.mvMedia>video,.mvMedia>img{width:100%;height:100%;min-height:0;object-fit:contain;display:block}
+.mvMedia .gifPlayer{width:100%;height:100%;display:flex;flex-direction:column}
+.mvMedia .gifStage{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.mvMedia .gifStage img{max-width:100%;max-height:100%;object-fit:contain}
+.mvMedia .gifStage .empty{margin:16px}.mvMedia .gifPlayer>.actions{justify-content:center;margin:0;padding:8px;background:#fff;border-top:1px solid var(--line)}
+.mvMedia>.empty{margin:12px;max-width:calc(100% - 24px)}
+.mvInfo{display:flex;justify-content:space-between;gap:10px 14px;align-items:center;flex-wrap:wrap;padding:12px 14px;border-top:1px solid var(--line)}
+.mvText{min-width:0;flex:1 1 220px}.mvText h3{margin:0;font-size:15px}
+.mvControls{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.mvPos{font-size:12px;font-weight:900;color:var(--muted);min-width:44px;text-align:center}
+.mvInclude{display:inline-flex;gap:6px;align-items:center;font-size:12px;font-weight:850;padding:7px 11px;border-radius:999px;background:var(--green);cursor:pointer}
+.mvSide{display:flex;flex-direction:column;min-height:0}.mvMissing{margin:0 0 8px}
+.mvList{position:relative;flex:1;min-height:0;overflow:auto;border:1px solid var(--line);border-radius:14px;padding:6px}
+.mvGroup{font-size:11px;font-weight:900;color:var(--muted);padding:10px 8px 4px}
+.mvItem{display:flex;align-items:center;gap:8px;padding:2px 6px;border-radius:10px}
+.mvItem.active{background:var(--soft)}.mvItem.off .mvPick{opacity:.45}
+.mvPick{flex:1;min-width:0;display:grid;grid-template-columns:22px minmax(0,1fr);column-gap:9px;text-align:left;border:0;background:transparent;padding:7px 2px;cursor:pointer;color:var(--ink);border-radius:8px}
+.mvNum{grid-row:span 2;align-self:center;width:22px;height:22px;border-radius:50%;background:#fff;border:1px solid var(--line);font-size:11px;font-weight:900;display:inline-flex;align-items:center;justify-content:center}
+.mvItem.active .mvNum{background:var(--blue);color:#fff;border-color:var(--blue)}
+.mvTitle{font-size:13px;font-weight:850;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mvSub{font-size:11px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@media(max-width:860px){.mediaSection{height:auto;min-height:0}.mediaViewer{grid-template-columns:1fr}.mvMedia{height:56vw;min-height:200px;flex:none}.mvList{max-height:240px}}
+
+/* ---- 설명 콘솔: 선택 | 정보 / 설명화면 / 동영상 ---- */
+body.console .top{display:none}
+body.console .shell{max-width:1440px;padding:12px 14px 0}
+.consoleGrid{display:grid;grid-template-columns:232px minmax(0,1fr);grid-template-rows:auto minmax(0,1fr) 132px;grid-template-areas:"select info" "select explain" "select video";gap:10px;height:calc(100vh - 80px);height:calc(100dvh - 80px - env(safe-area-inset-bottom))}
+.pane{background:#fff;border:1px solid var(--line);border-radius:14px;min-width:0;min-height:0}
+.selectPane{grid-area:select;display:flex;flex-direction:column;padding:12px 10px}
+.paneLabel{font-size:12px;font-weight:900;color:var(--muted);margin:2px 6px 8px}
+.stepNav{display:flex;flex-direction:column;gap:4px;flex:1;min-height:0;overflow:auto}
+.stepNav button{display:grid;grid-template-columns:28px minmax(0,1fr) auto;align-items:center;gap:10px;text-align:left;border:1px solid transparent;background:transparent;border-radius:12px;padding:10px 8px;cursor:pointer;color:var(--ink)}
+.stepNav button:hover{background:#f6f8fc}
+.stepNav button.active{background:var(--soft);border-color:#cdd8fb}
+.navNo{width:28px;height:28px;border-radius:50%;background:#eef1f6;display:inline-flex;align-items:center;justify-content:center;font-weight:900;font-size:13px}
+.stepNav button.active .navNo{background:var(--blue);color:#fff}
+.stepNav button.done .navNo{background:#2f9e63;color:#fff}
+.navText{display:flex;flex-direction:column;min-width:0}.navText b{font-size:14px;line-height:1.35}
+.navState{font-size:11px;color:var(--muted)}.stepNav button.done .navState{color:#1d7a4a;font-weight:800}
+.navCount{font-size:11px;color:var(--blue);font-weight:800;white-space:nowrap}
+.selectFoot{display:grid;gap:8px;padding-top:10px;border-top:1px solid var(--line)}.selectFoot .progressPill{text-align:center}
+.infoPane{grid-area:info;padding:10px 14px;display:flex;flex-direction:column;gap:7px}
+.infoMain{display:flex;align-items:center;gap:14px;flex-wrap:wrap}.infoMain .back{margin:0}
+.infoTitle{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}.infoTitle .resultTitle{font-size:19px}.infoTitle .resultSub{margin:0}
+.infoPane .caseFacts{grid-column:auto}
+.explainPane{grid-area:explain;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);overflow:hidden}
+.explainPane.noMedia{grid-template-columns:minmax(0,1fr)}.explainPane.noMedia .mvStage{display:none}
+.stepHost{min-height:0;display:flex}
+.explainPane .step{display:none;flex:1;min-height:0;border:0;border-radius:0;padding:18px 22px}
+.explainPane .step.current{display:flex}
+.explainPane .stepBody{overflow:auto;min-height:0;padding-right:4px}
+.explainPane .step .text{font-size:16px;line-height:1.8}
+.explainPane .step header h2{font-size:19px}
+.explainPane .riskCols{grid-template-columns:1fr;gap:4px}
+.explainPane.noMedia .riskCols{grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.explainPane .mvStage{border:0;border-left:1px solid var(--line);border-radius:0}
+.videoPane{grid-area:video;display:flex;flex-direction:column;padding:10px 12px;gap:8px}
+.stripHead{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}.stripHead .actions{margin:0;align-items:center}
+.stripTitle{display:flex;align-items:center;gap:10px;flex-wrap:wrap;min-width:0}
+.segmented{display:inline-flex;background:#eef1f6;border-radius:999px;padding:3px}
+.segBtn{border:0;background:transparent;border-radius:999px;padding:5px 12px;font-size:12px;font-weight:850;cursor:pointer;color:#4d5668}
+.segBtn.active{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(20,30,50,.14)}
+.strip{flex:1;min-height:0;display:flex;align-items:stretch;gap:8px;overflow-x:auto;overflow-y:hidden;padding-bottom:4px;position:relative}
+.stripItem{flex:0 0 240px;display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:12px;padding:4px 10px;background:#fff}
+.stripItem.active{border-color:var(--blue);background:var(--soft)}
+.stripItem.active .mvNum{background:var(--blue);color:#fff;border-color:var(--blue)}
+.stripItem.off .mvPick{opacity:.45}
+.stripEmpty{font-size:13px;color:var(--muted);padding:12px 14px;border:1px dashed #c5cfe0;border-radius:12px;flex:1;display:flex;align-items:center}
+@media(max-width:860px){
+ body.console .shell{padding:10px 10px 90px}
+ .consoleGrid{display:flex;flex-direction:column;height:auto}
+ .infoPane{order:1}.selectPane{order:2;padding:8px}.explainPane{order:3;grid-template-columns:1fr}.videoPane{order:4}
+ .paneLabel{display:none}
+ .stepNav{flex-direction:row;overflow-x:auto}.stepNav button{flex:0 0 auto;grid-template-columns:24px auto}.stepNav .navCount{display:none}
+ .selectFoot{grid-template-columns:1fr 1fr;border-top:0;padding-top:8px}.selectFoot .progressPill{grid-column:1/-1}.selectFoot .btn{white-space:nowrap}
+ .explainPane .mvStage{border-left:0;border-top:1px solid var(--line)}
+ .explainPane.noMedia .riskCols{grid-template-columns:1fr}
+ .strip{min-height:64px}.stripItem{flex-basis:210px}
+}
+@media print{.selectPane,.videoPane,.mvStage{display:none!important}.consoleGrid{display:block;height:auto}.explainPane .step{display:flex!important}}
+
+/* ---- 하단 썸네일 줄 ---- */
+.consoleGrid{grid-template-rows:auto minmax(0,1fr) 206px}
+.strip{align-items:flex-start;gap:12px;padding-bottom:6px}
+.stripItem{flex:0 0 184px;display:flex;flex-direction:column;align-items:stretch;gap:6px;border:0;background:transparent;padding:0}
+.stripItem.active{background:transparent}
+.thumbBtn{position:relative;display:block;width:100%;aspect-ratio:16/9;padding:0;border:2px solid transparent;border-radius:10px;overflow:hidden;background:#1d2533;cursor:pointer}
+.thumbBtn:hover{border-color:#9baee9}
+.stripItem.active .thumbBtn{border-color:var(--blue);box-shadow:0 0 0 3px #dbe3ff}
+.thumb{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+.thumb video,.thumb canvas,.thumb img{width:100%;height:100%;object-fit:cover;display:block;pointer-events:none}
+.thumbFallback{position:absolute;left:8px;bottom:7px;color:#b9c3d6;font-size:10px;font-weight:800}
+.thumbPlay{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.9);color:#1d2533;font-size:13px;display:flex;align-items:center;justify-content:center;padding-left:2px}
+.stripItem.active .thumbPlay{background:var(--blue);color:#fff}
+.thumbNum{position:absolute;left:6px;top:6px;min-width:20px;height:20px;padding:0 5px;border-radius:999px;background:rgba(20,28,40,.78);color:#fff;font-size:11px;font-weight:900;display:flex;align-items:center;justify-content:center}
+.thumbType{position:absolute;right:6px;bottom:6px;padding:2px 6px;border-radius:6px;background:rgba(20,28,40,.78);color:#fff;font-size:10px;font-weight:800}
+.stripItem.off .thumbBtn{opacity:.4}
+.thumbMeta{display:flex;align-items:flex-start;gap:6px;cursor:pointer;min-width:0}
+.thumbMeta input{margin-top:2px;flex:none}
+.thumbText{display:flex;flex-direction:column;min-width:0}
+.thumbTitle{font-size:12.5px;font-weight:850;line-height:1.3;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.thumbTag{font-size:11px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.stripItem.off .thumbText{opacity:.5}
+.stripEmpty{align-self:stretch}
+@media(max-width:860px){.stripItem{flex-basis:160px}}
 </style>
 </head>
 <body>
@@ -96,7 +259,7 @@ textarea{min-height:86px;resize:vertical;line-height:1.55}
       <textarea id="historyText" placeholder="예: HTN, DM, old infarction, PCI s/p, aspirin 복용, CKD, COPD... 자유롭게 붙여 넣으세요."></textarea>
       <div class="note">입력한 문장에서 위험 관련 키워드를 자동 추출하여 동의 설명 시 참고할 환자별 위험과 관련 합병증을 표시합니다. 입력 원문은 현재 설명 화면에서만 사용합니다.</div>
 
-      <button id="resetPatient" class="btn ghost full" type="button">새 환자 · 입력 및 설명 기록 초기화</button><button id="generateBtn" class="btn full">동의 설명 자료 생성</button>
+      <button id="generateBtn" class="btn full">설명 화면 열기</button><button id="resetPatient" class="btn ghost full" type="button">새 환자 · 입력 및 설명 기록 초기화</button>
     </div>
     <div class="card">
       <h2>이 도구의 역할</h2>
@@ -105,76 +268,67 @@ textarea{min-height:86px;resize:vertical;line-height:1.55}
   </section>
 
   <section id="resultView" class="view">
-    <button id="backBtn" class="back">← 환자 정보 수정</button>
-    <div class="card">
-      <div class="resultHead">
-        <div><div id="rTitle" class="resultTitle"></div><div id="rSub" class="resultSub"></div></div>
-        <div class="actions"><button id="openAssembly" class="btn small">영상 연결·다운로드</button><button class="btn ghost small" onclick="window.print()">설명 화면 인쇄</button></div>
+   <div class="consoleGrid">
+    <aside class="pane selectPane" aria-label="설명 항목 선택">
+      <div class="paneLabel">설명 순서</div>
+      <nav id="stepNav" class="stepNav">
+        <button type="button" data-step="disease" class="active" aria-current="step"><span class="navNo">1</span><span class="navText"><b>질환 이해</b><small class="navState">설명 전</small></span><span class="navCount"></span></button>
+        <button type="button" data-step="procedure"><span class="navNo">2</span><span class="navText"><b>수술 방법</b><small class="navState">설명 전</small></span><span class="navCount"></span></button>
+        <button type="button" data-step="risk"><span class="navNo">3</span><span class="navText"><b>합병증</b><small class="navState">설명 전</small></span><span class="navCount"></span></button>
+        <button type="button" data-step="alternative"><span class="navNo">4</span><span class="navText"><b>대안 · 치료 안 할 경우</b><small class="navState">설명 전</small></span><span class="navCount"></span></button>
+        <button type="button" data-step="qa"><span class="navNo">5</span><span class="navText"><b>질문 확인</b><small class="navState">설명 전</small></span><span class="navCount"></span></button>
+      </nav>
+      <div class="selectFoot"><div id="checkProgress" class="progressPill">설명 0 / 5 완료</div><button id="openAssembly" class="btn ghost small">영상 하나로 합치기</button><button id="openHandout" class="btn small">환자용 설명서 출력</button></div>
+    </aside>
+
+    <header class="pane infoPane">
+      <div class="infoMain"><button id="backBtn" class="back">← 환자 정보 수정</button><div class="infoTitle"><span id="rTitle" class="resultTitle"></span><span id="rSub" class="resultSub"></span></div></div>
+      <div class="caseFacts"><div><b>환자</b><span id="rPatient">-</span></div><div><b>병변</b><span id="rLesion">-</span></div><div><b>접근법</b><span id="rApproach">-</span></div><div><b>기저질환·복용약</b><span id="rSpecific">-</span></div></div>
+    </header>
+
+    <main class="pane explainPane">
+      <div class="stepHost">
+        <article class="step current" data-step="disease">
+          <header><span class="stepNo">1</span><h2>질환 이해</h2><button class="showBtn" data-present="diagnosis">크게 보여주기</button></header>
+          <div class="stepBody"><h3>어떤 병인가요</h3><p id="diagnosisText" class="text"></p><h3>왜 치료가 필요한가요</h3><p id="purposeText" class="text"></p>
+          <details class="clinicianBox"><summary>의료진 참고</summary><span id="diagnosisNote"></span></details></div>
+          <footer class="stepFoot"><label class="doneToggle"><input type="checkbox" class="stepCheck" data-key="disease"><span>설명 완료</span></label><textarea class="oral" data-key="disease" rows="2" aria-label="구두 설명 메모" placeholder="구두로 추가 설명한 내용 · 설명서에 함께 출력됩니다"></textarea></footer>
+        </article>
+        <article class="step" data-step="procedure">
+          <header><span class="stepNo">2</span><h2>수술 방법</h2><button class="showBtn" data-present="procedure">크게 보여주기</button></header>
+          <div class="stepBody"><p id="procedureText" class="text"></p></div>
+          <footer class="stepFoot"><label class="doneToggle"><input type="checkbox" class="stepCheck" data-key="procedure"><span>설명 완료</span></label><textarea class="oral" data-key="procedure" rows="2" aria-label="구두 설명 메모" placeholder="구두로 추가 설명한 내용 · 설명서에 함께 출력됩니다"></textarea></footer>
+        </article>
+        <article class="step" data-step="risk">
+          <header><span class="stepNo">3</span><h2>합병증</h2><button class="showBtn" data-present="risk">크게 보여주기</button></header>
+          <div class="stepBody riskCols">
+            <div><h3>이 수술의 주요 합병증</h3><div id="riskList" class="chips"></div></div>
+            <div><h3>병변 위치에 따른 위험</h3><div id="locationRiskSection"></div></div>
+            <div><h3>이 환자에게 더 주의할 점</h3><div id="patientRiskList"></div></div>
+          </div>
+          <footer class="stepFoot"><label class="doneToggle"><input type="checkbox" class="stepCheck" data-key="risk"><span>설명 완료</span></label><textarea class="oral" data-key="risk" rows="2" aria-label="구두 설명 메모" placeholder="구두로 추가 설명한 내용 · 설명서에 함께 출력됩니다"></textarea></footer>
+        </article>
+        <article class="step" data-step="alternative">
+          <header><span class="stepNo">4</span><h2>대안 · 치료하지 않을 경우</h2><button class="showBtn" data-present="alternative">크게 보여주기</button></header>
+          <div class="stepBody"><p id="alternativeText" class="text"></p></div>
+          <footer class="stepFoot"><label class="doneToggle"><input type="checkbox" class="stepCheck" data-key="alternative"><span>설명 완료</span></label><textarea class="oral" data-key="alternative" rows="2" aria-label="구두 설명 메모" placeholder="구두로 추가 설명한 내용 · 설명서에 함께 출력됩니다"></textarea></footer>
+        </article>
+        <article class="step" data-step="qa">
+          <header><span class="stepNo">5</span><h2>질문 확인</h2></header>
+          <div class="stepBody"><p class="note">환자·보호자가 한 질문과 답변, 특이사항을 적어 두면 설명서에 함께 출력됩니다.</p></div>
+          <footer class="stepFoot"><label class="doneToggle"><input type="checkbox" class="stepCheck" data-key="qa"><span>설명 완료</span></label><textarea class="oral" data-key="qa" rows="2" aria-label="구두 설명 메모" placeholder="예: 수술 후 입원 기간 문의 → 약 7일 예상으로 설명"></textarea></footer>
+        </article>
       </div>
-      <div class="summary">
-        <div class="summaryItem"><b>PATIENT</b><span id="rPatient">-</span></div>
-        <div class="summaryItem"><b>LESION</b><span id="rLesion">-</span></div>
-        <div class="summaryItem"><b>APPROACH</b><span id="rApproach">-</span></div>
-        <div class="summaryItem"><b>HISTORY / MEDICATION</b><span id="rSpecific">-</span></div>
-      </div>
-    </div>
+      <div id="mediaStage" class="mvStage"></div>
+    </main>
 
-    <div class="workspace">
-      <main>
-        <div class="card sectionCard">
-          <div class="sectionTop"><div class="sectionTitle"><span class="sectionNo">1</span>진단 및 병변 위치</div><button class="showBtn" data-present="diagnosis">환자에게 크게 보여주기</button></div>
-          <div id="diagnosisText" class="text"></div>
-          <div class="visual"><div class="visualTitle">환자에게 보여줄 시각자료</div><div id="diagnosisVisual" class="mediaGrid"></div></div>
-          <div class="clinicianBox"><b>의료진 참고</b><br><span id="diagnosisNote"></span></div>
-        </div>
-
-        <div class="card sectionCard">
-          <div class="sectionTop"><div class="sectionTitle"><span class="sectionNo">2</span>치료 목적과 필요성</div><button class="showBtn" data-present="purpose">환자에게 크게 보여주기</button></div>
-          <div id="purposeText" class="text"></div>
-          <div class="clinicianBox"><b>설명 포인트</b><br>수술의 목적, 기대할 수 있는 효과와 한계, 치료하지 않았을 때의 경과를 환자의 실제 상황에 맞추어 설명합니다.</div>
-        </div>
-
-        <div class="card sectionCard">
-          <div class="sectionTop"><div class="sectionTitle"><span class="sectionNo">3</span>수술 / 시술 방법</div><button class="showBtn" data-present="procedure">환자에게 크게 보여주기</button></div>
-          <div id="procedureText" class="text"></div>
-          <div class="visual"><div class="visualTitle">수술 설명 영상 / 단계별 그림</div><div id="procedureVisual" class="mediaGrid"></div></div>
-        </div>
-
-        <div class="card sectionCard">
-          <div class="sectionTop"><div class="sectionTitle"><span class="sectionNo">4</span>주요 합병증 및 위험</div><button class="showBtn" data-present="risk">환자에게 크게 보여주기</button></div>
-          <h3>주요 합병증 · 영상 설명</h3><div id="riskList" class="chips"></div><div id="riskVisual"></div><div id="locationRiskSection"></div>
-          <div class="clinicianBox"><b>의료진 참고</b><br>모든 가능한 합병증을 나열하기보다 해당 술식에서 반드시 설명해야 하는 중대한 위험과 이 환자에서 특히 증가할 수 있는 위험을 구분합니다.</div>
-        </div>
-
-        <div class="card sectionCard">
-          <div class="sectionTop"><div class="sectionTitle"><span class="sectionNo">5</span>환자별 추가 위험</div></div>
-          <div id="patientRiskList"></div>
-        </div>
-
-        <div class="card sectionCard">
-          <div class="sectionTop"><div class="sectionTitle"><span class="sectionNo">6</span>대안 및 치료하지 않을 경우</div><button class="showBtn" data-present="alternative">환자에게 크게 보여주기</button></div>
-          <div id="alternativeText" class="text"></div><div id="aftercareVisual" class="mediaGrid"></div>
-        </div>
-      </main>
-
-      <aside class="card checklist">
-        <h2>동의 설명 체크</h2><div id="checkProgress" class="status">0 / 8 설명 완료</div>
-        <div class="note">설명하면서 확인하는 내부 체크리스트입니다.</div>
-        <div class="checkRow"><input type="checkbox"><span>진단명과 병변 위치 설명</span></div>
-        <div class="checkRow"><input type="checkbox"><span>수술/시술 목적과 기대 효과 설명</span></div>
-        <div class="checkRow"><input type="checkbox"><span>수술/시술 방법 설명</span></div>
-        <div class="checkRow"><input type="checkbox"><span>중대한 합병증 설명</span></div>
-        <div class="checkRow"><input type="checkbox"><span>환자별 추가 위험 설명</span></div>
-        <div class="checkRow"><input type="checkbox"><span>대안적 치료 방법 설명</span></div>
-        <div class="checkRow"><input type="checkbox"><span>치료하지 않을 경우 설명</span></div>
-        <div class="checkRow"><input type="checkbox"><span>환자/보호자 질문 확인</span></div>
-        <div class="divider"></div>
-        <label class="h">설명 중 메모</label>
-        <textarea placeholder="추가로 설명한 내용, 질문, 특이사항"></textarea>
-        <div class="note" style="margin-top:8px">설명 보조 도구입니다. 실제 동의서 서명·의무기록 저장 기능은 포함하지 않습니다.</div>
-      </aside>
-    </div>
+    <section id="mediaSection" class="pane videoPane" aria-label="관련 영상">
+      <div class="stripHead"><div class="stripTitle"><b>관련 영상</b><div id="mediaTabs" class="segmented"></div><span id="stripNote" class="note"></span></div><div class="actions"><span id="pickCount" class="note"></span><button id="openAssembly2" class="btn small">선택한 영상 합치기</button></div></div>
+      <div id="mediaGroups" class="strip"></div>
+    </section>
+   </div>
   </section>
+
 <section id="assetView" class="view">
  <div class="card"><div class="assetToolbar"><div><h2>공용 자료실</h2><div class="note">자료를 한 번 모아두면 모든 환자 케이스에서 함께 사용합니다. 질환·위치·술식에 맞는 자료를 자동으로 골라옵니다.</div></div><button class="btn" id="exportHtml">자료 포함 HTML 다운로드</button></div><div class="actions"><button class="btn ghost small" id="exportCatalog">자료목록 백업 (JSON)</button><label class="btn ghost small">자료목록 가져오기<input type="file" id="importCatalog" accept="application/json,.json" hidden></label><button class="btn ghost small" id="downloadExample">자료목록 양식</button></div><p id="storageStatus" class="note"></p><div class="help">교육 자료와 추천 피드백은 이 브라우저에 보관합니다. 다른 컴퓨터에서 사용하려면 <b>자료 포함 HTML</b>을 다운로드하세요. 환자 입력·설명 메모는 포함되지 않습니다.</div></div>
  <div class="card"><h2>영상·GIF 폴더 연결</h2><label class="h" for="mediaFolder">자료 폴더 주소</label><input id="mediaFolder" class="field" value="Assets/Videos/" placeholder="assets/video/ 또는 https://사이트주소/자료폴더/"><div class="note">index.html 기준 폴더 경로 또는 자료가 있는 웹 폴더 주소를 입력하세요. GitHub의 /blob/ 파일 보기 주소는 사용할 수 없습니다. 컴퓨터에서 HTML만 열면 GitHub 자료가 자동으로 연결되지 않습니다.</div><button id="saveMediaFolder" class="btn">폴더 주소 적용</button><div id="mediaFolderStatus" class="note" role="status"></div></div>
@@ -222,6 +376,11 @@ textarea{min-height:86px;resize:vertical;line-height:1.55}
     <div id="pBody" class="bigText"></div>
     <div id="pVisual" class="visual" style="margin-top:22px"><div class="visualMock">시각자료 영역</div></div>
   </div>
+</div>
+
+<div id="handoutView" class="handoutView" hidden>
+  <div class="handoutBar"><div><b>환자용 설명서 미리보기</b><div id="handoutWarn"></div></div><div class="actions"><button id="printHandout" class="btn">인쇄 / PDF 저장</button><button id="closeHandout" class="btn ghost">설명 화면으로 돌아가기</button></div></div>
+  <article id="handout" class="handout"></article>
 </div>
 
 <div class="bottomNav">
@@ -297,7 +456,7 @@ let assets=[],feedback={},db=null,editing=null,generated=false,objectURLs=[],sna
 function el(tag,cls,text){const n=document.createElement(tag);if(cls)n.className=cls;if(text!==undefined)n.textContent=text;return n}
 function button(text,fn,cls='btn ghost small'){const b=el('button',cls,text);b.type='button';b.onclick=fn;return b}
 let toastTimer;function toast(t){$('toast').textContent=t;$('toast').style.display='block';clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').style.display='none',5000)}
-function show(id){document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v.id===id));window.scrollTo(0,0);if(id==='assetView')renderLibrary()}
+function show(id){document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v.id===id));document.body.classList.toggle('console',id==='resultView');window.scrollTo(0,0);if(id==='assetView')renderLibrary()}
 function fillOps(){const d=$('dx').value;$('op').replaceChildren(...OPS[d].map(k=>{const o=el('option','',OP_NAMES[k]);o.value=k;return o}));$('category').value=GROUP[d]}
 function fillAssetOps(){const all=el('option','','공통 · 특정 술식 제한 없음');all.value='';$('assetProcedure').replaceChildren(all,...(OPS[$('assetDomain').value]||[]).map(k=>{const o=el('option','',OP_NAMES[k]);o.value=k;return o}))}
 $('dx').onchange=fillOps;$('category').onchange=()=>{const d=Object.keys(GROUP).find(k=>GROUP[k]===$('category').value);$('dx').value=d;fillOps()};$('assetDomain').onchange=fillAssetOps;fillOps();fillAssetOps();
@@ -327,13 +486,37 @@ function createMedia(a){
  const m=el(a.type==='video'?'video':'img');if(a.type==='video'){m.controls=true;m.preload='metadata';m.playsInline=true}else{m.alt=a.title;m.loading='lazy'}m.src=url;m.onerror=()=>{if(!m.parentElement.querySelector('.loadError'))m.before(error(m))};return m;
 }
 
-function mediaCard(a,manage=false){const card=el('article','mediaCard');card.append(createMedia(a));const meta=el('div','meta');meta.append(el('h3','',a.title));if(a.caption)meta.append(el('div','text',a.caption));meta.append(el('div','note',(CATS[a.category]||'미분류')+' · '+(DOMAIN[a.domain]||'질환 미분류')));if(manage){meta.append(el('div','note','파일: '+(a.url||a.fileKey||'직접 등록')));if(a.legacyRiskKey)meta.append(el('div','note','기존 위치별 영상 · 주요 합병증 분류로 다시 확인하세요.'));meta.append(el('div',a.reviewed?'status':'risk',a.reviewed?'자동 추천에 사용 중':'분류 확인 필요 · 추천 제외'));if(a.locationKey)meta.append(el('div','note',LOCATIONS[a.locationKey].name));if(a.procedure)meta.append(el('div','note',OP_NAMES[a.procedure]));}if(a.reason)meta.append(el('div','note','추천 근거: '+a.reason));meta.append(el('div','note',[a.source,a.license].filter(Boolean).join(' · ')||'출처 미기재'));const actions=el('div','actions');actions.append(button('크게 보기',()=>presentMedia(a)));if(manage){appendRiskAssignments(actions,a);actions.append(button('수정',()=>editAsset(a)),button('삭제',async()=>{if(!confirm('이 교육 자료를 삭제할까요?'))return;try{if(db)await writeDB('assets',null,a.id,true);assets=assets.filter(x=>x.id!==a.id);renderLibrary();if(generated)renderRecommendations()}catch(e){toast('삭제 실패: '+e.message)}},'btn ghost small deleteAsset'))}else{const use=button('사용',()=>rate(a.id,1),'btn ghost small feedback'),skip=button('제외',()=>rate(a.id,-1),'btn ghost small feedback');actions.append(use,skip)}meta.append(actions);card.append(meta);return card}
+function mediaCard(a,manage=false,opts={}){const card=el('article','mediaCard');if(opts.pick){const on=!unpicked.has(a.id);card.classList.toggle('off',!on);const lab=el('label','pickToggle'),cb=el('input');cb.type='checkbox';cb.checked=on;cb.onchange=()=>{if(cb.checked)unpicked.delete(a.id);else unpicked.add(a.id);card.classList.toggle('off',!cb.checked);updatePickCount()};lab.append(cb,el('span','','합칠 영상에 포함'));card.append(lab)}card.append(createMedia(a));const meta=el('div','meta');if(opts.tag)meta.append(el('div','mediaTag',opts.tag));meta.append(el('h3','',a.title));if(a.caption)meta.append(el('div','text',a.caption));if(manage){meta.append(el('div','note',(CATS[a.category]||'미분류')+' · '+(DOMAIN[a.domain]||'질환 미분류')));meta.append(el('div','note','파일: '+(a.url||a.fileKey||'직접 등록')));if(a.legacyRiskKey)meta.append(el('div','note','기존 위치별 영상 · 주요 합병증 분류로 다시 확인하세요.'));meta.append(el('div',a.reviewed?'status':'risk',a.reviewed?'자동 추천에 사용 중':'분류 확인 필요 · 추천 제외'));if(a.locationKey)meta.append(el('div','note',LOCATIONS[a.locationKey].name));if(a.procedure)meta.append(el('div','note',OP_NAMES[a.procedure]));meta.append(el('div','note',[a.source,a.license].filter(Boolean).join(' · ')||'출처 미기재'))}const actions=el('div','actions');actions.append(button('크게 보기',()=>presentMedia(a)));if(manage){appendRiskAssignments(actions,a);actions.append(button('수정',()=>editAsset(a)),button('삭제',async()=>{if(!confirm('이 교육 자료를 삭제할까요?'))return;try{if(db)await writeDB('assets',null,a.id,true);assets=assets.filter(x=>x.id!==a.id);renderLibrary();if(generated)renderRecommendations()}catch(e){toast('삭제 실패: '+e.message)}},'btn ghost small deleteAsset'))}meta.append(actions);card.append(meta);return card}
 async function assignRisk(a,domain,procedure){try{const updated=validateAsset({...a,domain,procedure,reviewed:true,aneurysmOnly:domain==='aneurysm',coilBasics:false});if(db)await writeDB('assets',updated);assets=assets.map(x=>x.id===a.id?updated:x);renderLibrary();if(generated)renderRecommendations();toast('적용 범위 저장: '+DOMAIN[domain]+(procedure?' · '+OP_NAMES[procedure]:''));}catch(e){toast('분류 저장 실패: '+e.message)}}
 function appendRiskAssignments(root,a){if(a.category!=='risk')return;if(a.riskKey==='infection'){root.append(button('두개강 감염용',()=>assignRisk(a,'cranial','')),button('요추 감염용',()=>assignRisk(a,'lumbar','')))}if(a.riskKey==='hemorrhage'&&a.domain==='aneurysm'){root.append(button('클립 파열용',()=>assignRisk(a,'aneurysm','clip')),button('코일 파열용',()=>assignRisk(a,'aneurysm','coil')),button('스텐트 코일 파열용',()=>assignRisk(a,'aneurysm','stentcoil')))}}
 let activeCategory='';
 function renderLibrary(){const q=normalize($('assetSearch').value),domain=$('domainFilter').value,status=$('reviewFilter').value;$('assetCount').textContent=assets.length;const reviewed=assets.filter(a=>a.reviewed).length;$('libraryStats').textContent=`전체 ${assets.length}개 · 이미지 ${assets.filter(a=>a.type==='image').length}개 · 동영상 ${assets.filter(a=>a.type==='video').length}개 · 추천 사용 ${reviewed}개 · 분류 확인 필요 ${assets.length-reviewed}개`;$('categoryFilters').replaceChildren();for(const [key,label] of [['','전체'],...Object.entries(CATS),['unknown','미분류']]){const count=assets.filter(a=>!key||(key==='unknown'?!a.category:a.category===key)).length;const b=button(label+' '+count,()=>{activeCategory=key;renderLibrary()},'btn ghost small categoryButton'+(activeCategory===key?' active':''));b.setAttribute('aria-pressed',String(activeCategory===key));$('categoryFilters').append(b)}const list=assets.filter(a=>(!activeCategory||(activeCategory==='unknown'?!a.category:a.category===activeCategory))&&(!domain||a.domain===domain)&&(!status||(status==='ready'?a.reviewed:!a.reviewed))&&normalize([a.title,...a.tags,DOMAIN[a.domain],LOCATIONS[a.locationKey]?.name,OP_NAMES[a.procedure]].join(' ')).includes(q));$('assetList').replaceChildren();for(const key of [...Object.keys(CATS),'']){const group=list.filter(a=>a.category===key);if(!group.length)continue;const section=el('section','categorySection');section.append(el('h3','',(CATS[key]||'미분류')+' · '+group.length+'개'));const grid=el('div','mediaGrid');group.forEach(a=>grid.append(mediaCard(a,true)));section.append(grid);$('assetList').append(section)}if(!list.length)$('assetList').append(el('div','empty',assets.length?'해당 조건의 자료가 없습니다.':'아직 등록된 자료가 없습니다. 아래에서 여러 파일을 한 번에 등록하세요.'))}
 
-function renderRecommendations(){if(!snapshot)return;renderLocationRisks();renderMajorRisks($('riskVisual'));for(const [id,cats] of [['diagnosisVisual',['anatomy','lesion']],['procedureVisual',['approach','procedure']],['aftercareVisual',['aftercare']]]){const list=recommend(snapshot,cats);$(id).replaceChildren(...list.map(a=>mediaCard(a)));if(!list.length)$(id).append(el('div','empty','조건에 맞는 등록 자료가 없습니다. 자료실에서 질환·술식과 위치 태그를 확인하세요.'))}}
+let mediaPlan=[],unpicked=new Set(),mediaFilter='';
+const MEDIA_GROUPS={disease:'질환',procedure:'수술 방법',risk:'합병증',aftercare:'회복·주의사항'};
+function buildMediaPlan(){const plan=[],seen=new Set();const add=(a,group,tag)=>{if(seen.has(a.id))return;seen.add(a.id);plan.push({asset:a,group,tag})};recommend(snapshot,['anatomy','lesion']).forEach(a=>add(a,'disease',CATS[a.category]));recommend(snapshot,['approach','procedure']).forEach(a=>add(a,'procedure',CATS[a.category]));majorKeys().forEach(k=>majorMedia(k).forEach(a=>add(a,'risk','합병증 · '+MAJOR_RISKS[k])));recommend(snapshot,['risk']).forEach(a=>add(a,'risk','합병증'));recommend(snapshot,['aftercare']).forEach(a=>add(a,'aftercare','회복·주의사항'));return plan}
+function pickedPlan(){return mediaPlan.filter(p=>!unpicked.has(p.asset.id))}
+function updatePickCount(){const n=pickedPlan().length;$('pickCount').textContent=n+' / '+mediaPlan.length+'개 선택';$('openAssembly2').disabled=!n}
+const STEP_GROUP={disease:'disease',procedure:'procedure',risk:'risk',alternative:'aftercare',qa:''};
+let currentStep='disease',mediaScope='step',currentMediaId=null;
+function setStep(k){currentStep=k;document.querySelectorAll('.explainPane .step').forEach(s=>s.classList.toggle('current',s.dataset.step===k));document.querySelectorAll('#stepNav button').forEach(b=>{const on=b.dataset.step===k;b.classList.toggle('active',on);if(on)b.setAttribute('aria-current','step');else b.removeAttribute('aria-current')});currentMediaId=null;renderMedia()}
+document.querySelectorAll('#stepNav button').forEach(b=>b.onclick=()=>setStep(b.dataset.step));
+function stripPlan(){const g=STEP_GROUP[currentStep];return mediaScope==='step'&&g?mediaPlan.filter(p=>p.group===g):mediaPlan}
+function setPick(id,on){if(on)unpicked.delete(id);else unpicked.add(id);document.querySelectorAll('#resultView [data-pick]').forEach(c=>{if(c.dataset.pick!==id)return;c.checked=on;c.closest('.stripItem')?.classList.toggle('off',!on)});updatePickCount()}
+function pickBox(id,label){const cb=el('input');cb.type='checkbox';cb.dataset.pick=id;cb.checked=!unpicked.has(id);cb.setAttribute('aria-label',label);cb.onchange=()=>setPick(id,cb.checked);return cb}
+function selectMedia(id){currentMediaId=id;let act=null;$('mediaGroups').querySelectorAll('.stripItem').forEach(r=>{const on=r.dataset.id===id;r.classList.toggle('active',on);if(on)act=r});if(act){const st=$('mediaGroups');if(act.offsetLeft<st.scrollLeft||act.offsetLeft+act.offsetWidth>st.scrollLeft+st.clientWidth)st.scrollLeft=act.offsetLeft-12}renderMediaStage()}
+function renderMediaStage(){const st=$('mediaStage');st.querySelectorAll('video').forEach(v=>v.pause());st.replaceChildren();const list=stripPlan(),i=list.findIndex(p=>p.asset.id===currentMediaId);document.querySelector('.explainPane').classList.toggle('noMedia',i<0);if(i<0)return;const cur=list[i],media=el('div','mvMedia');media.append(createMedia(cur.asset));const info=el('div','mvInfo'),txt=el('div','mvText');txt.append(el('div','mediaTag',cur.tag),el('h3','',cur.asset.title));if(cur.asset.caption)txt.append(el('div','note',cur.asset.caption));const ctr=el('div','mvControls'),inc=el('label','mvInclude');inc.append(pickBox(cur.asset.id,'합칠 영상에 포함'),el('span','','합칠 영상에 포함'));const prev=button('이전',()=>selectMedia(list[(i-1+list.length)%list.length].asset.id)),next=button('다음',()=>selectMedia(list[(i+1)%list.length].asset.id),'btn small');if(list.length<2){prev.disabled=true;next.disabled=true}ctr.append(inc,button('크게 보기',()=>presentMedia(cur.asset)),button('닫기',closeStage),prev,el('span','mvPos',(i+1)+' / '+list.length),next);info.append(txt,ctr);st.append(media,info)}
+function thumbFor(a){const box=el('div','thumb'),url=mediaURL(a),fallback=()=>box.replaceChildren(el('span','thumbFallback','미리보기 없음'));if(a.type==='video'){const v=el('video');v.muted=true;v.preload='metadata';v.playsInline=true;v.tabIndex=-1;v.setAttribute('aria-hidden','true');v.onerror=fallback;v.src=/^data:/.test(url)?url:url+'#t=0.5';box.append(v)}else{box.append(el('span','thumbFallback','불러오는 중'));const img=new Image();img.alt='';img.onload=()=>{try{const c=el('canvas');c.width=img.naturalWidth;c.height=img.naturalHeight;c.getContext('2d').drawImage(img,0,0);box.replaceChildren(c)}catch(e){box.replaceChildren(img)}};img.onerror=fallback;img.src=url}return box}
+function closeStage(){currentMediaId=null;$('mediaGroups').querySelectorAll('.stripItem.active').forEach(r=>r.classList.remove('active'));renderMediaStage()}
+function renderMedia(){const tabs=$('mediaTabs'),g=STEP_GROUP[currentStep];tabs.replaceChildren();for(const [k,l] of [['step','이 단계 '+(g?mediaPlan.filter(p=>p.group===g).length:mediaPlan.length)],['all','전체 '+mediaPlan.length]]){const b=button(l,()=>{mediaScope=k;renderMedia()},'segBtn'+(mediaScope===k?' active':''));b.setAttribute('aria-pressed',String(mediaScope===k));tabs.append(b)}
+ document.querySelectorAll('#stepNav button').forEach(b=>{const gg=STEP_GROUP[b.dataset.step],n=gg?mediaPlan.filter(p=>p.group===gg).length:0;b.querySelector('.navCount').textContent=n?'자료 '+n:''});
+ const list=stripPlan();if(!list.some(p=>p.asset.id===currentMediaId))currentMediaId=null;
+ const missing=currentStep==='risk'&&snapshot?majorKeys().filter(k=>!majorMedia(k).length).map(k=>MAJOR_RISKS[k]):[];$('stripNote').textContent=missing.length?'자료 없음: '+missing.join(', ')+' · 말로 설명해 주세요':'';
+ const strip=$('mediaGroups');strip.replaceChildren();if(!list.length)strip.append(el('div','stripEmpty',g&&mediaScope==='step'?'이 단계에 연결된 영상이 없습니다. ‘전체’에서 다른 영상을 고를 수 있습니다.':'조건에 맞는 자료가 없습니다. 자료실에서 질환·술식·위치 분류를 확인하세요.'));
+ list.forEach(p=>{const n=mediaPlan.indexOf(p)+1,row=el('div','stripItem'+(p.asset.id===currentMediaId?' active':'')+(unpicked.has(p.asset.id)?' off':''));row.dataset.id=p.asset.id;const pick=el('button','thumbBtn');pick.type='button';pick.title=p.asset.title+' · 눌러서 재생';pick.setAttribute('aria-label',n+'. '+p.asset.title+' 보기');pick.append(thumbFor(p.asset),el('span','thumbPlay','▶'),el('span','thumbNum',String(n)),el('span','thumbType',p.asset.type==='video'?'영상':'그림'));pick.onclick=()=>p.asset.id===currentMediaId?closeStage():selectMedia(p.asset.id);const meta=el('label','thumbMeta');meta.append(pickBox(p.asset.id,p.asset.title+' 합칠 영상에 포함'));const t=el('span','thumbText');t.append(el('span','thumbTitle',p.asset.title),el('span','thumbTag',p.tag));meta.append(t);row.append(pick,meta);strip.append(row)});
+ renderMediaStage();updatePickCount()}
+document.addEventListener('keydown',e=>{if(!$('resultView').classList.contains('active')||$('presenter').classList.contains('active')||!$('handoutView').hidden||document.querySelector('dialog[open]'))return;if(e.target.matches('input,textarea,select,video'))return;const list=stripPlan(),i=list.findIndex(p=>p.asset.id===currentMediaId);if((e.key==='ArrowRight'||e.key==='ArrowLeft')&&list.length){e.preventDefault();const j=e.key==='ArrowRight'?i+1:i-1;selectMedia(list[(j+list.length)%list.length].asset.id)}else if(e.key==='ArrowDown'||e.key==='ArrowUp'){const keys=Object.keys(STEP_GROUP),k=keys.indexOf(currentStep)+(e.key==='ArrowDown'?1:-1);if(k>=0&&k<keys.length){e.preventDefault();setStep(keys[k])}}});
+function renderRecommendations(){if(!snapshot)return;renderLocationRisks();mediaPlan=buildMediaPlan();renderMedia()}
 async function rate(id,n){if(!snapshot)return;const k=snapshot.domain+'|'+snapshot.procedure+'|'+id;feedback[k]=Math.max(-2,Math.min(2,(feedback[k]||0)+n));try{if(db)await writeDB('settings',feedback,'feedback');toast(n>0?'사용 피드백을 반영했습니다.':'제외 피드백을 반영했습니다.');renderRecommendations()}catch(e){toast('현재 화면에만 반영했습니다. 백업을 다운로드하세요.')}}
 function folderURL(value){let v=String(value).trim();if(!v)throw Error('자료 폴더 주소를 입력하세요.');if(!v.endsWith('/'))v+='/';const u=new URL(v,document.baseURI);if(!['https:','http:','file:'].includes(u.protocol))throw Error('폴더 경로 또는 HTTP(S) 주소를 사용하세요.');if(u.pathname.includes('/blob/'))throw Error('GitHub 파일 보기 주소(/blob/) 대신 실제 자료 폴더 주소를 사용하세요.');return u.href;}
 function applyFolder(base){for(const a of assets)if(a.id.startsWith('linked_')&&!a.blob&&!a.url.startsWith('data:')){const file=new URL(a.url,document.baseURI).pathname.split('/').pop();a.url=new URL(file,base).href;}}
@@ -343,15 +526,33 @@ async function init(){try{db=await openDB();assets=(await readDB('assets')).map(
 for(const a of assets){if(!a.id.startsWith('linked_')||a.blob||!a.url)continue;const u=new URL(a.url,document.baseURI);if(u.pathname.endsWith('/assets/videos/'+u.pathname.split('/').pop())&&(u.origin===location.origin||u.origin==='https://yyyoonggg.github.io')){a.url=a.url.replace('/assets/videos/','/Assets/Videos/').replace(/^assets\/videos\//,'Assets/Videos/');if(db)await writeDB('assets',a);}}
 if(savedFolder&&['assets/videos/','https://yyyoonggg.github.io/vincent/assets/videos/'].includes(savedFolder)){savedFolder=savedFolder.replace('assets/videos/','Assets/Videos/');if(db)await writeDB('settings',savedFolder,'mediaFolder');}
 if(savedFolder){$('mediaFolder').value=savedFolder;try{applyFolder(folderURL(savedFolder))}catch(e){toast(e.message)}}for(const a of assets){if((['linked_infection_gif','linked_infection2_gif'].includes(a.id)&&a.domain==='common'||a.id==='linked_rupture_gif'&&!a.procedure)&&a.reviewed){a.reviewed=false;if(db)await writeDB('assets',a);}}storageStatus();renderLibrary()}
-function generate(){if(!$('age').checkValidity()){$('age').reportValidity();return}snapshot=context();const d=DATA[snapshot.domain],loc=$('location').value.trim(),appr=$('approach').value.trim();$('rTitle').textContent=DOMAIN[snapshot.domain];$('rSub').textContent=OP_NAMES[snapshot.procedure];$('rPatient').textContent=[snapshot.age===null?'나이 미입력':snapshot.age+'세',snapshot.sex||'성별 미입력'].join(' · ');$('rLesion').textContent=(loc||'위치 미입력')+' · '+snapshot.side;$('rApproach').textContent=appr||'미입력';$('rSpecific').textContent=snapshot.history||'없음';$('diagnosisText').textContent=d.dx+(loc?' 병변 위치: '+snapshot.side+' '+loc+'.':'');$('diagnosisNote').textContent=d.note;$('purposeText').textContent=snapshot.procedure==='biopsy'?'조직을 채취하여 진단을 확인하고 이후 치료 계획을 세우기 위한 검사입니다. 종양 제거를 목적으로 하는 수술과는 구분됩니다.':d.purpose;$('procedureText').textContent=PROCEDURES[snapshot.procedure]+(appr?' 접근법: '+appr:'');let risks=[...RISKS[snapshot.domain]];if(snapshot.procedure==='fusion')risks.push('나사 위치 이상','불유합','인접 분절 질환');$('riskList').replaceChildren(...risks.map(t=>el('span','risk',t)));$('patientRiskList').replaceChildren();const hx=parseHistory(snapshot.history);let addedRisk=false;if(snapshot.age!==null&&snapshot.age>=80){const box=el('div','patientRisk');box.append(el('b','','고령 환자 · 80세 이상'),el('div','','전신마취 및 수술 후 섬망, 호흡기 합병증(무기폐·폐렴·호흡부전), 심혈관계 합병증(부정맥·저혈압·심근허혈), 흡인, 신기능 악화, 회복 지연 위험이 증가할 수 있습니다.'),el('div','note','관련 설명 키워드: 수술 후 섬망 · 폐합병증 · 심혈관계 합병증 · 흡인 · 신기능 악화 · 회복 지연'));$('patientRiskList').append(box);addedRisk=true}if(hx.length){for(const r of hx){const box=el('div','patientRisk');box.append(el('b','',r.label),el('div','',r.risk),el('div','note','관련 설명 키워드: '+r.comp.join(' · ')));$('patientRiskList').append(box);addedRisk=true}}if(!addedRisk){$('patientRiskList').append(el('div','empty',snapshot.history?'등록된 규칙에서 위험 키워드를 찾지 못했습니다. 원문을 확인해 직접 설명 항목을 추가하세요.':'기저력이 입력되지 않았습니다.'))}$('alternativeText').textContent=d.alt;generated=true;renderRecommendations();show('resultView')}
+function generate(){if(!$('age').checkValidity()){$('age').reportValidity();return}snapshot=context();const d=DATA[snapshot.domain],loc=$('location').value.trim(),appr=$('approach').value.trim();snapshot.loc=loc;snapshot.appr=appr;$('rTitle').textContent=DOMAIN[snapshot.domain];$('rSub').textContent=OP_NAMES[snapshot.procedure];$('rPatient').textContent=[snapshot.age===null?'나이 미입력':snapshot.age+'세',snapshot.sex||'성별 미입력'].join(' · ');$('rLesion').textContent=(loc||'위치 미입력')+' · '+snapshot.side;$('rApproach').textContent=appr||'미입력';$('rSpecific').textContent=snapshot.history||'없음';$('diagnosisText').textContent=d.dx+(loc?' 병변 위치: '+snapshot.side+' '+loc+'.':'');$('diagnosisNote').textContent=d.note;$('purposeText').textContent=snapshot.procedure==='biopsy'?'조직을 채취하여 진단을 확인하고 이후 치료 계획을 세우기 위한 검사입니다. 종양 제거를 목적으로 하는 수술과는 구분됩니다.':d.purpose;$('procedureText').textContent=PROCEDURES[snapshot.procedure]+(appr?' 접근법: '+appr+'.':'');let risks=[...RISKS[snapshot.domain]];if(snapshot.procedure==='fusion')risks.push('나사 위치 이상','불유합','인접 분절 질환');snapshot.risks=risks;$('riskList').replaceChildren(...risks.map(t=>el('span','risk',t)));const pr=[];if(snapshot.age!==null&&snapshot.age>=80)pr.push({label:'고령 (80세 이상)',text:'전신마취 및 수술 후 섬망, 폐합병증(무기폐·폐렴·호흡부전), 심혈관계 합병증(부정맥·저혈압·심근허혈), 흡인, 신기능 악화, 회복 지연 위험이 증가할 수 있습니다.',keys:'수술 후 섬망 · 폐합병증 · 심혈관계 합병증 · 흡인 · 신기능 악화 · 회복 지연'});for(const r of parseHistory(snapshot.history))pr.push({label:r.label,text:r.risk,keys:r.comp.join(' · ')});snapshot.patientRisks=pr;$('patientRiskList').replaceChildren();for(const r of pr){const box=el('div','patientRisk');box.append(el('b','',r.label),el('div','',r.text),el('div','note','관련 합병증: '+r.keys));$('patientRiskList').append(box)}if(!pr.length)$('patientRiskList').append(el('p','note',snapshot.history?'입력한 기저력에서 등록된 위험 키워드를 찾지 못했습니다. 원문을 확인하고 필요한 내용을 메모에 적어 주세요.':'기저력이 입력되지 않았습니다.'));$('alternativeText').textContent=d.alt;generated=true;renderRecommendations();show('resultView')}
 $('generateBtn').onclick=generate;$('backBtn').onclick=()=>show('inputView');$('navInput').onclick=()=>show('inputView');$('navResult').onclick=()=>{if(generated)show('resultView');else generate()};$('navAssets').onclick=()=>show('assetView');$('assetSearch').oninput=renderLibrary;
 function openPresenter(title,body){$('pTitle').textContent=title;$('pBody').textContent=body;$('pVisual').replaceChildren();$('pVisual').style.display='block';$('presenter').classList.add('active');$('closePresenter').focus()}
 function closePresenter(){$('presenter').classList.remove('active');$('pVisual').querySelectorAll('video').forEach(v=>v.pause());$('pVisual').replaceChildren()}
 function presentMedia(a){openPresenter(a.title,a.caption||'');$('pVisual').append(mediaCard(a))}
-$('closePresenter').onclick=closePresenter;document.addEventListener('keydown',e=>{if(e.key==='Escape')closePresenter()});
-document.querySelectorAll('[data-present]').forEach(b=>b.onclick=()=>{const k=b.dataset.present;const map={diagnosis:['진단 및 병변 위치','diagnosisText','diagnosisVisual'],purpose:['치료 목적과 필요성','purposeText'],procedure:['수술 / 시술 방법','procedureText','procedureVisual'],risk:['주요 합병증 및 위험','riskList','riskVisual'],alternative:['대안 및 치료하지 않을 경우','alternativeText','aftercareVisual']};const [t,id,visual]=map[k];openPresenter(t,k==='risk'?[...$('riskList').children].map(x=>x.textContent).join(' · '):$(id).textContent);if(visual&&k!=='risk'){const cats={diagnosis:['anatomy','lesion'],procedure:['approach','procedure'],risk:['risk'],alternative:['aftercare']}[k];for(const a of recommend(snapshot,cats))$('pVisual').append(mediaCard(a))}if(k==='risk'){renderMajorRisks($('pVisual'),true);appendLocationText($('pVisual'));}if(!$('pVisual').children.length)$('pVisual').style.display='none'});
-function updateProgress(){$('checkProgress').textContent=document.querySelectorAll('.checklist input:checked').length+' / 8 설명 완료'}document.querySelectorAll('.checklist input').forEach(i=>i.onchange=updateProgress);
-$('resetPatient').onclick=()=>{if($('historyText'))$('historyText').value='';for(const id of ['age','sex','location','approach'])$(id).value='';document.querySelectorAll('.chip input,.checklist input').forEach(i=>i.checked=false);document.querySelector('.checklist textarea').value='';$('dx').value='aneurysm';fillOps();$('side').selectedIndex=0;for(const id of ['rTitle','rSub','rPatient','rLesion','rApproach','rSpecific','diagnosisText','diagnosisNote','purposeText','procedureText','riskList','patientRiskList','alternativeText','diagnosisVisual','procedureVisual','riskVisual','aftercareVisual','locationRiskSection','locationHint'])$(id).replaceChildren();generated=false;snapshot=null;updateProgress();closePresenter();show('inputView');toast('새 환자 입력을 준비했습니다.')};
+$('closePresenter').onclick=closePresenter;document.addEventListener('keydown',e=>{if(e.key==='Escape'){closePresenter();if(!$('handoutView').hidden)closeHandout()}});
+const PRESENT={diagnosis:['질환 이해',()=>$('diagnosisText').textContent+'\n\n'+$('purposeText').textContent,'disease'],procedure:['수술 방법',()=>$('procedureText').textContent,'procedure'],risk:['수술 후 생길 수 있는 합병증',()=>snapshot.risks.join(' · '),'risk'],alternative:['다른 치료 방법과 치료하지 않을 경우',()=>$('alternativeText').textContent,'aftercare']};
+document.querySelectorAll('[data-present]').forEach(b=>b.onclick=()=>{if(!snapshot)return;const k=b.dataset.present,[t,body,group]=PRESENT[k];openPresenter(t,body());if(k==='risk'){appendLocationText($('pVisual'));if(snapshot.patientRisks.length){const box=el('div','card');box.append(el('h3','','환자분께 특히 주의할 점'));const chips=el('div','chips');snapshot.patientRisks.forEach(r=>chips.append(el('span','risk',r.label)));box.append(chips);$('pVisual').append(box)}}const list=mediaPlan.filter(p=>p.group===group);if(list.length){const g=el('div','mediaGrid');list.forEach(p=>g.append(mediaCard(p.asset,false,{tag:p.tag})));$('pVisual').append(g)}if(!$('pVisual').children.length)$('pVisual').style.display='none'});
+$('openAssembly2').onclick=()=>$('openAssembly').click();
+function updateProgress(){const all=document.querySelectorAll('.stepCheck');let n=0;all.forEach(c=>{c.closest('.step').classList.toggle('done',c.checked);const nb=document.querySelector('#stepNav button[data-step="'+c.dataset.key+'"]');if(nb){nb.classList.toggle('done',c.checked);nb.querySelector('.navState').textContent=c.checked?'설명 완료':'설명 전'}if(c.checked)n++});$('checkProgress').textContent='설명 '+n+' / '+all.length+' 완료'}document.querySelectorAll('.stepCheck').forEach(i=>i.onchange=updateProgress);
+function autoGrow(t){t.style.height='auto';t.style.height=t.scrollHeight+'px'}document.querySelectorAll('textarea.oral').forEach(t=>t.addEventListener('input',()=>autoGrow(t)));
+const STEPS=['disease','procedure','risk','alternative','qa'];
+function stepDone(k){return document.querySelector('.stepCheck[data-key="'+k+'"]').checked}
+function oral(k){return document.querySelector('.oral[data-key="'+k+'"]')?.value.trim()||''}
+function buildHandout(){const s=snapshot,root=$('handout');root.replaceChildren();const head=el('header','hoHead');head.append(el('h1','','수술 설명 확인서'),el('p','','환자 보관용 · 설명 일시 '+new Date().toLocaleString('ko-KR',{dateStyle:'long',timeStyle:'short'})));root.append(head);const info=el('table','hoInfo');for(const [k,v] of [['진단명',DOMAIN[s.domain]],['예정 수술·시술',OP_NAMES[s.procedure]+(s.appr?' ('+s.appr+')':'')],['병변 위치',[s.side,s.loc].filter(Boolean).join(' ')||'-'],['환자',$('rPatient').textContent]]){const tr=el('tr');tr.append(el('th','',k),el('td','',v));info.append(tr)}root.append(info);
+ const sec=(key,title,fill,oralLabel='추가로 설명한 내용')=>{const box=el('section','hoSec'),h=el('h2');h.append(el('span','hoNo',String(STEPS.indexOf(key)+1)),document.createTextNode(title),el('span','hoMark',(stepDone(key)?'☑':'☐')+' 설명함'));box.append(h);fill(box);const o=oral(key);if(o){const add=el('div','hoOral');add.append(el('b','',oralLabel),el('p','',o));box.append(add)}root.append(box)};
+ sec('disease','질환에 대한 설명',b=>b.append(el('p','',$('diagnosisText').textContent),el('p','',$('purposeText').textContent)));
+ sec('procedure','수술·시술 방법',b=>b.append(el('p','',$('procedureText').textContent)));
+ sec('risk','수술 후 생길 수 있는 합병증',b=>{b.append(el('h3','','이 수술의 주요 합병증'));const ul=el('ul','cols');s.risks.forEach(r=>ul.append(el('li','',r)));b.append(ul);if(s.domain==='aneurysm'&&s.sites.length){b.append(el('h3','','병변 위치에 따라 생길 수 있는 증상'));const u2=el('ul');s.sites.forEach(k=>u2.append(el('li','',LOCATIONS[k].name+': '+locationRisks(k).map(r=>r.label).join(', '))));b.append(u2)}if(s.patientRisks.length){b.append(el('h3','','환자분의 건강 상태와 관련해 주의할 점'));const u3=el('ul');s.patientRisks.forEach(r=>{const li=el('li');li.append(el('b','',r.label+': '),document.createTextNode(r.text));u3.append(li)});b.append(u3)}b.append(el('p','hoSmall','합병증이 반드시 생기는 것은 아니며, 발생 가능성은 환자의 상태와 병변에 따라 다릅니다.'))});
+ sec('alternative','다른 치료 방법과 치료하지 않을 경우',b=>b.append(el('p','',$('alternativeText').textContent)));
+ sec('qa','질문과 답변',b=>{if(!oral('qa'))b.append(el('p','hoSmall','기록된 질문이 없습니다.'))},'질문·답변 기록');
+ const media=pickedPlan();if(media.length){const box=el('section','hoSec');box.append(el('h2','','함께 제공하는 설명 영상·그림'));const ul=el('ul');media.forEach(p=>ul.append(el('li','',p.asset.title)));box.append(ul);root.append(box)}
+ const sign=el('div','hoSign');for(const t of ['설명 의사','환자','보호자 (관계:\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0)']){const d=el('div');d.append(el('span','',t),el('i'),el('small','','(서명)'));sign.append(d)}root.append(sign);root.append(el('p','hoFoot','이 문서는 수술 전 설명 내용을 정리한 안내문으로, 정식 수술 동의서를 대신하지 않습니다. 궁금한 점은 담당 의료진에게 다시 문의하세요.'));
+ const missing=STEPS.filter(k=>!stepDone(k)).length;$('handoutWarn').textContent=missing?'설명 완료 표시가 없는 항목이 '+missing+'개 있습니다. 출력 전에 확인하세요.':'모든 항목에 설명 완료 표시가 되어 있습니다.'}
+function closeHandout(){$('handoutView').hidden=true;document.body.classList.remove('handout-open')}
+$('openHandout').onclick=()=>{if(!snapshot)return;buildHandout();$('handoutView').hidden=false;$('handoutView').scrollTop=0;document.body.classList.add('handout-open');$('printHandout').focus()};$('closeHandout').onclick=closeHandout;$('printHandout').onclick=()=>window.print();
+$('resetPatient').onclick=()=>{if($('historyText'))$('historyText').value='';for(const id of ['age','sex','location','approach'])$(id).value='';document.querySelectorAll('.chip input,.stepCheck').forEach(i=>i.checked=false);document.querySelectorAll('textarea.oral').forEach(t=>{t.value='';t.style.height=''});$('dx').value='aneurysm';fillOps();$('side').selectedIndex=0;for(const id of ['rTitle','rSub','rPatient','rLesion','rApproach','rSpecific','diagnosisText','diagnosisNote','purposeText','procedureText','riskList','patientRiskList','alternativeText','mediaGroups','mediaTabs','mediaStage','stripNote','locationRiskSection','locationHint','handout'])$(id).replaceChildren();generated=false;snapshot=null;mediaPlan=[];unpicked=new Set();mediaFilter='';currentMediaId=null;mediaScope='step';setStep('disease');updateProgress();closePresenter();closeHandout();show('inputView');toast('새 환자 입력을 준비했습니다.')};
 function validateAsset(raw,base){raw=upgradeRiskAsset(raw);if(!raw||typeof raw!=='object')throw Error('자료 형식이 올바르지 않습니다.');const a={id:typeof raw.id==='string'&&/^[\w-]{1,100}$/.test(raw.id)?raw.id:'a_'+crypto.randomUUID(),title:String(raw.title||'').slice(0,200),fileKey:String(raw.fileKey||'').slice(0,500),domain:raw.domain,category:raw.category,procedure:raw.procedure||'',type:raw.type,tags:Array.isArray(raw.tags)?raw.tags.map(t=>normalize(String(t))).filter(Boolean).slice(0,30):[],side:raw.side||'',sex:raw.sex||'',minAge:raw.minAge==null||raw.minAge===''?null:Number(raw.minAge),maxAge:raw.maxAge==null||raw.maxAge===''?null:Number(raw.maxAge),source:String(raw.source||'').slice(0,500),license:String(raw.license||'').slice(0,200),caption:String(raw.caption||'').slice(0,500),reviewed:raw.reviewed===true,locationKey:raw.locationKey||'',riskKey:raw.riskKey||'',legacyRiskKey:raw.legacyRiskKey||'',aneurysmOnly:raw.aneurysmOnly===true,coilBasics:raw.coilBasics===true,url:safeURL(raw.url,base)};if(!a.title||(a.domain&&!DOMAIN[a.domain])||(a.category&&!CATS[a.category])||!['image','video'].includes(a.type)||(a.reviewed&&(!DOMAIN[a.domain]||!CATS[a.category])))throw Error('제목·질환·카테고리·유형·검토 여부를 확인하세요.');if(a.locationKey&&(!LOCATIONS[a.locationKey]||a.domain!=='aneurysm'))throw Error('동맥류 위치를 확인하세요.');if(a.domain==='common'&&a.category!=='risk')throw Error('공통 자료는 주요 합병증 카테고리로 등록하세요.');if(a.riskKey&&(a.category!=='risk'||!MAJOR_RISKS[a.riskKey]))throw Error('합병증 연결 항목을 확인하세요.');if(a.procedure&&!(OPS[a.domain]||[]).includes(a.procedure))throw Error('질환과 술식이 맞지 않습니다.');if(a.side&&!['좌측','우측'].includes(a.side)||a.sex&&!['여성','남성'].includes(a.sex))throw Error('좌우·성별 형식 오류');if([a.minAge,a.maxAge].some(n=>n!==null&&(!Number.isInteger(n)||n<0||n>120))||a.minAge!==null&&a.maxAge!==null&&a.minAge>a.maxAge)throw Error('나이 범위를 확인하세요.');if(raw.blob instanceof Blob){a.blob=raw.blob;a.url=''}if(!a.url&&!a.blob)throw Error('자료 파일 또는 주소가 필요합니다.');return a}
 $('assetForm').onsubmit=async e=>{e.preventDefault();const submit=e.submitter;submit.disabled=true;try{const file=$('assetFile').files[0];if(file&&file.size>MAX)throw Error('파일당 40MB 이하로 등록하세요.');if(file&&!/^(image\/(png|jpeg|webp|gif)|video\/(mp4|webm))$/.test(file.type))throw Error('지원하지 않는 파일 형식입니다.');const old=assets.find(a=>a.id===editing);const sites=detectLocations($('assetLocation').value);if($('assetLocation').value.trim()&&sites.length!==1)throw Error('자료에는 한 개의 동맥류 위치를 입력하세요. 예: A.com');const raw={aneurysmOnly:old?.aneurysmOnly||false,locationKey:sites[0]||'',riskKey:$('assetRiskKey').value,id:editing||'a_'+crypto.randomUUID(),title:$('assetTitle').value.trim(),domain:$('assetDomain').value,category:$('assetCategory').value,procedure:$('assetProcedure').value,tags:splitTags($('assetTags').value),side:$('assetSide').value,sex:$('assetSex').value,minAge:$('assetMinAge').value,maxAge:$('assetMaxAge').value,source:$('assetSource').value,license:$('assetLicense').value,caption:$('assetCaption').value,reviewed:$('assetReviewed').checked,type:file?(file.type.startsWith('video')?'video':'image'):$('assetType').value,url:file?'':$('assetUrl').value,blob:file||(!$('assetUrl').value?old?.blob:null)};const a=validateAsset(raw);if(db)await writeDB('assets',a);assets=assets.filter(x=>x.id!==a.id);assets.push(a);cancelEdit();renderLibrary();if(generated)renderRecommendations();toast('자료를 저장했습니다.')}catch(err){toast(err.message)}finally{submit.disabled=false}};
 function cancelEdit(){editing=null;$('assetForm').reset();fillAssetOps();fillRiskOptions();$('editHeading').textContent='사진·영상 등록';$('cancelEdit').hidden=true}
@@ -366,7 +567,7 @@ $('downloadExample').onclick=()=>download('assets_example.json',JSON.stringify({
 async function importList(json,base){const rows=Array.isArray(json)?json:json.assets;if(!Array.isArray(rows)||rows.length>500)throw Error('최대 500개 자료 목록만 가져올 수 있습니다.');const checked=rows.map(r=>validateAsset(r,base));if(new Set(checked.map(a=>a.id)).size!==checked.length)throw Error('중복 자료 ID가 있습니다.');if(db)await new Promise((resolve,reject)=>{const tx=db.transaction('assets','readwrite');checked.forEach(a=>tx.objectStore('assets').put(a));tx.oncomplete=resolve;tx.onerror=()=>reject(tx.error);tx.onabort=()=>reject(tx.error)});const map=new Map(assets.map(a=>[a.id,a]));checked.forEach(a=>map.set(a.id,a));assets=[...map.values()];renderLibrary();if(generated)renderRecommendations();toast(checked.length+'개 자료를 가져왔습니다.')}
 $('importCatalog').onchange=async()=>{try{const f=$('importCatalog').files[0];if(!f)return;if(f.size>150*1024*1024)throw Error('자료목록 파일이 너무 큽니다.');await importList(JSON.parse(await f.text()))}catch(e){toast('가져오기 실패: '+e.message)}finally{$('importCatalog').value=''}};
 $('fetchCatalog').onclick=async()=>{const b=$('fetchCatalog');b.disabled=true;try{const url=safeURL($('catalogUrl').value);if(!/^https?:\/\//.test(url))throw Error('자료목록의 전체 HTTPS 주소를 입력하세요.');const r=await fetch(url,{signal:AbortSignal.timeout(20000),credentials:'omit',referrerPolicy:'no-referrer'});if(!r.ok)throw Error('HTTP '+r.status);const body=await r.text();if(body.length>150*1024*1024)throw Error('자료목록이 너무 큽니다.');await importList(JSON.parse(body),r.url||url)}catch(e){toast('불러오기 실패: 주소·CORS·네트워크·JSON 형식을 확인하세요. '+e.message)}finally{b.disabled=false}};
-$('exportHtml').onclick=async()=>{const b=$('exportHtml');b.disabled=true;try{toast('자료를 포함한 HTML을 준비합니다.');const list=await serializable();const doc=document.documentElement.cloneNode(true);doc.querySelector('#embeddedAssets').textContent=JSON.stringify(list).replace(/</g,'\\u003c');doc.querySelectorAll('input').forEach(i=>{i.removeAttribute('value');i.removeAttribute('checked')});doc.querySelectorAll('textarea').forEach(i=>i.textContent='');doc.querySelectorAll('option').forEach(i=>i.removeAttribute('selected'));doc.querySelectorAll('button').forEach(i=>i.removeAttribute('disabled'));for(const id of ['assetList','diagnosisVisual','procedureVisual','riskVisual','aftercareVisual','rTitle','rSub','rPatient','rLesion','rApproach','rSpecific','diagnosisText','diagnosisNote','purposeText','procedureText','riskList','patientRiskList','alternativeText','pTitle','pBody','pVisual','locationRiskSection','locationHint','bulkRows','bulkMessage','bulkCount','mediaFolderStatus','assemblyRows','assemblyStatus','assemblyFormat','assemblyStage','assemblyOutput'])doc.querySelector('#'+id).replaceChildren();doc.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v.id==='inputView'));doc.querySelector('#assemblyDialog').removeAttribute('open');doc.querySelector('#assemblyCanvas').style.display='none';doc.querySelector('#assemblyProgress').value=0;doc.querySelector('#cancelAssembly').disabled=true;doc.querySelector('#bulkStage').hidden=true;doc.querySelector('#singleEditor').open=false;doc.querySelector('#presenter').classList.remove('active');doc.querySelector('#toast').style.display='none';doc.querySelector('#toast').textContent='';doc.querySelector('#cancelEdit').hidden=true;doc.querySelector('#editHeading').textContent='사진·영상 등록';doc.querySelector('#checkProgress').textContent='0 / 8 설명 완료';download('neuro_consent_final.html','<!doctype html>\n'+doc.outerHTML,'text/html');toast('자료 포함 HTML을 다운로드했습니다. 주소로 등록한 자료는 원본 주소에서 불러옵니다.')}catch(e){toast('HTML 내보내기 실패: '+e.message)}finally{b.disabled=false}};
+$('exportHtml').onclick=async()=>{const b=$('exportHtml');b.disabled=true;try{toast('자료를 포함한 HTML을 준비합니다.');const list=await serializable();const doc=document.documentElement.cloneNode(true);doc.querySelector('#embeddedAssets').textContent=JSON.stringify(list).replace(/</g,'\\u003c');doc.querySelectorAll('input').forEach(i=>{i.removeAttribute('value');i.removeAttribute('checked')});doc.querySelectorAll('textarea').forEach(i=>i.textContent='');doc.querySelectorAll('option').forEach(i=>i.removeAttribute('selected'));doc.querySelectorAll('button').forEach(i=>i.removeAttribute('disabled'));for(const id of ['assetList','mediaGroups','mediaTabs','mediaStage','stripNote','handout','handoutWarn','pickCount','rTitle','rSub','rPatient','rLesion','rApproach','rSpecific','diagnosisText','diagnosisNote','purposeText','procedureText','riskList','patientRiskList','alternativeText','pTitle','pBody','pVisual','locationRiskSection','locationHint','bulkRows','bulkMessage','bulkCount','mediaFolderStatus','assemblyRows','assemblyStatus','assemblyFormat','assemblyStage','assemblyOutput'])doc.querySelector('#'+id).replaceChildren();doc.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v.id==='inputView'));doc.querySelector('#assemblyDialog').removeAttribute('open');doc.querySelector('#assemblyCanvas').style.display='none';doc.querySelector('#assemblyProgress').value=0;doc.querySelector('#cancelAssembly').disabled=true;doc.querySelector('#bulkStage').hidden=true;doc.querySelector('#singleEditor').open=false;doc.querySelector('#presenter').classList.remove('active');doc.querySelector('#toast').style.display='none';doc.querySelector('#toast').textContent='';doc.querySelector('#cancelEdit').hidden=true;doc.querySelector('#editHeading').textContent='사진·영상 등록';doc.querySelector('#checkProgress').textContent='설명 0 / 5 완료';doc.querySelectorAll('.step.done').forEach(s=>s.classList.remove('done'));doc.querySelectorAll('textarea').forEach(t=>t.removeAttribute('style'));doc.querySelector('body').classList.remove('handout-open','console');doc.querySelectorAll('.navState').forEach(n=>n.textContent='설명 전');doc.querySelectorAll('#stepNav button,.explainPane .step').forEach(n=>{n.classList.remove('done','active','current');n.removeAttribute('aria-current')});doc.querySelector('#stepNav button').classList.add('active');doc.querySelector('.explainPane .step').classList.add('current');doc.querySelector('#handoutView').hidden=true;download('neuro_consent_final.html','<!doctype html>\n'+doc.outerHTML,'text/html');toast('자료 포함 HTML을 다운로드했습니다. 주소로 등록한 자료는 원본 주소에서 불러옵니다.')}catch(e){toast('HTML 내보내기 실패: '+e.message)}finally{b.disabled=false}};
 
 const LOCATIONS={
  mca:{name:'MCA · 중대뇌동맥',risks:[
@@ -405,7 +606,7 @@ function majorKeys(){return Object.keys(MAJOR_RISKS).filter(k=>['infarction','se
 function majorMedia(key){return assets.map(a=>score(a,snapshot)).filter(a=>a&&a.category==='risk'&&a.riskKey===key).sort((a,b)=>b.score-a.score).slice(0,4)}
 function renderMajorRisks(root,present=false){root.replaceChildren();if(!snapshot)return;const grid=el('div','mediaGrid');for(const key of majorKeys()){const card=el('section','card');card.append(el('h3','',MAJOR_RISKS[key]));const list=majorMedia(key);if(list.length)list.forEach(a=>card.append(mediaCard(a)));else card.append(el('div','note','등록된 영상·이미지 없음'));grid.append(card)}root.append(grid);const general=recommend(snapshot,['risk']);if(general.length){root.append(el('h3','','그 밖의 합병증 설명자료'));const extra=el('div','mediaGrid');general.forEach(a=>extra.append(mediaCard(a)));root.append(extra)}}
 function appendLocationText(root){if(snapshot.domain!=='aneurysm'||!snapshot.sites.length)return;root.append(el('h3','','위치별 추가 합병증 · 글로 설명'));for(const key of snapshot.sites){const box=el('div','card');box.append(el('h3','',LOCATIONS[key].name));const chips=el('div','chips');locationRisks(key).forEach(r=>chips.append(el('span','risk',r.label)));box.append(chips);root.append(box)}}
-function renderLocationRisks(){const root=$('locationRiskSection');root.replaceChildren();if(snapshot.domain!=='aneurysm')return;if(!snapshot.sites.length){root.append(el('div','note','위치 입력 시 위치별 추가 합병증을 글로 보여줍니다.'));return}appendLocationText(root);const details=el('details','clinicianBox');details.append(el('summary','','의료진 참고'));for(const key of snapshot.sites)for(const r of locationRisks(key))details.append(el('div','',LOCATIONS[key].name+' · '+r.label+': '+r.note));root.append(details)}
+function renderLocationRisks(){const root=$('locationRiskSection');root.replaceChildren();if(snapshot.domain!=='aneurysm'){root.append(el('p','note','위치별 자동 항목은 뇌동맥류 위치(MCA, A.com, P.com, A.cho, Basilar top)에서 제공됩니다. 병변 위치와 관련된 위험은 아래 메모에 적어 주세요.'));return}if(!snapshot.sites.length){root.append(el('p','note','환자 정보에서 동맥류 위치(예: Lt MCA bifurcation)를 입력하면 위치별 위험이 표시됩니다.'));return}for(const key of snapshot.sites){const box=el('div','siteBox');box.append(el('div','siteName',LOCATIONS[key].name));const ul=el('ul','siteList');for(const r of locationRisks(key)){const li=el('li');li.append(el('b','',r.label),el('span','note',r.note));ul.append(li)}box.append(ul);root.append(box)}}
 function fillRiskOptions(){const old=$('assetRiskKey').value,opt=el('option','','기타 / 종합 설명');opt.value='';$('assetRiskKey').replaceChildren(opt);for(const [key,label] of Object.entries(MAJOR_RISKS)){const o=el('option','',label);o.value=key;$('assetRiskKey').append(o)}$('assetRiskKey').value=MAJOR_RISKS[old]?old:''}
 window.addEventListener('DOMContentLoaded',fillRiskOptions);
 $('assetLocation').addEventListener('input',fillRiskOptions);
@@ -440,8 +641,8 @@ window.neuroConsent.guessFile=guessFile;
 let assemblyItems=[],assemblyJob=null,assemblyDownloadURL=null;
 function recordingFormat(){if(!window.MediaRecorder)return null;return ['video/mp4;codecs=avc1.424028,mp4a.40.2','video/mp4','video/webm;codecs=vp9,opus','video/webm;codecs=vp8,opus','video/webm'].find(t=>MediaRecorder.isTypeSupported(t))||null;}
 function clearAssemblyOutput(){if(assemblyDownloadURL){URL.revokeObjectURL(assemblyDownloadURL);assemblyDownloadURL=null;}$('assemblyOutput').querySelectorAll('video').forEach(v=>v.pause());$('assemblyOutput').replaceChildren();}
-function buildAssemblyItems(){const chosen=[...recommend(snapshot,['anatomy','lesion']),...recommend(snapshot,['approach','procedure']),...majorKeys().flatMap(majorMedia),...recommend(snapshot,['risk']),...recommend(snapshot,['aftercare'])];const seen=new Set();return chosen.filter(a=>!seen.has(a.id)&&seen.add(a.id)).map(a=>({asset:a,included:true,seconds:8}));}
-function renderAssemblyItems(){const root=$('assemblyRows');root.replaceChildren();assemblyItems.forEach((item,i)=>{const row=el('div','card'),check=el('input');check.type='checkbox';check.checked=item.included;check.onchange=()=>item.included=check.checked;const label=el('label','checkRow');label.append(check,el('span','',item.asset.title));row.append(label);const actions=el('div','actions');if(item.asset.type!=='video'){const seconds=el('input','field');seconds.type='number';seconds.min=1;seconds.max=120;seconds.value=item.seconds;seconds.style.width='90px';seconds.setAttribute('aria-label',item.asset.title+' 표시 시간');seconds.onchange=()=>{item.seconds=Math.max(1,Math.min(120,Number(seconds.value)||8));seconds.value=item.seconds;};actions.append(el('span','','GIF·이미지 표시 시간(초)'),seconds);}else actions.append(el('span','note','동영상 전체 길이 · 원본 음성 포함'));for(const [label,delta] of [['↑',-1],['↓',1]]){const b=button(label,()=>{const j=i+delta;[assemblyItems[i],assemblyItems[j]]=[assemblyItems[j],assemblyItems[i]];renderAssemblyItems();});b.disabled=i+delta<0||i+delta>=assemblyItems.length;actions.append(b);}row.append(actions);root.append(row);});if(!assemblyItems.length)root.append(el('div','empty','이 환자의 조건에 맞는 자료가 없습니다. 자료실에서 용도를 지정한 뒤 다시 생성하세요.'));}
+function buildAssemblyItems(){return pickedPlan().map(p=>({asset:p.asset,included:true,seconds:8}))}
+function renderAssemblyItems(){const root=$('assemblyRows');root.replaceChildren();assemblyItems.forEach((item,i)=>{const row=el('div','card'),check=el('input');check.type='checkbox';check.checked=item.included;check.onchange=()=>item.included=check.checked;const label=el('label','checkRow');label.append(check,el('span','',item.asset.title));row.append(label);const actions=el('div','actions');if(item.asset.type!=='video'){const seconds=el('input','field');seconds.type='number';seconds.min=1;seconds.max=120;seconds.value=item.seconds;seconds.style.width='90px';seconds.setAttribute('aria-label',item.asset.title+' 표시 시간');seconds.onchange=()=>{item.seconds=Math.max(1,Math.min(120,Number(seconds.value)||8));seconds.value=item.seconds;};actions.append(el('span','','GIF·이미지 표시 시간(초)'),seconds);}else actions.append(el('span','note','동영상 전체 길이 · 원본 음성 포함'));for(const [label,delta] of [['↑',-1],['↓',1]]){const b=button(label,()=>{const j=i+delta;[assemblyItems[i],assemblyItems[j]]=[assemblyItems[j],assemblyItems[i]];renderAssemblyItems();});b.disabled=i+delta<0||i+delta>=assemblyItems.length;actions.append(b);}row.append(actions);root.append(row);});if(!assemblyItems.length)root.append(el('div','empty','선택한 자료가 없습니다. 설명 화면 아래 ‘관련 영상·그림’에서 포함할 자료를 체크하세요.'));}
 $('openAssembly').onclick=()=>{if(!snapshot)return;assemblyItems=buildAssemblyItems();clearAssemblyOutput();renderAssemblyItems();const format=recordingFormat();$('assemblyFormat').textContent=format?'이 브라우저의 저장 형식: '+(format.startsWith('video/mp4')?'MP4':'WebM')+' · 1280 × 720':'이 브라우저는 영상 저장을 지원하지 않습니다.';$('startAssembly').disabled=!format||!assemblyItems.length;$('assemblyProgress').value=0;$('assemblyStatus').textContent='포함 자료와 순서를 확인한 뒤 영상 만들기를 누르세요.';$('assemblyCanvas').style.display='none';$('assemblyDialog').showModal();};
 $('closeAssembly').onclick=()=>{if(!assemblyJob)$('assemblyDialog').close();};$('assemblyDialog').addEventListener('cancel',e=>{if(assemblyJob)e.preventDefault();});
 $('cancelAssembly').onclick=()=>assemblyJob?.abort();
