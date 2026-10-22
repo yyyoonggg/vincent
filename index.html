@@ -450,7 +450,7 @@ const CATS={anatomy:'정상 해부학',lesion:'질환·병변 위치',approach:'
 const OPS={cranial:[],common:[],lumbar:['discectomy','decompression','fusion'],aneurysm:['clip','coil','stentcoil'],tumor:['resection','biopsy'],disc:['discectomy'],stenosis:['decompression','fusion']};
 const OP_NAMES={clip:'개두술 및 뇌동맥류 결찰술',coil:'뇌동맥류 코일색전술',stentcoil:'스텐트 보조 코일색전술',resection:'개두술 및 뇌종양 제거술',biopsy:'정위적 조직검사',discectomy:'요추 디스크 제거술 · 내시경/미세현미경',decompression:'요추 감압술',fusion:'요추 감압술 및 유합술'};
 const PROCEDURES={clip:'개두 후 동맥류의 목에 클립을 적용하여 동맥류로 들어가는 혈류를 차단합니다.',coil:'혈관 안으로 카테터를 넣고 동맥류 내부에 코일을 삽입합니다.',stentcoil:'혈관 안으로 카테터를 넣고 스텐트로 코일을 지지하면서 동맥류 내부에 코일을 삽입합니다.',biopsy:'영상으로 병변의 위치를 확인하고 조직 일부를 채취하여 병리검사를 시행합니다.',resection:DATA.tumor.procedure,discectomy:DATA.disc.procedure,decompression:'신경을 압박하는 뼈·인대 등의 일부를 제거하여 신경이 지나가는 공간을 넓힙니다.',fusion:DATA.stenosis.procedure};
-const RISKS={aneurysm:['출혈 및 파열','뇌경색','신경손상','감염','경련','잔여·재발','추가치료','중증 장애·사망'],tumor:['출혈','뇌경색','신경기능 저하','뇌부종','경련','감염','뇌척수액 누출','추가치료','중증 장애·사망'],disc:['출혈·혈종','감염','신경손상','경막손상·뇌척수액 누출','잔여 증상','재발·재수술'],stenosis:['출혈·혈종','감염','신경손상','경막손상·뇌척수액 누출','잔여 증상','재협착']};
+const RISKS={aneurysm:['출혈 및 파열','뇌경색','잔여·재발','신경손상','감염','경련','중증 장애·사망'],tumor:['출혈','뇌경색','신경기능 저하','뇌부종','경련','감염','뇌척수액 누출','추가치료','중증 장애·사망'],disc:['출혈·혈종','감염','신경손상','경막손상·뇌척수액 누출','잔여 증상','재발·재수술'],stenosis:['출혈·혈종','감염','신경손상','경막손상·뇌척수액 누출','잔여 증상','재협착']};
 const MAX=40*1024*1024;const mediaCache=new WeakMap();
 let assets=[],feedback={},db=null,editing=null,generated=false,objectURLs=[],snapshot=null;
 function el(tag,cls,text){const n=document.createElement(tag);if(cls)n.className=cls;if(text!==undefined)n.textContent=text;return n}
