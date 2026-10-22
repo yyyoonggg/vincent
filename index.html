@@ -418,7 +418,7 @@ const DATA={
    note:"eloquent area, vessel/cranial nerve relationship, expected extent of resection, pathology uncertainty를 환자별로 강조."
  },
  disc:{
-   ops:["요추 디스크 제거술 · 내시경/미세현미경"],
+   ops:["요추 디스크 제거술 · 내시경/미세현미경","요추 감압술 및 유합술"],
    dx:"허리 디스크 안쪽의 수핵이 바깥으로 밀려나와 신경근을 압박하는 병변이 확인되었습니다.",
    purpose:"수술의 주된 목적은 눌린 신경을 감압하여 다리로 뻗치는 통증, 저림 또는 근력저하를 호전시키는 것입니다. 이미 오래 지속된 신경 손상은 수술 후에도 완전히 회복되지 않을 수 있습니다.",
    procedure:"전신마취 후 병변 위치를 확인하고 작은 절개 또는 내시경 통로로 접근하여 신경을 보호하면서 탈출된 디스크 조각을 제거합니다.",
@@ -456,7 +456,7 @@ const $=id=>document.getElementById(id);
 const DOMAIN={cranial:"두개강 공통 (동맥류·뇌종양)",common:"공통 주요 합병증",lumbar:'요추 공통 (디스크·협착증)',aneurysm:'비파열성 뇌동맥류',tumor:'뇌종양',disc:'요추 추간판 탈출증',stenosis:'요추 척추관 협착증'};
 const GROUP={aneurysm:'뇌혈관',tumor:'뇌종양',disc:'척추',stenosis:'척추'};
 const CATS={anatomy:'정상 해부학',lesion:'질환·병변 위치',approach:'수술 접근법',procedure:'수술·시술 과정',risk:'합병증',aftercare:'회복·주의사항'};
-const OPS={cranial:[],common:[],lumbar:['discectomy','decompression','fusion'],aneurysm:['clip','coil','stentcoil'],tumor:['resection','biopsy'],disc:['discectomy'],stenosis:['decompression','fusion']};
+const OPS={cranial:[],common:[],lumbar:['discectomy','decompression','fusion'],aneurysm:['clip','coil','stentcoil'],tumor:['resection','biopsy'],disc:['discectomy','fusion'],stenosis:['decompression','fusion']};
 const OP_NAMES={clip:'개두술 및 뇌동맥류 결찰술',coil:'뇌동맥류 코일색전술',stentcoil:'스텐트 보조 코일색전술',resection:'개두술 및 뇌종양 제거술',biopsy:'정위적 조직검사',discectomy:'요추 디스크 제거술 · 내시경/미세현미경',decompression:'요추 감압술',fusion:'요추 감압술 및 유합술'};
 const PROCEDURES={clip:'개두 후 동맥류의 목에 클립을 적용하여 동맥류로 들어가는 혈류를 차단합니다.',coil:'혈관 안으로 카테터를 넣고 동맥류 내부에 코일을 삽입합니다.',stentcoil:'혈관 안으로 카테터를 넣고 스텐트로 코일을 지지하면서 동맥류 내부에 코일을 삽입합니다.',biopsy:'영상으로 병변의 위치를 확인하고 조직 일부를 채취하여 병리검사를 시행합니다.',resection:DATA.tumor.procedure,discectomy:DATA.disc.procedure,decompression:'신경을 압박하는 뼈·인대 등의 일부를 제거하여 신경이 지나가는 공간을 넓힙니다.',fusion:DATA.stenosis.procedure};
 const RISKS={aneurysm:['출혈 및 파열','뇌경색','신경손상','감염','경련','잔여·재발','추가치료','중증 장애·사망'],tumor:['출혈','뇌경색','신경기능 저하','뇌부종','경련','감염','뇌척수액 누출','추가치료','중증 장애·사망'],disc:['출혈·혈종','감염','신경손상','경막손상·뇌척수액 누출','잔여 증상','재발·재수술'],stenosis:['출혈·혈종','감염','신경손상','경막손상·뇌척수액 누출','잔여 증상','재협착']};
@@ -753,6 +753,21 @@ window.addEventListener('DOMContentLoaded',init);
     "source": "사용자 제공 자료",
     "caption": "설명 화면 추천에서 제외 (자료실에서만 표시)",
     "riskKey": "infarction"
+  },
+  {
+    "id": "linked_clip_rupture_gif",
+    "title": "결찰술 중 동맥류 파열",
+    "domain": "aneurysm",
+    "category": "risk",
+    "type": "image",
+    "url": "Assets/Videos/clip_rupture.gif",
+    "tags": [],
+    "reviewed": false,
+    "source": "사용자 제공 자료",
+    "caption": "설명 화면 추천에서 제외 (자료실에서만 표시)",
+    "riskKey": "hemorrhage",
+    "aneurysmOnly": true,
+    "procedure": "clip"
   },
   {
     "id": "linked_thrombectomy_web_mp4",
