@@ -141,7 +141,7 @@ textarea.oral{min-height:46px;font-size:13px;overflow:hidden}
 /* ---- 설명 콘솔: 선택 | 정보 / 설명화면 / 동영상 ---- */
 body.console .top{display:none}
 body.console .shell{max-width:1440px;padding:12px 14px 0}
-.consoleGrid{display:grid;grid-template-columns:232px minmax(0,1fr);grid-template-rows:auto minmax(0,1fr) 132px;grid-template-areas:"select info" "select explain" "select video";gap:10px;height:calc(100vh - 80px);height:calc(100dvh - 80px - env(safe-area-inset-bottom))}
+.consoleGrid{display:grid;grid-template-columns:232px minmax(0,1fr);grid-template-rows:auto minmax(0,1fr) 132px;grid-template-areas:"select info" "select explain" "select video";gap:10px;height:calc(100vh - 116px);height:calc(100dvh - 116px - env(safe-area-inset-bottom))}
 .pane{background:#fff;border:1px solid var(--line);border-radius:14px;min-width:0;min-height:0}
 .selectPane{grid-area:select;display:flex;flex-direction:column;padding:12px 10px}
 .paneLabel{font-size:12px;font-weight:900;color:var(--muted);margin:2px 6px 8px}
@@ -220,10 +220,19 @@ body.console .shell{max-width:1440px;padding:12px 14px 0}
 .stripItem.off .thumbText{opacity:.5}
 .stripEmpty{align-self:stretch}
 @media(max-width:860px){.stripItem{flex-basis:160px}}
+
+/* ---- 병원 배너 ---- */
+.orgBar{display:flex;align-items:center;gap:8px;height:30px;margin:0 0 10px;padding:0 12px;border-radius:999px;background:#1f3a73;color:#fff;font-size:13px;letter-spacing:.01em;width:max-content;max-width:100%}
+.orgBar b{font-weight:800}.orgBar span:last-child{opacity:.85;font-weight:600}
+.orgBar span:last-child::before{content:"";display:inline-block;width:1px;height:11px;background:rgba(255,255,255,.45);margin:0 8px 0 2px;vertical-align:-1px}
+.orgDot{width:8px;height:8px;border-radius:50%;background:#7fb2ff;flex:none}
+body.console .orgBar{margin-bottom:8px}
+@media print{.orgBar{display:none!important}}
 </style>
 </head>
 <body>
 <div class="shell">
+  <div class="orgBar" role="banner"><span class="orgDot" aria-hidden="true"></span><b>성빈센트병원</b><span>신경외과</span></div>
   <div class="top">
     <div class="brand">
       <h1>동의서 설명 지원 도구</h1>
@@ -540,7 +549,7 @@ function autoGrow(t){t.style.height='auto';t.style.height=t.scrollHeight+'px'}do
 const STEPS=['disease','procedure','risk','alternative','qa'];
 function stepDone(k){return document.querySelector('.stepCheck[data-key="'+k+'"]').checked}
 function oral(k){return document.querySelector('.oral[data-key="'+k+'"]')?.value.trim()||''}
-function buildHandout(){const s=snapshot,root=$('handout');root.replaceChildren();const head=el('header','hoHead');head.append(el('h1','','수술 설명 확인서'),el('p','','환자 보관용 · 설명 일시 '+new Date().toLocaleString('ko-KR',{dateStyle:'long',timeStyle:'short'})));root.append(head);const info=el('table','hoInfo');for(const [k,v] of [['진단명',DOMAIN[s.domain]],['예정 수술·시술',OP_NAMES[s.procedure]+(s.appr?' ('+s.appr+')':'')],['병변 위치',[s.side,s.loc].filter(Boolean).join(' ')||'-'],['환자',$('rPatient').textContent]]){const tr=el('tr');tr.append(el('th','',k),el('td','',v));info.append(tr)}root.append(info);
+function buildHandout(){const s=snapshot,root=$('handout');root.replaceChildren();const head=el('header','hoHead');head.append(el('h1','','수술 설명 확인서'),el('p','','성빈센트병원 신경외과 · 환자 보관용 · 설명 일시 '+new Date().toLocaleString('ko-KR',{dateStyle:'long',timeStyle:'short'})));root.append(head);const info=el('table','hoInfo');for(const [k,v] of [['진단명',DOMAIN[s.domain]],['예정 수술·시술',OP_NAMES[s.procedure]+(s.appr?' ('+s.appr+')':'')],['병변 위치',[s.side,s.loc].filter(Boolean).join(' ')||'-'],['환자',$('rPatient').textContent]]){const tr=el('tr');tr.append(el('th','',k),el('td','',v));info.append(tr)}root.append(info);
  const sec=(key,title,fill,oralLabel='추가로 설명한 내용')=>{const box=el('section','hoSec'),h=el('h2');h.append(el('span','hoNo',String(STEPS.indexOf(key)+1)),document.createTextNode(title),el('span','hoMark',(stepDone(key)?'☑':'☐')+' 설명함'));box.append(h);fill(box);const o=oral(key);if(o){const add=el('div','hoOral');add.append(el('b','',oralLabel),el('p','',o));box.append(add)}root.append(box)};
  sec('disease','질환에 대한 설명',b=>b.append(el('p','',$('diagnosisText').textContent),el('p','',$('purposeText').textContent)));
  sec('procedure','수술·시술 방법',b=>b.append(el('p','',$('procedureText').textContent)));
@@ -742,7 +751,7 @@ window.addEventListener('DOMContentLoaded',init);
     "tags": [],
     "reviewed": true,
     "source": "사용자 제공 자료",
-    "caption": "대혈관 폐색에 의한 뇌경색의 설명자료입니다.",
+     "caption": "연결 보류 · 환자 설명 자동 추천에서 제외",
     "riskKey": "infarction"
   },
   {
@@ -824,36 +833,6 @@ window.addEventListener('DOMContentLoaded',init);
     "reviewed": false,
     "url": "Assets/Videos/cervical_anatomy_web.mp4",
     "caption": "경추 진단 항목이 없어 자동 추천에서 제외 · 자료실에서 볼 수 있음"
-  },
-  {
-    "domain": "aneurysm",
-    "category": "risk",
-    "type": "video",
-    "tags": [],
-    "reviewed": true,
-    "source": "자체 제작 도식 애니메이션",
-    "riskKey": "hemorrhage",
-    "aneurysmOnly": true,
-    "url": "Assets/Videos/coil_rupture_web.mp4",
-    "caption": "시술 중 동맥류 파열 → 코일 추가·풍선으로 지혈 → 약물 조치 → 이후 경과",
-    "id": "linked_coil_rupture_web_mp4",
-    "title": "코일색전술 중 동맥류 파열",
-    "procedure": "coil"
-  },
-  {
-    "domain": "aneurysm",
-    "category": "risk",
-    "type": "video",
-    "tags": [],
-    "reviewed": true,
-    "source": "자체 제작 도식 애니메이션",
-    "riskKey": "hemorrhage",
-    "aneurysmOnly": true,
-    "url": "Assets/Videos/coil_rupture_web.mp4",
-    "caption": "시술 중 동맥류 파열 → 코일 추가·풍선으로 지혈 → 약물 조치 → 이후 경과",
-    "id": "linked_stentcoil_rupture_web_mp4",
-    "title": "스텐트 보조 코일색전술 중 동맥류 파열",
-    "procedure": "stentcoil"
   },
   {
     "domain": "aneurysm",
