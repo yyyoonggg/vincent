@@ -534,7 +534,7 @@ async function init(){try{db=await openDB();assets=(await readDB('assets')).map(
 // Repair earlier generated lowercase paths without changing uploaded/custom media.
 for(const a of assets){if(!a.id.startsWith('linked_')||a.blob||!a.url)continue;const u=new URL(a.url,document.baseURI);if(u.pathname.endsWith('/assets/videos/'+u.pathname.split('/').pop())&&(u.origin===location.origin||u.origin==='https://yyyoonggg.github.io')){a.url=a.url.replace('/assets/videos/','/Assets/Videos/').replace(/^assets\/videos\//,'Assets/Videos/');if(db)await writeDB('assets',a);}}
 if(savedFolder&&['assets/videos/','https://yyyoonggg.github.io/vincent/assets/videos/'].includes(savedFolder)){savedFolder=savedFolder.replace('assets/videos/','Assets/Videos/');if(db)await writeDB('settings',savedFolder,'mediaFolder');}
-if(savedFolder){$('mediaFolder').value=savedFolder;try{applyFolder(folderURL(savedFolder))}catch(e){toast(e.message)}}for(const a of assets){if((['linked_infection_gif','linked_infection2_gif'].includes(a.id)&&a.domain==='common'||a.id==='linked_rupture_gif'&&!a.procedure)&&a.reviewed){a.reviewed=false;if(db)await writeDB('assets',a);}}storageStatus();renderLibrary()}
+if(savedFolder){$('mediaFolder').value=savedFolder;try{applyFolder(folderURL(savedFolder))}catch(e){toast(e.message)}}for(const a of assets){if(['linked_clip_rupture_gif','linked_largevessel_occlusion_web_mp4'].includes(a.id)&&a.reviewed){a.reviewed=false;if(db)await writeDB('assets',a);}}for(const a of assets){if((['linked_infection_gif','linked_infection2_gif'].includes(a.id)&&a.domain==='common'||a.id==='linked_rupture_gif'&&!a.procedure)&&a.reviewed){a.reviewed=false;if(db)await writeDB('assets',a);}}storageStatus();renderLibrary()}
 function generate(){if(!$('age').checkValidity()){$('age').reportValidity();return}snapshot=context();const d=DATA[snapshot.domain],loc=$('location').value.trim(),appr=$('approach').value.trim();snapshot.loc=loc;snapshot.appr=appr;$('rTitle').textContent=DOMAIN[snapshot.domain];$('rSub').textContent=OP_NAMES[snapshot.procedure];$('rPatient').textContent=[snapshot.age===null?'나이 미입력':snapshot.age+'세',snapshot.sex||'성별 미입력'].join(' · ');$('rLesion').textContent=(loc||'위치 미입력')+' · '+snapshot.side;$('rApproach').textContent=appr||'미입력';$('rSpecific').textContent=snapshot.history||'없음';$('diagnosisText').textContent=d.dx+(loc?' 병변 위치: '+snapshot.side+' '+loc+'.':'');$('diagnosisNote').textContent=d.note;$('purposeText').textContent=snapshot.procedure==='biopsy'?'조직을 채취하여 진단을 확인하고 이후 치료 계획을 세우기 위한 검사입니다. 종양 제거를 목적으로 하는 수술과는 구분됩니다.':d.purpose;$('procedureText').textContent=PROCEDURES[snapshot.procedure]+(appr?' 접근법: '+appr+'.':'');let risks=[...RISKS[snapshot.domain]];if(snapshot.procedure==='fusion')risks.push('나사 위치 이상','불유합','인접 분절 질환');snapshot.risks=risks;$('riskList').replaceChildren(...risks.map(t=>el('span','risk',t)));const pr=[];if(snapshot.age!==null&&snapshot.age>=80)pr.push({label:'고령 (80세 이상)',text:'전신마취 및 수술 후 섬망, 폐합병증(무기폐·폐렴·호흡부전), 심혈관계 합병증(부정맥·저혈압·심근허혈), 흡인, 신기능 악화, 회복 지연 위험이 증가할 수 있습니다.',keys:'수술 후 섬망 · 폐합병증 · 심혈관계 합병증 · 흡인 · 신기능 악화 · 회복 지연'});for(const r of parseHistory(snapshot.history))pr.push({label:r.label,text:r.risk,keys:r.comp.join(' · ')});snapshot.patientRisks=pr;$('patientRiskList').replaceChildren();for(const r of pr){const box=el('div','patientRisk');box.append(el('b','',r.label),el('div','',r.text),el('div','note','관련 합병증: '+r.keys));$('patientRiskList').append(box)}if(!pr.length)$('patientRiskList').append(el('p','note',snapshot.history?'입력한 기저력에서 등록된 위험 키워드를 찾지 못했습니다. 원문을 확인하고 필요한 내용을 메모에 적어 주세요.':'기저력이 입력되지 않았습니다.'));$('alternativeText').textContent=d.alt;generated=true;renderRecommendations();show('resultView')}
 $('generateBtn').onclick=generate;$('backBtn').onclick=()=>show('inputView');$('navInput').onclick=()=>show('inputView');$('navResult').onclick=()=>{if(generated)show('resultView');else generate()};$('navAssets').onclick=()=>show('assetView');$('assetSearch').oninput=renderLibrary;
 function openPresenter(title,body){$('pTitle').textContent=title;$('pBody').textContent=body;$('pVisual').replaceChildren();$('pVisual').style.display='block';$('presenter').classList.add('active');$('closePresenter').focus()}
@@ -744,15 +744,30 @@ window.addEventListener('DOMContentLoaded',init);
   {
     "id": "linked_largevessel_occlusion_web_mp4",
     "title": "대혈관 폐색 설명",
-    "domain": "",
+    "domain": "common",
     "category": "risk",
     "type": "video",
     "url": "Assets/Videos/largevessel_occlusion_web.mp4",
     "tags": [],
-    "reviewed": true,
+    "reviewed": false,
     "source": "사용자 제공 자료",
-    "caption": "연결 보류 · 환자 설명 자동 추천에서 제외",
+    "caption": "설명 화면 추천에서 제외 (자료실에서만 표시)",
     "riskKey": "infarction"
+  },
+  {
+    "id": "linked_clip_rupture_gif",
+    "title": "결찰술 중 동맥류 파열",
+    "domain": "aneurysm",
+    "category": "risk",
+    "type": "image",
+    "url": "Assets/Videos/clip_rupture.gif",
+    "tags": [],
+    "reviewed": false,
+    "source": "사용자 제공 자료",
+    "caption": "설명 화면 추천에서 제외 (자료실에서만 표시)",
+    "riskKey": "hemorrhage",
+    "aneurysmOnly": true,
+    "procedure": "clip"
   },
   {
     "id": "linked_thrombectomy_web_mp4",
