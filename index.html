@@ -82,6 +82,7 @@ textarea.oral{min-height:46px;font-size:13px;overflow:hidden}
 .siteBox{margin-bottom:10px}.siteName{font-weight:900;font-size:13px;margin-bottom:2px}
 .siteList{margin:0;padding-left:18px;font-size:13px;line-height:1.55}.siteList li{margin:5px 0}.siteList .note{display:block}
 .patientRisk b{display:block;margin-bottom:2px}
+.patientRisk.emphasis{background:#fff4e8;border:2px solid #e5a34b}.patientRisk.emphasis .emphasisTag{display:inline-block;color:#985400;font-weight:900;margin-bottom:5px}.risk.emphasized{background:#fff0db;border:2px solid #d78a23;color:#783f00}.riskEmphasisIntro{padding:10px 12px;border-radius:10px;background:#fff8eb;border:1px solid #edc889;margin-bottom:10px;font-size:12px;line-height:1.6}
 .mediaSection{margin-top:22px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px;scroll-margin-top:150px}
 .mediaHead{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;margin-bottom:12px}
 .mediaHead h2{margin:0 0 4px;font-size:17px}.mediaHead .actions{margin-top:0;align-items:center}
@@ -228,6 +229,7 @@ body.console .shell{max-width:1440px;padding:12px 14px 0}
 .orgDot{width:8px;height:8px;border-radius:50%;background:#7fb2ff;flex:none}
 body.console .orgBar{margin-bottom:8px}
 @media print{.orgBar{display:none!important}}
+.personalizedStar{position:absolute;right:7px;top:7px;z-index:2;background:#fff4cb;color:#8b5400;border:1px solid #e9bc55;border-radius:999px;width:27px;height:27px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:900;box-shadow:0 2px 6px #0003}
 </style>
 </head>
 <body>
@@ -438,12 +440,13 @@ const DATA={
 };
 const HISTORY_RULES=[
  {key:'htn',label:'고혈압',patterns:[/\bhtn\b/i,/hypertension/i,/고혈압/],risk:'수술 전후 혈압 변동을 고려해야 하며, 출혈 및 심혈관계 합병증 위험 평가가 필요합니다.',comp:['출혈','심혈관계 합병증']},
- {key:'dm',label:'당뇨',patterns:[/\bdm\b/i,/diabetes/i,/당뇨/],risk:'수술 전후 혈당 관리가 필요하며 감염과 상처 회복 지연 가능성을 고려합니다.',comp:['감염','상처 회복 지연']},
+ {key:'dm',label:'당뇨',patterns:[/\bdm\b/i,/diabetes/i,/당뇨/],risk:'특히 혈당 조절이 불량한 경우 수술 부위 감염과 상처 치유 지연 가능성을 설명하고, 수술 전후 혈당 관리의 중요성을 안내합니다.',comp:['감염','상처 회복 지연']},
  {key:'stroke',label:'뇌경색/뇌졸중 병력',patterns:[/old infarct/i,/cerebral infarct/i,/stroke/i,/뇌경색|뇌졸중/],risk:'기존 신경학적 상태를 확인하고 수술 전후 허혈성 사건과 항혈전제 조정 문제를 함께 고려합니다.',comp:['뇌경색','신경학적 악화']},
  {key:'cad',label:'관상동맥질환/PCI 병력',patterns:[/\bcad\b/i,/\bpci\b/i,/coronary/i,/stent/i,/관상동맥|심근경색/],risk:'마취 및 수술 전후 심혈관계 위험과 항혈소판제 중단·재개 계획을 함께 평가합니다.',comp:['심근허혈','심혈관계 합병증','출혈·혈전 위험']},
- {key:'antiplatelet',label:'항혈소판제 복용',patterns:[/aspirin/i,/clopidogrel/i,/plavix/i,/cilostazol/i,/항혈소판/],risk:'약제 유지 시 출혈 위험과 중단 시 혈전성 사건 위험을 비교하여 중단·재개 계획을 결정합니다.',comp:['출혈','혈전성 합병증']},
- {key:'anticoag',label:'항응고제 복용',patterns:[/warfarin/i,/apixaban/i,/rivaroxaban/i,/edoxaban/i,/dabigatran/i,/항응고/],risk:'항응고 효과에 따른 출혈 위험과 중단 시 혈전색전 위험을 함께 고려합니다.',comp:['출혈','혈전색전증']},
- {key:'ckd',label:'신기능 저하/CKD',patterns:[/\bckd\b/i,/renal failure/i,/kidney disease/i,/신부전|만성콩팥|신기능/],risk:'신기능에 따라 조영제, 수액, 약제 용량 및 수술 전후 신기능 악화 가능성을 고려합니다.',comp:['신기능 악화','약제·조영제 관련 위험']},
+ {key:'antiplatelet',label:'항혈소판제 복용',patterns:[/aspirin/i,/clopidogrel/i,/plavix/i,/cilostazol/i,/pletal/i,/brilinta/i,/ticagrelor/i,/prasugrel/i,/effient/i,/아스피린|클로피도그렐|플라빅스|플레탈|티카그렐러|프라수그렐|항혈소판|항혈전제|항혈전/],risk:'약제 유지 시 출혈 위험과 중단 시 혈전성 사건 위험을 비교하여 중단·재개 계획을 결정합니다.',comp:['출혈','혈전성 합병증']},
+ {key:'anticoag',label:'항응고제 복용',patterns:[/warfarin/i,/apixaban/i,/rivaroxaban/i,/edoxaban/i,/dabigatran/i,/\bdoac\b/i,/\bnoac\b/i,/coumadin/i,/eliquis/i,/xarelto/i,/lixiana/i,/pradaxa/i,/항응고/],risk:'항응고제 복용으로 수술 전후 출혈 위험을 주의 깊게 평가해야 합니다. 약제 중단 시 혈전색전 위험도 함께 고려해야 하므로, 약제의 중단·재개 여부와 시점은 의료진이 개별적으로 결정합니다.',comp:['출혈','혈전색전증']},
+ {key:'osteoporosis',label:'골다공증',patterns:[/osteoporosis/i,/osteoporotic/i,/골다공증/,/\bOP\b/],risk:'골다공증이 있는 경우 특히 척추 나사 고정·유합술에서 골질 저하로 나사 고정력 저하, 나사 이완·위치 변화 및 불유합 가능성을 추가로 검토합니다. 위험은 골밀도, 골질, 고정 범위와 수술 방법에 따라 달라집니다.',comp:['나사 고정력 저하·위치 변화','불유합']},
+ {key:'ckd',label:'신기능 저하/CKD',patterns:[/\bckd\b/i,/renal failure/i,/kidney disease/i,/신부전|만성콩팥|신기능/],risk:'요오드화 조영제를 사용하는 시술에서는 기존 신기능 저하 정도와 급성 신손상 위험을 평가하고, 필요 시 수액·조영제 사용량 및 신기능 추적 계획을 조정합니다. CKD만으로 조영제 부작용이 반드시 발생하는 것은 아닙니다.',comp:['신기능 악화','약제·조영제 관련 위험']},
  {key:'copd',label:'만성 폐질환',patterns:[/\bcopd\b/i,/emphysema/i,/chronic lung/i,/만성폐쇄성|폐기종/],risk:'전신마취와 수술 후 호흡기 관리에서 폐합병증 위험을 고려합니다.',comp:['폐렴','호흡부전','인공호흡기 이탈 지연']},
  {key:'af',label:'심방세동',patterns:[/atrial fibrillation/i,/\ba[.]?fib\b/i,/심방세동/],risk:'혈전색전 위험과 항응고제 사용 여부를 확인하여 수술 전후 약제 계획을 조정합니다.',comp:['혈전색전증','출혈']}
 ];
@@ -468,7 +471,17 @@ let toastTimer;function toast(t){$('toast').textContent=t;$('toast').style.displ
 function show(id){document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v.id===id));document.body.classList.toggle('console',id==='resultView');window.scrollTo(0,0);if(id==='assetView')renderLibrary()}
 function fillOps(){const d=$('dx').value;$('op').replaceChildren(...OPS[d].map(k=>{const o=el('option','',OP_NAMES[k]);o.value=k;return o}));$('category').value=GROUP[d]}
 function fillAssetOps(){const all=el('option','','공통 · 특정 술식 제한 없음');all.value='';$('assetProcedure').replaceChildren(all,...(OPS[$('assetDomain').value]||[]).map(k=>{const o=el('option','',OP_NAMES[k]);o.value=k;return o}))}
-$('dx').onchange=fillOps;$('category').onchange=()=>{const d=Object.keys(GROUP).find(k=>GROUP[k]===$('category').value);$('dx').value=d;fillOps()};$('assetDomain').onchange=fillAssetOps;fillOps();fillAssetOps();
+function filterDiagnosesByCategory(){
+ const category=$('category').value, dx=$('dx');
+ const allowed=Object.keys(GROUP).filter(key=>GROUP[key]===category);
+ for(const option of dx.options){option.hidden=!allowed.includes(option.value);option.disabled=!allowed.includes(option.value)}
+ if(!allowed.includes(dx.value))dx.value=allowed[0]||'';
+ fillOps();
+}
+$('dx').onchange=fillOps;
+$('category').onchange=filterDiagnosesByCategory;
+$('assetDomain').onchange=fillAssetOps;
+filterDiagnosesByCategory();fillAssetOps();
 function openDB(){return new Promise((resolve,reject)=>{const req=indexedDB.open('neuroConsentV3',1);req.onupgradeneeded=()=>{req.result.createObjectStore('assets',{keyPath:'id'});req.result.createObjectStore('settings')};req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error)})}
 function readDB(store,key){return new Promise((res,rej)=>{const tx=db.transaction(store);const req=key===undefined?tx.objectStore(store).getAll():tx.objectStore(store).get(key);req.onsuccess=()=>res(req.result);req.onerror=()=>rej(req.error)})}
 function writeDB(store,data,key,remove=false){return new Promise((res,rej)=>{const tx=db.transaction(store,'readwrite'),s=tx.objectStore(store);if(remove)s.delete(key);else if(key!==undefined)s.put(data,key);else s.put(data);tx.oncomplete=res;tx.onerror=()=>rej(tx.error);tx.onabort=()=>rej(tx.error)})}
@@ -503,7 +516,17 @@ function renderLibrary(){const q=normalize($('assetSearch').value),domain=$('dom
 
 let mediaPlan=[],unpicked=new Set(),mediaFilter='';
 const MEDIA_GROUPS={disease:'질환',procedure:'수술 방법',risk:'합병증',aftercare:'회복·주의사항'};
-function buildMediaPlan(){const plan=[],seen=new Set();const add=(a,group,tag)=>{if(seen.has(a.id))return;seen.add(a.id);plan.push({asset:a,group,tag})};recommend(snapshot,['anatomy','lesion']).forEach(a=>add(a,'disease',CATS[a.category]));recommend(snapshot,['approach','procedure']).forEach(a=>add(a,'procedure',CATS[a.category]));majorKeys().forEach(k=>majorMedia(k).forEach(a=>add(a,'risk','합병증 · '+MAJOR_RISKS[k])));recommend(snapshot,['risk']).forEach(a=>add(a,'risk','합병증'));recommend(snapshot,['aftercare']).forEach(a=>add(a,'aftercare','회복·주의사항'));return plan}
+function personalizedMediaReason(a){
+ if(!snapshot)return '';
+ const keys=new Set(parseHistory(snapshot.history||'').map(r=>r.key));
+ const title=[a.title,a.caption,...(a.tags||[])].join(' ').toLowerCase();
+ if(keys.has('dm')&&(a.riskKey==='infection'||/infection|감염|wound|상처/.test(title)))return '당뇨 · 감염 관련';
+ if((keys.has('anticoag')||keys.has('antiplatelet'))&&(a.riskKey==='hemorrhage'||/hemorrhage|bleed|hematoma|출혈|혈종/.test(title)))return '항혈전제 · 출혈 관련';
+ if(keys.has('ckd')&&snapshot.domain==='aneurysm'&&['coil','stentcoil'].includes(snapshot.procedure)&&/contrast|조영제|신기능|신손상|kidney|renal/.test(title))return 'CKD · 조영제 관련';
+ if(keys.has('osteoporosis')&&snapshot.procedure==='fusion'&&/screw|loosening|pull.?out|pseudarthrosis|non.?union|나사|불유합|고정력/.test(title))return '골다공증 · 나사/유합 관련';
+ return '';
+}
+function buildMediaPlan(){const plan=[],seen=new Set();const add=(a,group,tag)=>{if(seen.has(a.id))return;seen.add(a.id);plan.push({asset:a,group,tag})};recommend(snapshot,['anatomy','lesion']).forEach(a=>add(a,'disease',CATS[a.category]));recommend(snapshot,['approach','procedure']).forEach(a=>add(a,'procedure',CATS[a.category]));majorKeys().forEach(k=>majorMedia(k).forEach(a=>add(a,'risk','합병증 · '+MAJOR_RISKS[k])));recommend(snapshot,['risk']).forEach(a=>add(a,'risk','합병증'));assets.filter(a=>personalizedMediaReason(a)&&score(a,snapshot)).forEach(a=>add(a,'risk','★ '+personalizedMediaReason(a)));recommend(snapshot,['aftercare']).forEach(a=>add(a,'aftercare','회복·주의사항'));return plan.map((p,i)=>({...p,originalOrder:i,personalized:personalizedMediaReason(p.asset)})).sort((a,b)=>a.group==='risk'&&b.group==='risk'?Number(!!b.personalized)-Number(!!a.personalized)||a.originalOrder-b.originalOrder:a.originalOrder-b.originalOrder)}
 function pickedPlan(){return mediaPlan.filter(p=>!unpicked.has(p.asset.id))}
 function updatePickCount(){const n=pickedPlan().length;$('pickCount').textContent=n+' / '+mediaPlan.length+'개 선택';$('openAssembly2').disabled=!n}
 const STEP_GROUP={disease:'disease',procedure:'procedure',risk:'risk',alternative:'aftercare',qa:''};
@@ -522,7 +545,7 @@ function renderMedia(){const tabs=$('mediaTabs'),g=STEP_GROUP[currentStep];tabs.
  const list=stripPlan();if(!list.some(p=>p.asset.id===currentMediaId))currentMediaId=null;
  const missing=currentStep==='risk'&&snapshot?majorKeys().filter(k=>!majorMedia(k).length).map(k=>MAJOR_RISKS[k]):[];$('stripNote').textContent=missing.length?'자료 없음: '+missing.join(', ')+' · 말로 설명해 주세요':'';
  const strip=$('mediaGroups');strip.replaceChildren();if(!list.length)strip.append(el('div','stripEmpty',g&&mediaScope==='step'?'이 단계에 연결된 영상이 없습니다. ‘전체’에서 다른 영상을 고를 수 있습니다.':'조건에 맞는 자료가 없습니다. 자료실에서 질환·술식·위치 분류를 확인하세요.'));
- list.forEach(p=>{const n=mediaPlan.indexOf(p)+1,row=el('div','stripItem'+(p.asset.id===currentMediaId?' active':'')+(unpicked.has(p.asset.id)?' off':''));row.dataset.id=p.asset.id;const pick=el('button','thumbBtn');pick.type='button';pick.title=p.asset.title+' · 눌러서 재생';pick.setAttribute('aria-label',n+'. '+p.asset.title+' 보기');pick.append(thumbFor(p.asset),el('span','thumbPlay','▶'),el('span','thumbNum',String(n)),el('span','thumbType',p.asset.type==='video'?'영상':'그림'));pick.onclick=()=>p.asset.id===currentMediaId?closeStage():selectMedia(p.asset.id);const meta=el('label','thumbMeta');meta.append(pickBox(p.asset.id,p.asset.title+' 합칠 영상에 포함'));const t=el('span','thumbText');t.append(el('span','thumbTitle',p.asset.title),el('span','thumbTag',p.tag));meta.append(t);row.append(pick,meta);strip.append(row)});
+ list.forEach(p=>{const n=mediaPlan.indexOf(p)+1,row=el('div','stripItem'+(p.asset.id===currentMediaId?' active':'')+(unpicked.has(p.asset.id)?' off':''));row.dataset.id=p.asset.id;const pick=el('button','thumbBtn');pick.type='button';pick.title=p.asset.title+' · 눌러서 재생';pick.setAttribute('aria-label',n+'. '+p.asset.title+' 보기');pick.append(thumbFor(p.asset),el('span','thumbPlay','▶'),el('span','thumbNum',String(n)),el('span','thumbType',p.asset.type==='video'?'영상':'그림'));if(p.personalized){pick.append(el('span','personalizedStar','★'));pick.title+=' · '+p.personalized;}pick.onclick=()=>p.asset.id===currentMediaId?closeStage():selectMedia(p.asset.id);const meta=el('label','thumbMeta');meta.append(pickBox(p.asset.id,p.asset.title+' 합칠 영상에 포함'));const t=el('span','thumbText');t.append(el('span','thumbTitle',p.asset.title+(p.personalized?' ★':'')),el('span','thumbTag',p.personalized||p.tag));meta.append(t);row.append(pick,meta);strip.append(row)});
  renderMediaStage();updatePickCount()}
 document.addEventListener('keydown',e=>{if(!$('resultView').classList.contains('active')||$('presenter').classList.contains('active')||!$('handoutView').hidden||document.querySelector('dialog[open]'))return;if(e.target.matches('input,textarea,select,video'))return;const list=stripPlan(),i=list.findIndex(p=>p.asset.id===currentMediaId);if((e.key==='ArrowRight'||e.key==='ArrowLeft')&&list.length){e.preventDefault();const j=e.key==='ArrowRight'?i+1:i-1;selectMedia(list[(j+list.length)%list.length].asset.id)}else if(e.key==='ArrowDown'||e.key==='ArrowUp'){const keys=Object.keys(STEP_GROUP),k=keys.indexOf(currentStep)+(e.key==='ArrowDown'?1:-1);if(k>=0&&k<keys.length){e.preventDefault();setStep(keys[k])}}});
 function renderRecommendations(){if(!snapshot)return;renderLocationRisks();mediaPlan=buildMediaPlan();renderMedia()}
@@ -535,7 +558,26 @@ async function init(){try{db=await openDB();assets=(await readDB('assets')).map(
 for(const a of assets){if(!a.id.startsWith('linked_')||a.blob||!a.url)continue;const u=new URL(a.url,document.baseURI);if(u.pathname.endsWith('/assets/videos/'+u.pathname.split('/').pop())&&(u.origin===location.origin||u.origin==='https://yyyoonggg.github.io')){a.url=a.url.replace('/assets/videos/','/Assets/Videos/').replace(/^assets\/videos\//,'Assets/Videos/');if(db)await writeDB('assets',a);}}
 if(savedFolder&&['assets/videos/','https://yyyoonggg.github.io/vincent/assets/videos/'].includes(savedFolder)){savedFolder=savedFolder.replace('assets/videos/','Assets/Videos/');if(db)await writeDB('settings',savedFolder,'mediaFolder');}
 if(savedFolder){$('mediaFolder').value=savedFolder;try{applyFolder(folderURL(savedFolder))}catch(e){toast(e.message)}}for(const a of assets){if(['linked_clip_rupture_gif','linked_largevessel_occlusion_web_mp4'].includes(a.id)&&a.reviewed){a.reviewed=false;if(db)await writeDB('assets',a);}}for(const a of assets){if((['linked_infection_gif','linked_infection2_gif'].includes(a.id)&&a.domain==='common'||a.id==='linked_rupture_gif'&&!a.procedure)&&a.reviewed){a.reviewed=false;if(db)await writeDB('assets',a);}}storageStatus();renderLibrary()}
-function generate(){if(!$('age').checkValidity()){$('age').reportValidity();return}snapshot=context();const d=DATA[snapshot.domain],loc=$('location').value.trim(),appr=$('approach').value.trim();snapshot.loc=loc;snapshot.appr=appr;$('rTitle').textContent=DOMAIN[snapshot.domain];$('rSub').textContent=OP_NAMES[snapshot.procedure];$('rPatient').textContent=[snapshot.age===null?'나이 미입력':snapshot.age+'세',snapshot.sex||'성별 미입력'].join(' · ');$('rLesion').textContent=(loc||'위치 미입력')+' · '+snapshot.side;$('rApproach').textContent=appr||'미입력';$('rSpecific').textContent=snapshot.history||'없음';$('diagnosisText').textContent=d.dx+(loc?' 병변 위치: '+snapshot.side+' '+loc+'.':'');$('diagnosisNote').textContent=d.note;$('purposeText').textContent=snapshot.procedure==='biopsy'?'조직을 채취하여 진단을 확인하고 이후 치료 계획을 세우기 위한 검사입니다. 종양 제거를 목적으로 하는 수술과는 구분됩니다.':d.purpose;$('procedureText').textContent=PROCEDURES[snapshot.procedure]+(appr?' 접근법: '+appr+'.':'');let risks=[...RISKS[snapshot.domain]];if(snapshot.procedure==='fusion')risks.push('나사 위치 이상','불유합','인접 분절 질환');snapshot.risks=risks;$('riskList').replaceChildren(...risks.map(t=>el('span','risk',t)));const pr=[];if(snapshot.age!==null&&snapshot.age>=80)pr.push({label:'고령 (80세 이상)',text:'전신마취 및 수술 후 섬망, 폐합병증(무기폐·폐렴·호흡부전), 심혈관계 합병증(부정맥·저혈압·심근허혈), 흡인, 신기능 악화, 회복 지연 위험이 증가할 수 있습니다.',keys:'수술 후 섬망 · 폐합병증 · 심혈관계 합병증 · 흡인 · 신기능 악화 · 회복 지연'});for(const r of parseHistory(snapshot.history))pr.push({label:r.label,text:r.risk,keys:r.comp.join(' · ')});snapshot.patientRisks=pr;$('patientRiskList').replaceChildren();for(const r of pr){const box=el('div','patientRisk');box.append(el('b','',r.label),el('div','',r.text),el('div','note','관련 합병증: '+r.keys));$('patientRiskList').append(box)}if(!pr.length)$('patientRiskList').append(el('p','note',snapshot.history?'입력한 기저력에서 등록된 위험 키워드를 찾지 못했습니다. 원문을 확인하고 필요한 내용을 메모에 적어 주세요.':'기저력이 입력되지 않았습니다.'));$('alternativeText').textContent=d.alt;generated=true;renderRecommendations();show('resultView')}
+function generate(){if(!$('age').checkValidity()){$('age').reportValidity();return}snapshot=context();const d=DATA[snapshot.domain],loc=$('location').value.trim(),appr=$('approach').value.trim();snapshot.loc=loc;snapshot.appr=appr;$('rTitle').textContent=DOMAIN[snapshot.domain];$('rSub').textContent=OP_NAMES[snapshot.procedure];$('rPatient').textContent=[snapshot.age===null?'나이 미입력':snapshot.age+'세',snapshot.sex||'성별 미입력'].join(' · ');$('rLesion').textContent=(loc||'위치 미입력')+' · '+snapshot.side;$('rApproach').textContent=appr||'미입력';$('rSpecific').textContent=snapshot.history||'없음';$('diagnosisText').textContent=d.dx+(loc?' 병변 위치: '+snapshot.side+' '+loc+'.':'');$('diagnosisNote').textContent=d.note;$('purposeText').textContent=snapshot.procedure==='biopsy'?'조직을 채취하여 진단을 확인하고 이후 치료 계획을 세우기 위한 검사입니다. 종양 제거를 목적으로 하는 수술과는 구분됩니다.':d.purpose;$('procedureText').textContent=PROCEDURES[snapshot.procedure]+(appr?' 접근법: '+appr+'.':'');let risks=[...RISKS[snapshot.domain]];if(snapshot.domain==='aneurysm'&&['coil','stentcoil'].includes(snapshot.procedure))risks.push('조영제 관련 부작용 및 신기능 악화');if(snapshot.procedure==='fusion')risks.push('나사 위치 이상','불유합','인접 분절 질환');if(hasL1ConusRisk(snapshot)){risks.push(CONUS_RISK_LABEL);snapshot.conusRisk=true}else snapshot.conusRisk=false;snapshot.risks=risks;
+const historyRules=parseHistory(snapshot.history);
+const emphasizeInfection=historyRules.some(r=>r.key==='dm');
+const emphasizeBleeding=historyRules.some(r=>['anticoag','antiplatelet'].includes(r.key));
+const emphasizeBone=historyRules.some(r=>r.key==='osteoporosis')&&snapshot.procedure==='fusion';
+const emphasizeContrast=historyRules.some(r=>r.key==='ckd')&&snapshot.domain==='aneurysm'&&['coil','stentcoil'].includes(snapshot.procedure);
+$('riskList').replaceChildren();
+if(emphasizeInfection||emphasizeBleeding||emphasizeBone||emphasizeContrast){
+ const note=el('div','riskEmphasisIntro','환자 기저력·복용약에 따라 추가로 확인할 합병증: '+[emphasizeInfection?'감염 및 상처 회복':null,emphasizeBleeding?'출혈 및 항혈전제 조정':null,emphasizeBone?'나사 고정 문제 및 불유합':null,emphasizeContrast?'조영제 관련 신기능 악화':null].filter(Boolean).join(' / ')+' (개별 위험도 및 약제 계획은 의료진 확인 필요)');
+ $('riskList').append(note);
+}
+for(const t of risks){
+ const hit=(emphasizeInfection&&/감염|상처/.test(t))||(emphasizeBleeding&&/출혈|혈종|파열/.test(t))||(emphasizeBone&&/나사 위치 이상|불유합/.test(t))||(emphasizeContrast&&/조영제/.test(t));
+ $('riskList').append(el('span','risk'+(hit?' emphasized':''),t+(hit?' ★':'')));
+}
+const pr=[];if(snapshot.age!==null&&snapshot.age>=80)pr.push({label:'고령 (80세 이상)',text:'전신마취 및 수술 후 섬망, 폐합병증(무기폐·폐렴·호흡부전), 심혈관계 합병증(부정맥·저혈압·심근허혈), 흡인, 신기능 악화, 회복 지연 위험이 증가할 수 있습니다.',keys:'수술 후 섬망 · 폐합병증 · 심혈관계 합병증 · 흡인 · 신기능 악화 · 회복 지연'});for(const r of historyRules)pr.push({label:r.label,text:r.risk,keys:r.comp.join(' · ')});snapshot.patientRisks=pr;$('patientRiskList').replaceChildren();for(const r of pr){const box=el('div','patientRisk');if(['당뇨','항응고제 복용','항혈소판제 복용','골다공증','신기능 저하/CKD'].includes(r.label)){
+ if(r.label!=='신기능 저하/CKD'||emphasizeContrast)box.classList.add('emphasis');
+ if(r.label!=='신기능 저하/CKD'||emphasizeContrast)box.append(el('div','emphasisTag',r.label==='당뇨'?'★ 감염·상처 회복 관련 추가 설명':r.label==='신기능 저하/CKD'?(emphasizeContrast?'★ 조영제 관련 신기능 악화 주의':'신기능 관련 주의사항 (조영제 사용 시 별표 적용)'):r.label==='골다공증'?(snapshot.procedure==='fusion'?'★ 나사 고정 문제·불유합 관련 추가 설명':'골질 관련 주의사항 (나사·유합술 시 별표 적용)'):'★ 출혈 관련 추가 설명 · 혈전 위험도 검토'));
+}
+box.append(el('b','',r.label),el('div','',r.text),el('div','note','관련 합병증: '+r.keys));$('patientRiskList').append(box)}if(!pr.length)$('patientRiskList').append(el('p','note',snapshot.history?'입력한 기저력에서 등록된 위험 키워드를 찾지 못했습니다. 원문을 확인하고 필요한 내용을 메모에 적어 주세요.':'기저력이 입력되지 않았습니다.'));$('alternativeText').textContent=d.alt;generated=true;renderRecommendations();show('resultView')}
 $('generateBtn').onclick=generate;$('backBtn').onclick=()=>show('inputView');$('navInput').onclick=()=>show('inputView');$('navResult').onclick=()=>{if(generated)show('resultView');else generate()};$('navAssets').onclick=()=>show('assetView');$('assetSearch').oninput=renderLibrary;
 function openPresenter(title,body){$('pTitle').textContent=title;$('pBody').textContent=body;$('pVisual').replaceChildren();$('pVisual').style.display='block';$('presenter').classList.add('active');$('closePresenter').focus()}
 function closePresenter(){$('presenter').classList.remove('active');$('pVisual').querySelectorAll('video').forEach(v=>v.pause());$('pVisual').replaceChildren()}
@@ -553,7 +595,7 @@ function buildHandout(){const s=snapshot,root=$('handout');root.replaceChildren(
  const sec=(key,title,fill,oralLabel='추가로 설명한 내용')=>{const box=el('section','hoSec'),h=el('h2');h.append(el('span','hoNo',String(STEPS.indexOf(key)+1)),document.createTextNode(title),el('span','hoMark',(stepDone(key)?'☑':'☐')+' 설명함'));box.append(h);fill(box);const o=oral(key);if(o){const add=el('div','hoOral');add.append(el('b','',oralLabel),el('p','',o));box.append(add)}root.append(box)};
  sec('disease','질환에 대한 설명',b=>b.append(el('p','',$('diagnosisText').textContent),el('p','',$('purposeText').textContent)));
  sec('procedure','수술·시술 방법',b=>b.append(el('p','',$('procedureText').textContent)));
- sec('risk','수술 후 생길 수 있는 합병증',b=>{b.append(el('h3','','이 수술의 주요 합병증'));const ul=el('ul','cols');s.risks.forEach(r=>ul.append(el('li','',r)));b.append(ul);if(s.domain==='aneurysm'&&s.sites.length){b.append(el('h3','','병변 위치에 따라 생길 수 있는 증상'));const u2=el('ul');s.sites.forEach(k=>u2.append(el('li','',LOCATIONS[k].name+': '+locationRisks(k).map(r=>r.label).join(', '))));b.append(u2)}if(s.patientRisks.length){b.append(el('h3','','환자분의 건강 상태와 관련해 주의할 점'));const u3=el('ul');s.patientRisks.forEach(r=>{const li=el('li');li.append(el('b','',r.label+': '),document.createTextNode(r.text));u3.append(li)});b.append(u3)}b.append(el('p','hoSmall','합병증이 반드시 생기는 것은 아니며, 발생 가능성은 환자의 상태와 병변에 따라 다릅니다.'))});
+ sec('risk','수술 후 생길 수 있는 합병증',b=>{b.append(el('h3','','이 수술의 주요 합병증'));const ul=el('ul','cols');s.risks.forEach(r=>ul.append(el('li','',(s.emphasizedRisks||[]).includes(r)?r+' ★':r)));b.append(ul);if(s.conusRisk){b.append(el('h3','','L1 수술 범위 관련 추가 설명'));b.append(el('p','',CONUS_RISK_TEXT))}if(s.domain==='aneurysm'&&s.sites.length){b.append(el('h3','','병변 위치에 따라 생길 수 있는 증상'));const u2=el('ul');s.sites.forEach(k=>u2.append(el('li','',LOCATIONS[k].name+': '+locationRisks(k).map(r=>r.label).join(', '))));b.append(u2)}if(s.patientRisks.length){b.append(el('h3','','환자분의 건강 상태와 관련해 주의할 점'));const u3=el('ul');s.patientRisks.forEach(r=>{const li=el('li');const star= r.label==='당뇨'||r.label==='항응고제 복용'||r.label==='항혈소판제 복용'||(r.label==='골다공증'&&s.procedure==='fusion')||(r.label==='신기능 저하/CKD'&&s.domain==='aneurysm'&&['coil','stentcoil'].includes(s.procedure));li.append(el('b','',(star?'★ ':'')+r.label+': '),document.createTextNode(r.text));u3.append(li)});b.append(u3)}b.append(el('p','hoSmall','합병증이 반드시 생기는 것은 아니며, 발생 가능성은 환자의 상태와 병변에 따라 다릅니다.'))});
  sec('alternative','다른 치료 방법과 치료하지 않을 경우',b=>b.append(el('p','',$('alternativeText').textContent)));
  sec('qa','질문과 답변',b=>{if(!oral('qa'))b.append(el('p','hoSmall','기록된 질문이 없습니다.'))},'질문·답변 기록');
  const media=pickedPlan();if(media.length){const box=el('section','hoSec');box.append(el('h2','','함께 제공하는 설명 영상·그림'));const ul=el('ul');media.forEach(p=>ul.append(el('li','',p.asset.title)));box.append(ul);root.append(box)}
@@ -608,18 +650,41 @@ const LOCATIONS={
  {id:'visual',label:'시야장애',note:'P1/PCA 혈류 손상에 따른 후두엽·시각 경로 허혈.'},
  {id:'ataxia',label:'균형·보행장애',note:'중뇌·소뇌 연결 경로 또는 인접 혈관 영역이 영향을 받는 경우.'}]}
 };
-function detectLocations(value){const t=String(value).toLowerCase().replace(/\b(lt|rt)\./g,'$1 ').replace(/[._-]/g,'').replace(/\s+/g,' ');const patterns={mca:/\bmca\b|중대뇌동맥|middle cerebral/,acom:/\ba ?co(?:m(?:m)?a?|a)\b|전교통|anterior communicating/,pcom:/\bp ?co(?:m(?:m)?a?|a)\b|후교통|posterior communicating/,acho:/\ba ?ch(?:o|a|oa)?\b|전맥락총|anterior choroidal/,basilar:/basilar\s*(top|tip|apex)|\bba\s*(top|tip|apex)\b|기저동맥\s*(첨부|끝|분지부)/};return Object.keys(patterns).filter(k=>patterns[k].test(t))}
+function detectLocations(value){
+ const t=String(value||'').toLowerCase().replace(/[._\-/]+/g,' ').replace(/\s+/g,' ').trim();
+ const compact=t.replace(/\s+/g,'');
+ const patterns={
+  mca:/(?:^|[^a-z])mca(?:b|bif|bifurcation|m1|m2)?(?=$|[^a-z])|중대뇌동맥|middle cerebral/,
+  acom:/(?:^|[^a-z])(?:acom|acoma|a com|a comm|anterior communicating)(?=$|[^a-z])|전교통/,
+  pcom:/(?:^|[^a-z])(?:pcom|pcoma|p comm|posterior communicating)(?=$|[^a-z])|후교통/,
+  acho:/(?:^|[^a-z])(?:acho|achoa|acha|a cho|anterior choroidal)(?=$|[^a-z])|전맥락총/,
+  basilar:/basilar(?:\s*(?:top|tip|apex))?|(?:^|[^a-z])ba\s*(?:top|tip|apex)|기저동맥/
+ };
+ return Object.keys(patterns).filter(k=>patterns[k].test(t)||({mca:/^(?:lt|rt|left|right)?mcab(?:if(?:urcation)?)?$/,acom:/^(?:lt|rt)?acomm?a?$/,pcom:/^(?:lt|rt)?pcomm?a?$/,acho:/^(?:lt|rt)?achoa?$/,basilar:/^(?:lt|rt)?basilartop$/}[k]).test(compact));
+}
 function locationRisks(key){return LOCATIONS[key].risks.filter(r=>!r.clipOnly||snapshot?.procedure==='clip')}
 const MAJOR_RISKS={hemorrhage:'출혈 및 파열',infarction:'뇌경색',recurrence:'재발(재성장)',nerve:'신경손상',infection:'감염',seizure:'경련'};
 function majorKeys(){if(snapshot.domain==='aneurysm')return ['hemorrhage','infarction','recurrence'];return Object.keys(MAJOR_RISKS).filter(k=>k!=='recurrence'&&(['infarction','seizure'].includes(k)?['aneurysm','tumor'].includes(snapshot.domain):true))}
 function majorMedia(key){return assets.map(a=>score(a,snapshot)).filter(a=>a&&a.category==='risk'&&a.riskKey===key).sort((a,b)=>b.score-a.score).slice(0,4)}
 function renderMajorRisks(root,present=false){root.replaceChildren();if(!snapshot)return;const grid=el('div','mediaGrid');for(const key of majorKeys()){const card=el('section','card');card.append(el('h3','',MAJOR_RISKS[key]));const list=majorMedia(key);if(list.length)list.forEach(a=>card.append(mediaCard(a)));else card.append(el('div','note','등록된 영상·이미지 없음'));grid.append(card)}root.append(grid);const general=recommend(snapshot,['risk']);if(general.length){root.append(el('h3','','그 밖의 합병증 설명자료'));const extra=el('div','mediaGrid');general.forEach(a=>extra.append(mediaCard(a)));root.append(extra)}}
 function appendLocationText(root){if(snapshot.domain!=='aneurysm'||!snapshot.sites.length)return;root.append(el('h3','','위치별 추가 합병증 · 글로 설명'));for(const key of snapshot.sites){const box=el('div','card');box.append(el('h3','',LOCATIONS[key].name));const chips=el('div','chips');locationRisks(key).forEach(r=>chips.append(el('span','risk',r.label)));box.append(chips);root.append(box)}}
-function renderLocationRisks(){const root=$('locationRiskSection');root.replaceChildren();if(snapshot.domain!=='aneurysm'){root.append(el('p','note','위치별 자동 항목은 뇌동맥류 위치(MCA, A.com, P.com, A.cho, Basilar top)에서 제공됩니다. 병변 위치와 관련된 위험은 아래 메모에 적어 주세요.'));return}if(!snapshot.sites.length){root.append(el('p','note','환자 정보에서 동맥류 위치(예: Lt MCA bifurcation)를 입력하면 위치별 위험이 표시됩니다.'));return}for(const key of snapshot.sites){const box=el('div','siteBox');box.append(el('div','siteName',LOCATIONS[key].name));const ul=el('ul','siteList');for(const r of locationRisks(key)){const li=el('li');li.append(el('b','',r.label),el('span','note',r.note));ul.append(li)}box.append(ul);root.append(box)}}
+function lumbarIncludesL1(value){
+ const t=String(value||'').toUpperCase().replace(/[–—~〜～]/g,'-').replace(/제\s*1\s*요추/g,'L1');
+ if(/(?:^|[^A-Z0-9])L\s*[-.]?\s*1(?!\d)/.test(t))return true;
+ // T12-L2 같은 범위 표기도 L1을 포함하므로 감지합니다.
+ const vertebra=n=>{const m=n.match(/^(T|TH|D|L)(\d{1,2})$/);return m?(m[1]==='L'?12+Number(m[2]):Number(m[2])):null};
+ const re=/\b(T\d{1,2}|TH\d{1,2}|D\d{1,2}|L\d{1,2})\s*-\s*(T\d{1,2}|TH\d{1,2}|D\d{1,2}|L\d{1,2})\b/g;
+ for(const m of t.matchAll(re)){const a=vertebra(m[1]),b=vertebra(m[2]);if(a!==null&&b!==null&&Math.min(a,b)<=13&&Math.max(a,b)>=13)return true}
+ return false;
+}
+function hasL1ConusRisk(s){return !!s&&['disc','stenosis'].includes(s.domain)&&lumbarIncludesL1(s.loc)}
+const CONUS_RISK_LABEL='★ 척수원뿔(conus medullaris) 및 신경 손상 가능성';
+const CONUS_RISK_TEXT='L1을 포함하는 수술 범위는 척수원뿔(conus medullaris)과 가까울 수 있습니다. 척수원뿔의 끝 위치는 개인마다 달라 영상으로 확인해야 합니다. 수술 부위와 실제 신경 구조의 관계에 따라 손상 시 하지 근력·감각 저하, 회음부 감각 이상, 배뇨·배변 기능 장애 등이 발생할 수 있어 추가 설명이 필요합니다. L1이 포함된다는 이유만으로 척수 손상 위험이 높다고 단정할 수는 없습니다.';
+function renderLocationRisks(){const root=$('locationRiskSection');root.replaceChildren();if(snapshot.domain!=='aneurysm'){if(hasL1ConusRisk(snapshot)){const box=el('div','siteBox');box.append(el('div','siteName',CONUS_RISK_LABEL),el('p','text',CONUS_RISK_TEXT));root.append(box)}else root.append(el('p','note','L1을 포함하는 수술 범위에서는 척수원뿔 관련 위험이 자동으로 추가됩니다. 실제 해부학적 위치와 위험은 MRI에서 확인하세요.'));return}if(!snapshot.sites.length){root.append(el('p','note','환자 정보에서 동맥류 위치(예: Lt MCA bifurcation)를 입력하면 위치별 위험이 표시됩니다.'));return}for(const key of snapshot.sites){const box=el('div','siteBox');box.append(el('div','siteName',LOCATIONS[key].name));const ul=el('ul','siteList');for(const r of locationRisks(key)){const li=el('li');li.append(el('b','',r.label),el('span','note',r.note));ul.append(li)}box.append(ul);root.append(box)}}
 function fillRiskOptions(){const old=$('assetRiskKey').value,opt=el('option','','기타 / 종합 설명');opt.value='';$('assetRiskKey').replaceChildren(opt);for(const [key,label] of Object.entries(MAJOR_RISKS)){const o=el('option','',label);o.value=key;$('assetRiskKey').append(o)}$('assetRiskKey').value=MAJOR_RISKS[old]?old:''}
 window.addEventListener('DOMContentLoaded',fillRiskOptions);
 $('assetLocation').addEventListener('input',fillRiskOptions);
-$('location').addEventListener('input',()=>{const sites=detectLocations($('location').value);$('locationHint').textContent=$('dx').value==='aneurysm'?(sites.length?'인식: '+sites.map(k=>LOCATIONS[k].name).join(' / '):'위치를 입력하면 관련 항목이 연결됩니다.'):'';const t=$('location').value.toLowerCase();if(/\b(lt|left)\b|좌측/.test(t))$('side').value='좌측';else if(/\b(rt|right)\b|우측/.test(t))$('side').value='우측';else if(sites.length===1&&['acom','basilar'].includes(sites[0]))$('side').value='중앙 / 해당 없음'});
+$('location').addEventListener('input',()=>{const sites=detectLocations($('location').value);$('locationHint').textContent=$('dx').value==='aneurysm'?(sites.length?'✓ 위치 인식: '+sites.map(k=>LOCATIONS[k].name).join(' / ')+' · 설명 화면의 [3. 합병증]에서 위치별 위험 확인':'위치를 입력하면 관련 항목이 연결됩니다.'):'';const t=$('location').value.toLowerCase();if(/\b(lt|left)\b|좌측/.test(t))$('side').value='좌측';else if(/\b(rt|right)\b|우측/.test(t))$('side').value='우측';else if(sites.length===1&&['acom','basilar'].includes(sites[0]))$('side').value='중앙 / 해당 없음'});
 function buildLocationGuide(){$('locationGuide').replaceChildren();$('clinicalSources').replaceChildren();for(const [key,l] of Object.entries(LOCATIONS)){const box=el('div','card');box.append(el('h3','',l.name));for(const r of l.risks){const line=el('div','text',r.label+(r.clipOnly?' · 개두 결찰술':'')+' — '+r.note);box.append(line)}$('locationGuide').append(box)}const links=[['MCA 허혈성 합병증','https://pubmed.ncbi.nlm.nih.gov/33462782/'],['MCA 기능장애','https://pmc.ncbi.nlm.nih.gov/articles/PMC10400477/'],['A.com 기억장애','https://pubmed.ncbi.nlm.nih.gov/25082820/'],['A.com 해부학·천공지','https://www.frontiersin.org/journals/neurology/articles/10.3389/fneur.2020.01020/full'],['A.com 후각','https://pubmed.ncbi.nlm.nih.gov/26274995/'],['P.com 허혈','https://pmc.ncbi.nlm.nih.gov/articles/PMC9670603/'],['P.com 동안신경 손상','https://pmc.ncbi.nlm.nih.gov/articles/PMC7192810/'],['A.cho 허혈 증후군','https://pubmed.ncbi.nlm.nih.gov/3790969/'],['Basilar top 천공지·동안신경','https://pubmed.ncbi.nlm.nih.gov/25862105/']];$('clinicalSources').append(el('b','','임상 참고문헌 · 2026-09-29 확인'));for(const [t,u] of links){const a=el('a','',t);a.href=u;a.target='_blank';a.rel='noopener noreferrer';a.style='display:block;margin:7px 0';$('clinicalSources').append(a)}}
 window.addEventListener('DOMContentLoaded',buildLocationGuide);
 
