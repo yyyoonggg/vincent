@@ -440,7 +440,7 @@ const DATA={
 };
 const HISTORY_RULES=[
  {key:'htn',label:'고혈압',patterns:[/\bhtn\b/i,/hypertension/i,/고혈압/],risk:'수술 전후 혈압 변동을 고려해야 하며, 출혈 및 심혈관계 합병증 위험 평가가 필요합니다.',comp:['출혈','심혈관계 합병증']},
- {key:'dm',label:'당뇨',patterns:[/\bdm\b/i,/diabetes/i,/당뇨/],risk:'특히 혈당 조절이 불량한 경우 수술 부위 감염과 상처 치유 지연 가능성을 설명하고, 수술 전후 혈당 관리의 중요성을 안내합니다.',comp:['감염','상처 회복 지연']},
+ {key:'dm',label:'당뇨',patterns:[/\bdm\b/i,/\bt[12]\s?dm\b/i,/\bdm\s?(?:type\s?)?(?:[12]|i{1,2})\b/i,/\bn?iddm\b/i,/diabetes/i,/당뇨/,/metformin|메트포르민|insulin|인슐린/i],risk:'특히 혈당 조절이 불량한 경우 수술 부위 감염과 상처 치유 지연 가능성을 설명하고, 수술 전후 혈당 관리의 중요성을 안내합니다.',comp:['감염','상처 회복 지연']},
  {key:'stroke',label:'뇌경색/뇌졸중 병력',patterns:[/old infarct/i,/cerebral infarct/i,/stroke/i,/뇌경색|뇌졸중/],risk:'기존 신경학적 상태를 확인하고 수술 전후 허혈성 사건과 항혈전제 조정 문제를 함께 고려합니다.',comp:['뇌경색','신경학적 악화']},
  {key:'cad',label:'관상동맥질환/PCI 병력',patterns:[/\bcad\b/i,/\bpci\b/i,/coronary/i,/stent/i,/관상동맥|심근경색/],risk:'마취 및 수술 전후 심혈관계 위험과 항혈소판제 중단·재개 계획을 함께 평가합니다.',comp:['심근허혈','심혈관계 합병증','출혈·혈전 위험']},
  {key:'antiplatelet',label:'항혈소판제 복용',patterns:[/aspirin/i,/clopidogrel/i,/plavix/i,/cilostazol/i,/pletal/i,/brilinta/i,/ticagrelor/i,/prasugrel/i,/effient/i,/아스피린|클로피도그렐|플라빅스|플레탈|티카그렐러|프라수그렐|항혈소판|항혈전제|항혈전/],risk:'약제 유지 시 출혈 위험과 중단 시 혈전성 사건 위험을 비교하여 중단·재개 계획을 결정합니다.',comp:['출혈','혈전성 합병증']},
@@ -664,7 +664,7 @@ function detectLocations(value){
 }
 function locationRisks(key){return LOCATIONS[key].risks.filter(r=>!r.clipOnly||snapshot?.procedure==='clip')}
 const MAJOR_RISKS={hemorrhage:'출혈 및 파열',infarction:'뇌경색',recurrence:'재발(재성장)',nerve:'신경손상',infection:'감염',seizure:'경련'};
-function majorKeys(){if(snapshot.domain==='aneurysm')return ['hemorrhage','infarction','recurrence'];return Object.keys(MAJOR_RISKS).filter(k=>k!=='recurrence'&&(['infarction','seizure'].includes(k)?['aneurysm','tumor'].includes(snapshot.domain):true))}
+function majorKeys(){if(snapshot.domain==='aneurysm')return ['hemorrhage','infarction','recurrence',...(snapshot.procedure==='clip'?['infection']:[])];return Object.keys(MAJOR_RISKS).filter(k=>k!=='recurrence'&&(['infarction','seizure'].includes(k)?['aneurysm','tumor'].includes(snapshot.domain):true))}
 function majorMedia(key){return assets.map(a=>score(a,snapshot)).filter(a=>a&&a.category==='risk'&&a.riskKey===key).sort((a,b)=>b.score-a.score).slice(0,4)}
 function renderMajorRisks(root,present=false){root.replaceChildren();if(!snapshot)return;const grid=el('div','mediaGrid');for(const key of majorKeys()){const card=el('section','card');card.append(el('h3','',MAJOR_RISKS[key]));const list=majorMedia(key);if(list.length)list.forEach(a=>card.append(mediaCard(a)));else card.append(el('div','note','등록된 영상·이미지 없음'));grid.append(card)}root.append(grid);const general=recommend(snapshot,['risk']);if(general.length){root.append(el('h3','','그 밖의 합병증 설명자료'));const extra=el('div','mediaGrid');general.forEach(a=>extra.append(mediaCard(a)));root.append(extra)}}
 function appendLocationText(root){if(snapshot.domain!=='aneurysm'||!snapshot.sites.length)return;root.append(el('h3','','위치별 추가 합병증 · 글로 설명'));for(const key of snapshot.sites){const box=el('div','card');box.append(el('h3','',LOCATIONS[key].name));const chips=el('div','chips');locationRisks(key).forEach(r=>chips.append(el('span','risk',r.label)));box.append(chips);root.append(box)}}
