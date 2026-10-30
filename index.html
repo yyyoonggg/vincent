@@ -553,7 +553,7 @@ async function rate(id,n){if(!snapshot)return;const k=snapshot.domain+'|'+snapsh
 function folderURL(value){let v=String(value).trim();if(!v)throw Error('자료 폴더 주소를 입력하세요.');if(!v.endsWith('/'))v+='/';const u=new URL(v,document.baseURI);if(!['https:','http:','file:'].includes(u.protocol))throw Error('폴더 경로 또는 HTTP(S) 주소를 사용하세요.');if(u.pathname.includes('/blob/'))throw Error('GitHub 파일 보기 주소(/blob/) 대신 실제 자료 폴더 주소를 사용하세요.');return u.href;}
 function applyFolder(base){for(const a of assets)if(a.id.startsWith('linked_')&&!a.blob&&!a.url.startsWith('data:')){const file=new URL(a.url,document.baseURI).pathname.split('/').pop();a.url=new URL(file,base).href;}}
 $('saveMediaFolder').onclick=async()=>{try{const base=folderURL($('mediaFolder').value);applyFolder(base);if(db){for(const a of assets.filter(a=>a.id.startsWith('linked_')))await writeDB('assets',a);await writeDB('settings',$('mediaFolder').value.trim(),'mediaFolder');}renderLibrary();if(generated)renderRecommendations();$('mediaFolderStatus').textContent='적용 완료: '+base;toast('영상·GIF 폴더 주소를 적용했습니다.');}catch(e){$('mediaFolderStatus').textContent=e.message;}};
-async function init(){try{db=await openDB();assets=(await readDB('assets')).map(upgradeRiskAsset);feedback=(await readDB('settings','feedback'))||{}}catch(e){db=null}let embedded=[];try{embedded=JSON.parse($('embeddedAssets').textContent||'[]')}catch(e){toast('내장 자료를 읽을 수 없습니다.')}const embeddedText=$('embeddedAssets').textContent;let hash=0;for(let i=0;i<embeddedText.length;i++)hash=(hash*31+embeddedText.charCodeAt(i))|0;const importKey='embedded_'+hash;for(const oid of ['linked_coil_rupture_web_mp4','linked_stentcoil_rupture_web_mp4','linked_coil_recur_web_mp4','linked_stentcoil_recur_web_mp4','linked_infection_gif','linked_infection2_gif','linked_rupture_gif','linked_spine_infection_superficial_mp4','linked_spine_infection_deep_mp4']){if(assets.some(x=>x.id===oid&&/(infection2?|rupture)\.gif$|spine_infection_(superficial|deep)_web\.mp4$|aneurysm_recurrence_web\.mp4$|coil_rupture_web\.mp4$/.test(x.url||''))){assets=assets.filter(x=>x.id!==oid);if(db)try{await writeDB('assets',null,oid,true)}catch(e){}}}const imported=db?await readDB('settings',importKey):false;for(const raw of imported?[]:embedded){try{const a=validateAsset(raw);if(!assets.some(x=>x.id===a.id)){assets.push(a);if(db)await writeDB('assets',a)}}catch(e){toast('내장 자료 일부를 불러오지 못했습니다.')}}if(db&&!imported)await writeDB('settings',true,importKey);let savedFolder=db?await readDB('settings','mediaFolder'):null;
+async function init(){try{db=await openDB();assets=(await readDB('assets')).map(upgradeRiskAsset);feedback=(await readDB('settings','feedback'))||{}}catch(e){db=null}let embedded=[];try{embedded=JSON.parse($('embeddedAssets').textContent||'[]')}catch(e){toast('내장 자료를 읽을 수 없습니다.')}const embeddedText=$('embeddedAssets').textContent;let hash=0;for(let i=0;i<embeddedText.length;i++)hash=(hash*31+embeddedText.charCodeAt(i))|0;const importKey='embedded_'+hash;for(const oid of ['linked_coil_rupture_web_mp4','linked_stentcoil_rupture_web_mp4','linked_coil_recur_web_mp4','linked_stentcoil_recur_web_mp4','linked_infection_gif','linked_infection2_gif','linked_rupture_gif','linked_spine_infection_superficial_mp4','linked_spine_infection_deep_mp4']){if(assets.some(x=>x.id===oid&&/(infection2?|rupture)\.gif$|spine_infection_(superficial|deep)_web\.mp4$|aneurysm_recurrence_web\.mp4$|coil_rupture_web\.mp4$/.test(x.url||''))){assets=assets.filter(x=>x.id!==oid);if(db)try{await writeDB('assets',null,oid,true)}catch(e){}}}const imported=db?await readDB('settings',importKey):false;if(!imported){const keep=new Set(embedded.map(r=>r&&r.id));for(const old of assets.filter(x=>x.id.startsWith('linked_')&&!x.blob&&!keep.has(x.id))){assets=assets.filter(x=>x!==old);if(db)try{await writeDB('assets',null,old.id,true)}catch(e){}}}for(const raw of imported?[]:embedded){try{const a=validateAsset(raw);const i=assets.findIndex(x=>x.id===a.id);if(i<0)assets.push(a);else if(a.id.startsWith('linked_')&&!assets[i].blob)assets[i]=a;else continue;if(db)await writeDB('assets',a)}catch(e){toast('내장 자료 일부를 불러오지 못했습니다.')}}if(db&&!imported)await writeDB('settings',true,importKey);let savedFolder=db?await readDB('settings','mediaFolder'):null;
 // Repair earlier generated lowercase paths without changing uploaded/custom media.
 for(const a of assets){if(!a.id.startsWith('linked_')||a.blob||!a.url)continue;const u=new URL(a.url,document.baseURI);if(u.pathname.endsWith('/assets/videos/'+u.pathname.split('/').pop())&&(u.origin===location.origin||u.origin==='https://yyyoonggg.github.io')){a.url=a.url.replace('/assets/videos/','/Assets/Videos/').replace(/^assets\/videos\//,'Assets/Videos/');if(db)await writeDB('assets',a);}}
 if(savedFolder&&['assets/videos/','https://yyyoonggg.github.io/vincent/assets/videos/'].includes(savedFolder)){savedFolder=savedFolder.replace('assets/videos/','Assets/Videos/');if(db)await writeDB('settings',savedFolder,'mediaFolder');}
@@ -741,7 +741,8 @@ window.addEventListener('beforeunload',()=>{objectURLs.forEach(u=>URL.revokeObje
 window.addEventListener('DOMContentLoaded',init);
 </script>
 <!-- Media paths are relative to this HTML: Assets/Videos/ (case-sensitive). -->
-<script id="embeddedAssets" type="application/json">[
+<script id="embeddedAssets" type="application/json">
+[
   {
     "id": "linked_aneurysm_web_mp4",
     "title": "뇌동맥류 설명",
@@ -818,21 +819,6 @@ window.addEventListener('DOMContentLoaded',init);
     "source": "사용자 제공 자료",
     "caption": "설명 화면 추천에서 제외 (자료실에서만 표시)",
     "riskKey": "infarction"
-  },
-  {
-    "id": "linked_clip_rupture_gif",
-    "title": "결찰술 중 동맥류 파열",
-    "domain": "aneurysm",
-    "category": "risk",
-    "type": "image",
-    "url": "Assets/Videos/clip_rupture.gif",
-    "tags": [],
-    "reviewed": false,
-    "source": "사용자 제공 자료",
-    "caption": "설명 화면 추천에서 제외 (자료실에서만 표시)",
-    "riskKey": "hemorrhage",
-    "aneurysmOnly": true,
-    "procedure": "clip"
   },
   {
     "id": "linked_thrombectomy_web_mp4",
@@ -968,11 +954,11 @@ window.addEventListener('DOMContentLoaded',init);
     "source": "자체 제작 애니메이션 + 실제 수술 영상",
     "procedure": "clip",
     "id": "linked_clip_rupture_web_mp4",
-    "title": "결찰술 중 동맥류 파열 · 지혈 과정",
+    "title": "동맥류 파열 위험 · 결찰술 중 파열과 지혈",
     "url": "Assets/Videos/clip_rupture_web.mp4",
     "riskKey": "hemorrhage",
     "aneurysmOnly": true,
-    "caption": "파열·지혈 과정 요약 → 실제 수술 영상"
+    "caption": "수술 전에도 언제든 파열 가능 → 결찰술 중 파열 → 흡인·임시 클립 지혈 → 실제 수술 영상"
   },
   {
     "domain": "aneurysm",
@@ -980,13 +966,13 @@ window.addEventListener('DOMContentLoaded',init);
     "type": "video",
     "tags": [],
     "reviewed": true,
-    "source": "자체 제작 애니메이션 + 실제 수술 영상",
+    "source": "자체 제작 도식 애니메이션",
     "procedure": "clip",
     "id": "linked_clip_infarct_web_mp4",
     "title": "결찰술 관련 뇌경색",
     "url": "Assets/Videos/clip_infarct_web.mp4",
     "riskKey": "infarction",
-    "caption": "천공지·분지가 클립에 물리는 경우 요약 → 실제 수술 영상"
+    "caption": "클립에 의한 모혈관 협착·혈류 변화 → 동맥경화반·혈전 색전으로 원위부 혈관 폐색 → 협착 너머 혈류 저하"
   },
   {
     "domain": "aneurysm",
@@ -996,13 +982,43 @@ window.addEventListener('DOMContentLoaded',init);
     "reviewed": true,
     "source": "자체 제작 애니메이션 + 실제 혈관조영 사진",
     "url": "Assets/Videos/aneurysm_recurrence_web.mp4",
-    "caption": "코일 압밀 → 재발 → 정기 추적 검사 → 재치료, 실제 DSA",
+    "caption": "혈류 방향 표시 · 코일 압밀과 클립 잔여 목에서의 재발 → 정기 추적 검사 → 재치료, 실제 DSA",
     "id": "linked_aneurysm_recur_web_mp4",
-    "title": "동맥류 재발 · 재치료",
+    "title": "동맥류 재발 (코일·클립) · 재치료",
     "procedure": "",
     "riskKey": "recurrence",
     "aneurysmOnly": true
+  },
+  {
+    "id": "linked_spine_postop_hematoma_mp4",
+    "title": "요추 수술 후 출혈 · 혈종",
+    "domain": "lumbar",
+    "category": "risk",
+    "type": "video",
+    "url": "Assets/Videos/spine_postop_hematoma.mp4",
+    "tags": [],
+    "reviewed": true,
+    "source": "자체 제작 도식 애니메이션 + 실제 MRI",
+    "license": "원내 교육용",
+    "riskKey": "hemorrhage",
+    "caption": "수술 부위 출혈 → 경막외 혈종의 신경 압박(시상면·축면) → 항혈소판제·항응고제 복용 시 위험 증가 → 실제 MRI(T1·T2), 재수술 가능성"
+  },
+  {
+    "id": "linked_craniotomy_wound_infection_mp4",
+    "title": "개두술 후 상처 감염",
+    "domain": "aneurysm",
+    "category": "risk",
+    "type": "video",
+    "url": "Assets/Videos/craniotomy_wound_infection.mp4",
+    "tags": [],
+    "reviewed": true,
+    "source": "사용자 제공 자료",
+    "riskKey": "infection",
+    "aneurysmOnly": true,
+    "procedure": "clip",
+    "caption": "개두술(결찰술) 부위 상처 감염"
   }
-]</script>
+]
+</script>
 <div id="toast" role="status" aria-live="polite"></div>
 </body></html>
